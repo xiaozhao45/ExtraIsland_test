@@ -1,0 +1,29 @@
+﻿<ci:ComponentBase x:Class="ExtraIsland.Components.BetterCountdownSettings"
+                  x:TypeArguments="components:BetterCountdownConfig"
+                  xmlns:ci="http://classisland.tech/schemas/xaml/core"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:local="clr-namespace:ExtraIsland"
+                  xmlns:components="clr-namespace:ExtraIsland.Components"
+                  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                  mc:Ignorable="d"
+                  Loaded="BetterCountdownSettings_OnLoaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Column="0"
+            TextChanged="TBox_OnTextChanged"
+            x:Name="TBox"/>
+        <TextBox Grid.Column="1"
+            TextChanged="TBox_OnTextChanged"
+            x:Name="SBox"/>
+        <DatePicker Grid.Column="2"
+            SelectedDateChanged="Calendar_OnSelectedDatesChanged"
+            x:Name="SetCalendar"/>
+    </Grid>
+</ci:ComponentBase>
