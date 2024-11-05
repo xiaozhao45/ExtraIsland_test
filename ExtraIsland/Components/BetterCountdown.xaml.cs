@@ -78,41 +78,6 @@ public partial class BetterCountdown : ComponentBase<BetterCountdownConfig> {
         }
         // ReSharper disable once FunctionNeverReturns
     }
-    
-    static readonly Duration AnimDuration = new Duration(TimeSpan.FromSeconds(0.2));
-
-    readonly DoubleAnimationUsingKeyFrames _dakLeave = new() {
-        Duration = AnimDuration,
-        KeyFrames = [
-            new EasingDoubleKeyFrame{
-                KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(0.2)),
-                Value = 40,
-                EasingFunction = new SineEase()
-            }
-        ]
-    };
-
-    readonly DoubleAnimationUsingKeyFrames _dakSwap = new() {
-        Duration = new Duration(TimeSpan.FromSeconds(0)),
-        KeyFrames = [
-            new EasingDoubleKeyFrame{
-                KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(0)),
-                Value = 0,
-                EasingFunction = new SineEase()
-            }
-        ]
-    };
-    
-    readonly DoubleAnimationUsingKeyFrames _dakEnter = new() {
-        Duration = AnimDuration,
-        KeyFrames = [
-            new EasingDoubleKeyFrame{
-                KeyTime = KeyTime.FromTimeSpan(TimeSpan.FromSeconds(0.2)),
-                Value = 0,
-                EasingFunction = new SineEase()
-            }
-        ]
-    };
 
     double SineEase(double tick, double scale = 1, double multiplier = 1) {
         return double.Sin(scale * double.Pi * tick) * multiplier;
