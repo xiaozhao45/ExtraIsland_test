@@ -25,6 +25,8 @@
                Content="HH"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
+               FontSize="18"
+               Padding="2"
                x:Name="LHours">
             <Label.RenderTransform>
                 <TranslateTransform x:Name="HTt"/>
@@ -32,11 +34,14 @@
         </Label>
         <Label Grid.Column="1"
                VerticalAlignment="Center"
-               Padding="0">:</Label>
+               FontSize="20"
+               Padding="0,0,0,3">:</Label>
         <Label Grid.Column="2"
                Content="MM"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
+               Padding="2"
+               FontSize="18"
                x:Name="LMins">
             <Label.RenderTransform>
                 <TranslateTransform x:Name="MTt"/>
@@ -44,11 +49,14 @@
         </Label>
         <Label Grid.Column="3"
                VerticalAlignment="Center"
-               Padding="0">:</Label>
+               FontSize="20"
+               Padding="0,0,0,3">:</Label>
         <Label Grid.Column="4"
                Content="SS"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
+               Padding="2"
+               FontSize="18"
                x:Name="LSecs"
                >
             <Label.RenderTransform>
