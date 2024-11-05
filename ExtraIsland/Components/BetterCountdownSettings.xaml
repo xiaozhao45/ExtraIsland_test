@@ -8,22 +8,20 @@
                   xmlns:local="clr-namespace:ExtraIsland"
                   xmlns:components="clr-namespace:ExtraIsland.Components"
                   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                  mc:Ignorable="d"
-                  Loaded="BetterCountdownSettings_OnLoaded">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <TextBox Grid.Column="0"
-            TextChanged="TBox_OnTextChanged"
-            x:Name="TBox"/>
-        <TextBox Grid.Column="1"
-            TextChanged="TBox_OnTextChanged"
-            x:Name="SBox"/>
-        <DatePicker Grid.Column="2"
-            SelectedDateChanged="Calendar_OnSelectedDatesChanged"
-            x:Name="SetCalendar"/>
+                  mc:Ignorable="d">
+    <Grid
+        DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=components:BetterCountdownSettings}}">
+        <StackPanel>
+            <TextBlock Text="显示前缀" />
+            <TextBox Text="{Binding Settings.Prefix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="10 8 0 0" MinWidth="180" HorizontalAlignment="Left" />
+            <TextBlock Text="显示后缀" />
+            <TextBox Text="{Binding Settings.Suffix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="10 8 0 0" MinWidth="180" HorizontalAlignment="Left" />
+            <TextBlock Text="目标日期" Margin="0 8 0 0" />
+            <DatePicker SelectedDate="{Binding Settings.TargetDate, Mode=TwoWay}"
+                        Margin="10 8 0 0" HorizontalAlignment="Left"
+                        Width="120" />
+        </StackPanel>
     </Grid>
 </ci:ComponentBase>
