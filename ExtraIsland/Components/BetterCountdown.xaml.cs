@@ -13,7 +13,7 @@ namespace ExtraIsland.Components;
 
 [ComponentInfo(
     "759FFA33-309F-6494-3903-E0693036197E",
-    "更好的倒计时",
+    "(未完成)更好的倒计时",
     PackIconKind.CalendarOutline,
     "提供更高级的功能"
 )]

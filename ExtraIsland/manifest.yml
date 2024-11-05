@@ -6,7 +6,7 @@ id: ink.lipoly.ext.extraisland
 name: ExtraIsland
 description: 简单的扩展
 entranceAssembly: "ExtraIsland.dll"
-url: https://example.com
+url: https://lipoly.ink
 version: 0.0.0.0
 apiVersion: 1.5.0
 author: LiPolymer
