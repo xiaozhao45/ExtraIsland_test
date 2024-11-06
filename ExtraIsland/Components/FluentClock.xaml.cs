@@ -14,18 +14,23 @@ namespace ExtraIsland.Components;
     PackIconKind.ClockDigital,
     "拥有动画支持"
 )]
-public partial class FluentClock : ComponentBase {
+public partial class FluentClock : ComponentBase<FluentClockConfig> {
     public FluentClock() {
         InitializeComponent();
     }
 
     void LoadCache() {
-        _tripleEaseCache.Add(0,0.0);
-        for (int  x = 1;  x <= 40;  x++) {
-            _tripleEaseCache.Add(x,40 * TripleEase(x/40.0,1));
+        try {
+            _tripleEaseCache.Add(0,0.0);
+            for (int x = 1; x <= 40; x++) {
+                _tripleEaseCache.Add(x,40 * TripleEase(x / 40.0,1));
+            }
+            for (int x = 1; x <= 40; x++) {
+                _tripleEaseCache.Add(-x,-40 * TripleEase(1 - x / 40.0,1));
+            }
         }
-        for (int  x = 1;  x <= 40;  x++) {
-            _tripleEaseCache.Add(-x,-40 * TripleEase(1 - x/40.0,1));
+        catch {
+            // ignored
         }
     }
     
@@ -34,7 +39,20 @@ public partial class FluentClock : ComponentBase {
         string hours = string.Empty;
         string minutes = string.Empty;
         string seconds = string.Empty;
+        bool sparkSeq = true;
+        Settings.IsAccurate ??= true;
         while (true) {
+            if (Settings.IsAccurate.Value) {
+                this.Invoke(() => {
+                    LSecs.Visibility = Visibility.Visible;
+                    SSecs.Visibility = Visibility.Visible;
+                });
+            } else {
+                this.Invoke(() => {
+                    LSecs.Visibility = Visibility.Collapsed;
+                    SSecs.Visibility = Visibility.Collapsed;
+                });
+            }
             var now = DateTime.Now;
             if (hours != now.Hour.ToString()) {
                 hours = now.Hour.ToString();
@@ -51,13 +69,38 @@ public partial class FluentClock : ComponentBase {
             }
             if (seconds != now.Second.ToString()) {
                 seconds = now.Second.ToString();
-                var s = seconds;
-                if (s.Length == 1) {
-                    s = "0" + s;
+                if (Settings.IsAccurate.Value) {
+                    this.Invoke(() => {
+                        SMins.Opacity = 1;
+                    });
+                    var s = seconds;
+                    if (s.Length == 1) {
+                        s = "0" + s;
+                    }
+                    SwapAnim(LSecs,STt,s);
+                } else {
+                    if (sparkSeq) {
+                        for (int  x = 0;  x <= 40;  x++) {
+                            int x1 = x;
+                            this.Invoke(() => {
+                                SMins.Opacity = (40 - x1) / 40.0;
+                            });
+                            Thread.Sleep(1);
+                        }
+                        sparkSeq = false;
+                    } else {
+                        for (int x = 0; x <= 40; x++) {
+                            int x1 = x;
+                            this.Invoke(() => {
+                                SMins.Opacity = 1 - (40 - x1) / 40.0;
+                            });
+                            Thread.Sleep(1);
+                        }
+                        sparkSeq = true;
+                    }
                 }
-                SwapAnim(LSecs,STt,s);
             }
-            Thread.Sleep(100);
+            Thread.Sleep(60);
         }
         // ReSharper disable once FunctionNeverReturns
     }

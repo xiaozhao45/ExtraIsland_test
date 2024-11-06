@@ -1,0 +1,20 @@
+﻿<ci:ComponentBase x:Class="ExtraIsland.Components.FluentClockSettings"
+                  x:TypeArguments="local:FluentClockConfig"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:local="clr-namespace:ExtraIsland.Components"
+                  xmlns:ci="http://classisland.tech/schemas/xaml/core"
+                  mc:Ignorable="d"
+                  d:DesignHeight="300" d:DesignWidth="300">
+    <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClockSettings}}">
+        <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
+        <StackPanel Style="{StaticResource SettingsPageStackPanelStyle}">
+            <ci:SettingsCard IconGlyph="ClockDigital"
+                                   Header="精确到秒"
+                                   Description="启用后,将显示秒数,并关闭分隔符闪动"
+                                   IsOn="{Binding Settings.IsAccurate, Mode=TwoWay}"/>
+        </StackPanel>
+    </ScrollViewer>
+</ci:ComponentBase>

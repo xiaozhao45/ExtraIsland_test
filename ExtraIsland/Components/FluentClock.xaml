@@ -1,4 +1,5 @@
 ﻿<ci:ComponentBase x:Class="ExtraIsland.Components.FluentClock"
+                  x:TypeArguments="local:FluentClockConfig"
                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,7 +8,8 @@
                   xmlns:ci="http://classisland.tech/schemas/xaml/core"
                   mc:Ignorable="d"
                   Loaded="FluentClock_OnLoaded">
-    <Grid HorizontalAlignment="Center"
+    <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClock}}"
+        HorizontalAlignment="Center"
         VerticalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -22,7 +24,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Label Grid.Column="0"
-               Content="HH"
+               Content="--"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                FontSize="18"
@@ -35,9 +37,10 @@
         <Label Grid.Column="1"
                VerticalAlignment="Center"
                FontSize="20"
-               Padding="0,0,0,3">:</Label>
+               Padding="0,0,0,3"
+               x:Name="SMins">:</Label>
         <Label Grid.Column="2"
-               Content="MM"
+               Content="--"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                Padding="2"
@@ -50,15 +53,17 @@
         <Label Grid.Column="3"
                VerticalAlignment="Center"
                FontSize="20"
-               Padding="0,0,0,3">:</Label>
+               Content=":"
+               Padding="0,0,0,3"
+               x:Name="SSecs">
+        </Label>
         <Label Grid.Column="4"
-               Content="SS"
+               Content="--"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                Padding="2"
                FontSize="18"
-               x:Name="LSecs"
-               >
+               x:Name="LSecs">
             <Label.RenderTransform>
                 <TranslateTransform x:Name="STt"/>
             </Label.RenderTransform>

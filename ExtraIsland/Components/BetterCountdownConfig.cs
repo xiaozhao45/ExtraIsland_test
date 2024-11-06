@@ -4,6 +4,5 @@
 public class BetterCountdownConfig {
     public string? TargetDate { get; set; }
     public string? Prefix { get; set; }
-    
     public string? Suffix { get; set; }
 }
