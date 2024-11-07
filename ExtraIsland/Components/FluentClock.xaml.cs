@@ -42,6 +42,7 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
         bool sparkSeq = true;
         Settings.IsAccurate ??= true;
         Settings.IsFocusedMode ??= false;
+        Settings.IsSecondsSmall ??= false;
         while (true) {
             //Initialization
             if (Settings.IsAccurate.Value) {
@@ -71,9 +72,22 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
                 }
                 SwapAnim(LMins,MTt,m);
             }
+            //While Seconds change:
             if (seconds != now.Second.ToString()) {
                 seconds = now.Second.ToString();
                 if (Settings.IsAccurate.Value) {
+                    //PRE:
+                    this.Invoke(() => {
+                        LSecs.FontSize = Settings.IsSecondsSmall.Value ? 12 : 18;
+                        LSecs.Padding = Settings.IsSecondsSmall.Value ?
+                            new Thickness(0,5,0,0)
+                            : new Thickness(0);
+                        SSecs.Padding = Settings.IsSecondsSmall.Value ?
+                            new Thickness(0,4,0,0)
+                            : new Thickness(0,0,0,3);
+                        SSecs.FontSize = Settings.IsSecondsSmall.Value ? 14 : 20;
+                    });
+                    //Updater
                     var s = seconds;
                     if (s.Length == 1) {
                         s = "0" + s;
@@ -123,7 +137,7 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
                     }
                 }
             }
-            Thread.Sleep(60);
+            Thread.Sleep(50);
         }
         // ReSharper disable once FunctionNeverReturns
     }

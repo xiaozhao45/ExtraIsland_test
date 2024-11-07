@@ -19,6 +19,10 @@
                              Header="专注模式"
                              Description="启用后,秒数动画将被替换为微微闪烁,避免频繁的移动分散注意力"
                              IsOn="{Binding Settings.IsFocusedMode, Mode=TwoWay}"/>
+            <ci:SettingsCard IconGlyph="Stopwatch"
+                             Header="秒数小字号"
+                             Description="启用后,秒数将使用较小字体展示"
+                             IsOn="{Binding Settings.IsSecondsSmall, Mode=TwoWay}"/>
         </StackPanel>
     </ScrollViewer>
 </ci:ComponentBase>
