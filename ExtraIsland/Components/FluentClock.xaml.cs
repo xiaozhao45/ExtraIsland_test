@@ -41,11 +41,14 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
         string seconds = string.Empty;
         bool sparkSeq = true;
         Settings.IsAccurate ??= true;
+        Settings.IsFocusedMode ??= false;
         while (true) {
+            //Initialization
             if (Settings.IsAccurate.Value) {
                 this.Invoke(() => {
                     LSecs.Visibility = Visibility.Visible;
-                    SSecs.Visibility = Visibility.Visible;
+                    SSecs.Visibility = Visibility.Visible; 
+                    SMins.Opacity = 1;
                 });
             } else {
                 this.Invoke(() => {
@@ -53,6 +56,7 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
                     SSecs.Visibility = Visibility.Collapsed;
                 });
             }
+            //Animation
             var now = DateTime.Now;
             if (hours != now.Hour.ToString()) {
                 hours = now.Hour.ToString();
@@ -70,15 +74,34 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
             if (seconds != now.Second.ToString()) {
                 seconds = now.Second.ToString();
                 if (Settings.IsAccurate.Value) {
-                    this.Invoke(() => {
-                        SMins.Opacity = 1;
-                    });
                     var s = seconds;
                     if (s.Length == 1) {
                         s = "0" + s;
                     }
-                    SwapAnim(LSecs,STt,s);
+                    if (Settings.IsFocusedMode.Value) {
+                        // Second Sparkling
+                        for (int  x = 0;  x <= 40;  x++) {
+                            int x1 = x;
+                            this.Invoke(() => {
+                                LSecs.Opacity = (40 - x1) / 40.0 * 0.7 + 0.3;
+                            });
+                            Thread.Sleep(1);
+                        }
+                        this.Invoke(() => {
+                            LSecs.Content = s;
+                        });
+                        for (int x = 0; x <= 40; x++) {
+                            int x1 = x;
+                            this.Invoke(() => {
+                                LSecs.Opacity = (1 - (40 - x1) / 40.0) * 0.7 + 0.3;
+                            });
+                            Thread.Sleep(1);
+                        }
+                    } else {
+                        SwapAnim(LSecs,STt,s);
+                    }
                 } else {
+                    //Separator Sparkling
                     if (sparkSeq) {
                         for (int  x = 0;  x <= 40;  x++) {
                             int x1 = x;
