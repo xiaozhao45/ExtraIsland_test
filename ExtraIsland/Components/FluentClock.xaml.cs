@@ -78,14 +78,14 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
                 if (Settings.IsAccurate.Value) {
                     //PRE:
                     this.Invoke(() => {
-                        LSecs.FontSize = Settings.IsSecondsSmall.Value ? 12 : 18;
+                        LSecs.FontSize = Settings.IsSecondsSmall.Value ? 14 : 18;
                         LSecs.Padding = Settings.IsSecondsSmall.Value ?
-                            new Thickness(0,5,0,0)
+                            new Thickness(0,3,0,0)
                             : new Thickness(0);
                         SSecs.Padding = Settings.IsSecondsSmall.Value ?
-                            new Thickness(0,4,0,0)
+                            new Thickness(0,2,0,0)
                             : new Thickness(0,0,0,3);
-                        SSecs.FontSize = Settings.IsSecondsSmall.Value ? 14 : 20;
+                        SSecs.FontSize = Settings.IsSecondsSmall.Value ? 16 : 20;
                     });
                     //Updater
                     var s = seconds;
