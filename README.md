@@ -1,18 +1,23 @@
 # ExtraIsland
-a simple plugin to improve ClassIsland
 
->
->为[ClassIsland](https://classisland.tech/)扩充一些小小的功能
->
->*持续开发中*
->
->## 完成的功能:
->流畅时钟:
->- 带有切换和闪动动画
->- 支持关闭秒数
->- 支持秒数小字体显示
->## 正在开发:
->更高级的倒计日:
->- 支持精确到秒
->- 带有切换动画
->- 前后文案可配置
+[GitHub](https://github.com/LiPolymer/ExtraIsland) [GitLab](https://gitlab.com/LiPolymer/ExtraIsland)
+
+为[ClassIsland](https://classisland.tech/)扩充一些小小的功能
+
+*持续开发中*
+
+_~~其实想直接贡献主程序的 但感觉我代码质量太低了 就写成了插件~~_
+
+## 完成的功能:
+流畅时钟:
+- 带有切换和闪动动画
+- 支持关闭秒数
+- 支持秒数小字体显示
+## 正在开发:
+更高级的倒计日:
+- 支持精确到秒
+- 带有切换动画
+- 前后文案可配置
+
+流畅时钟:
+- 准点强调特效
