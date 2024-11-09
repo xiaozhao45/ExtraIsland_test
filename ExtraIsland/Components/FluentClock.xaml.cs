@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using ClassIsland.Core.Abstractions.Controls;
+using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Core.Attributes;
 using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
@@ -15,10 +16,17 @@ namespace ExtraIsland.Components;
     "拥有动画支持"
 )]
 public partial class FluentClock : ComponentBase<FluentClockConfig> {
-    public FluentClock() {
+    public FluentClock(ILessonsService lessonsService, IExactTimeService exactTimeService) {
+        ExactTimeService = exactTimeService;
+        LessonsService = lessonsService;
         InitializeComponent();
     }
 
+    IExactTimeService ExactTimeService { get; }
+    ILessonsService LessonsService { get; }
+
+    DateTime _now;
+    
     void LoadCache() {
         try {
             _tripleEaseCache.Add(0,0.0);
@@ -48,20 +56,21 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
         //Register Events
         Settings.OnSecondsSmallChanged += SmallSecondsUpdater;
         Settings.OnAccurateChanged += AccurateModeUpdater;
+        LessonsService.PostMainTimerTicked += (_,_) => {
+            _now = ExactTimeService.GetCurrentLocalDateTime();
+        };
         //Initialization
         SmallSecondsUpdater();
         AccurateModeUpdater();
-        //MainCycle
+        //Main Cycle
         while (true) {
-            //Animation
-            var now = DateTime.Now;
-            if (hours != now.Hour.ToString()) {
-                hours = now.Hour.ToString();
+            if (hours != _now.Hour.ToString()) {
+                hours = _now.Hour.ToString();
                 var h = hours;
                 SwapAnim(LHours,HTt,h);
             }
-            if (minutes != now.Minute.ToString()) {
-                minutes = now.Minute.ToString();
+            if (minutes != _now.Minute.ToString()) {
+                minutes = _now.Minute.ToString();
                 var m = minutes;
                 if (m.Length == 1) {
                     m = "0" + m;
@@ -69,8 +78,8 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
                 SwapAnim(LMins,MTt,m);
             }
             //While Seconds change:
-            if (seconds != now.Second.ToString()) {
-                seconds = now.Second.ToString();
+            if (seconds != _now.Second.ToString()) {
+                seconds = _now.Second.ToString();
                 if (Settings.IsAccurate.Value) {
                     //Updater
                     var s = seconds;
@@ -122,11 +131,11 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
                     }
                 }
             }
-            Thread.Sleep(50);
+            Thread.Sleep(30);
         }
         // ReSharper disable once FunctionNeverReturns
     }
-
+    
     void SmallSecondsUpdater() {
         this.Invoke(() => {
             LSecs.FontSize = Settings.IsSecondsSmall!.Value ? 14 : 18;
