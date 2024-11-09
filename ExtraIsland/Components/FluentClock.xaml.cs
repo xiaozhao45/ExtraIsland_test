@@ -35,28 +35,24 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
     }
     
     void DetectCycle() {
+        //Prepare local variable
         LoadCache();
         string hours = string.Empty;
         string minutes = string.Empty;
         string seconds = string.Empty;
         bool sparkSeq = true;
+        //Null check
         Settings.IsAccurate ??= true;
         Settings.IsFocusedMode ??= false;
         Settings.IsSecondsSmall ??= false;
+        //Register Events
+        Settings.OnSecondsSmallChanged += SmallSecondsUpdater;
+        Settings.OnAccurateChanged += AccurateModeUpdater;
+        //Initialization
+        SmallSecondsUpdater();
+        AccurateModeUpdater();
+        //MainCycle
         while (true) {
-            //Initialization
-            if (Settings.IsAccurate.Value) {
-                this.Invoke(() => {
-                    LSecs.Visibility = Visibility.Visible;
-                    SSecs.Visibility = Visibility.Visible; 
-                    SMins.Opacity = 1;
-                });
-            } else {
-                this.Invoke(() => {
-                    LSecs.Visibility = Visibility.Collapsed;
-                    SSecs.Visibility = Visibility.Collapsed;
-                });
-            }
             //Animation
             var now = DateTime.Now;
             if (hours != now.Hour.ToString()) {
@@ -76,17 +72,6 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
             if (seconds != now.Second.ToString()) {
                 seconds = now.Second.ToString();
                 if (Settings.IsAccurate.Value) {
-                    //PRE:
-                    this.Invoke(() => {
-                        LSecs.FontSize = Settings.IsSecondsSmall.Value ? 14 : 18;
-                        LSecs.Padding = Settings.IsSecondsSmall.Value ?
-                            new Thickness(0,3,0,0)
-                            : new Thickness(0);
-                        SSecs.Padding = Settings.IsSecondsSmall.Value ?
-                            new Thickness(0,2,0,0)
-                            : new Thickness(0,0,0,3);
-                        SSecs.FontSize = Settings.IsSecondsSmall.Value ? 16 : 20;
-                    });
                     //Updater
                     var s = seconds;
                     if (s.Length == 1) {
@@ -142,8 +127,29 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
         // ReSharper disable once FunctionNeverReturns
     }
 
-    readonly Dictionary<int,double> _tripleEaseCache = new Dictionary<int,double>();
+    void SmallSecondsUpdater() {
+        this.Invoke(() => {
+            LSecs.FontSize = Settings.IsSecondsSmall!.Value ? 14 : 18;
+            LSecs.Padding = Settings.IsSecondsSmall.Value ?
+                new Thickness(0,3,0,0)
+                : new Thickness(0);
+            SSecs.Padding = Settings.IsSecondsSmall.Value ?
+                new Thickness(0,2,0,0)
+                : new Thickness(0,0,0,3);
+            SSecs.FontSize = Settings.IsSecondsSmall.Value ? 16 : 20;
+        });
+    }
+
+    void AccurateModeUpdater() {
+        this.Invoke(() => {
+            SMins.Opacity = 1;
+            LSecs.Visibility = Settings.IsAccurate!.Value ? Visibility.Visible : Visibility.Collapsed;
+            SSecs.Visibility = Settings.IsAccurate!.Value ? Visibility.Visible : Visibility.Collapsed;
+        });
+
+    }
     
+    readonly Dictionary<int,double> _tripleEaseCache = new Dictionary<int,double>();
     double TripleEase(double tick,double scale = 1,double multiplier = 1) {
         return multiplier * (double.Pow(tick * scale,3));
     }
