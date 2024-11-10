@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using ClassIsland.Core.Abstractions.Controls;
 using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Core.Attributes;
 using MahApps.Metro.Controls;
@@ -15,7 +14,7 @@ namespace ExtraIsland.Components;
     PackIconKind.ClockDigital,
     "拥有动画支持"
 )]
-public partial class FluentClock : ComponentBase<FluentClockConfig> {
+public partial class FluentClock {
     public FluentClock(ILessonsService lessonsService, IExactTimeService exactTimeService) {
         ExactTimeService = exactTimeService;
         LessonsService = lessonsService;
@@ -44,10 +43,10 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
         try {
             _tripleEaseCache = new Dictionary<int,double> { { 0,0.0 } };
             for (int x = 1; x <= 40; x++) {
-                _tripleEaseCache.Add(x,40 * TripleEase(x / 40.0,1));
+                _tripleEaseCache.Add(x,40 * TripleEase(x / 40.0));
             }
             for (int x = 1; x <= 40; x++) {
-                _tripleEaseCache.Add(-x,-40 * TripleEase(1 - x / 40.0,1));
+                _tripleEaseCache.Add(-x,-40 * TripleEase(1 - x / 40.0));
             }
         }
         catch {
