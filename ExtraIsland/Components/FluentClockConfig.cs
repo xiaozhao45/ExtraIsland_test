@@ -7,12 +7,9 @@ public class FluentClockConfig {
     public bool? IsAccurate {
         get => _isAccurate;
         set {
-            if (_isAccurate != value) {
-                _isAccurate = value;
-                OnAccurateChanged?.Invoke();
-            } else {
-                _isAccurate = value;
-            }
+            if (_isAccurate == value) return;
+            _isAccurate = value; 
+            OnAccurateChanged?.Invoke();
         }
     }
     public event Action? OnAccurateChanged;
@@ -23,13 +20,12 @@ public class FluentClockConfig {
     public bool? IsSecondsSmall {
         get => _isSecondsSmall;
         set {
-            if (_isSecondsSmall != value) {
-                _isSecondsSmall = value;
-                OnSecondsSmallChanged?.Invoke();
-            } else {
-                _isSecondsSmall = value;
-            }
+            if (_isSecondsSmall == value) return;
+            _isSecondsSmall = value;
+            OnSecondsSmallChanged?.Invoke();
         }
     }
     public event Action? OnSecondsSmallChanged;
+
+    public bool? IsSystemTime { get; set; }
 }

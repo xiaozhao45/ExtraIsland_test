@@ -69,11 +69,14 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
         Settings.IsAccurate ??= true;
         Settings.IsFocusedMode ??= false;
         Settings.IsSecondsSmall ??= false;
+        Settings.IsSystemTime ??= false;
         //Register Events
         Settings.OnSecondsSmallChanged += SmallSecondsUpdater;
         Settings.OnAccurateChanged += AccurateModeUpdater;
         LessonsService.PostMainTimerTicked += (_,_) => {
-            Now = ExactTimeService.GetCurrentLocalDateTime();
+            Now = !Settings.IsSystemTime!.Value ? 
+                ExactTimeService.GetCurrentLocalDateTime()
+                : DateTime.Now;
         };
         OnTimeChanged += () => {
             if (updLock) return;
@@ -84,7 +87,6 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
         SmallSecondsUpdater();
         AccurateModeUpdater();
         return;
-        // ReSharper disable once FunctionNeverReturns
 
         void MainUpdater() {
             var handlingTime = Now;
@@ -154,6 +156,7 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
                     }
                 }
             }
+            // Unlocker
             if (handlingTime == Now) {
                 updLock = false;
             } else {
