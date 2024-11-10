@@ -25,11 +25,24 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
     IExactTimeService ExactTimeService { get; }
     ILessonsService LessonsService { get; }
 
-    DateTime _now;
+    DateTime _nowTime;
+    DateTime Now {
+        get => _nowTime;
+        set {
+            if (_nowTime == value) return;
+            _nowTime = value;
+            OnTimeChanged?.Invoke();
+        }   
+    }
+    event Action? OnTimeChanged;
     
+    Dictionary<int,double> _tripleEaseCache = new Dictionary<int,double>();
+    static double TripleEase(double tick,double scale = 1,double multiplier = 1) {
+        return multiplier * (double.Pow(tick * scale,3));
+    }
     void LoadCache() {
         try {
-            _tripleEaseCache.Add(0,0.0);
+            _tripleEaseCache = new Dictionary<int,double> { { 0,0.0 } };
             for (int x = 1; x <= 40; x++) {
                 _tripleEaseCache.Add(x,40 * TripleEase(x / 40.0,1));
             }
@@ -42,13 +55,16 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
         }
     }
     
-    void DetectCycle() {
+    void LoadedAction() {
         //Prepare local variable
         LoadCache();
+        
         string hours = string.Empty;
         string minutes = string.Empty;
         string seconds = string.Empty;
+        
         bool sparkSeq = true;
+        bool updLock = false;
         //Null check
         Settings.IsAccurate ??= true;
         Settings.IsFocusedMode ??= false;
@@ -57,29 +73,36 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
         Settings.OnSecondsSmallChanged += SmallSecondsUpdater;
         Settings.OnAccurateChanged += AccurateModeUpdater;
         LessonsService.PostMainTimerTicked += (_,_) => {
-            _now = ExactTimeService.GetCurrentLocalDateTime();
+            Now = ExactTimeService.GetCurrentLocalDateTime();
+        };
+        OnTimeChanged += () => {
+            if (updLock) return;
+            updLock = true;
+            new Thread(MainUpdater).Start();
         };
         //Initialization
         SmallSecondsUpdater();
         AccurateModeUpdater();
-        //Main Cycle
-        while (true) {
-            if (hours != _now.Hour.ToString()) {
-                hours = _now.Hour.ToString();
+        return;
+        // ReSharper disable once FunctionNeverReturns
+
+        void MainUpdater() {
+            var handlingTime = Now;
+            if (hours != Now.Hour.ToString()) {
+                hours = Now.Hour.ToString();
                 var h = hours;
                 SwapAnim(LHours,HTt,h);
             }
-            if (minutes != _now.Minute.ToString()) {
-                minutes = _now.Minute.ToString();
+            if (minutes != Now.Minute.ToString()) {
+                minutes = Now.Minute.ToString();
                 var m = minutes;
                 if (m.Length == 1) {
                     m = "0" + m;
                 }
                 SwapAnim(LMins,MTt,m);
             }
-            //While Seconds change:
-            if (seconds != _now.Second.ToString()) {
-                seconds = _now.Second.ToString();
+            if (seconds != Now.Second.ToString()) {
+                seconds = Now.Second.ToString();
                 if (Settings.IsAccurate.Value) {
                     //Updater
                     var s = seconds;
@@ -131,9 +154,12 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
                     }
                 }
             }
-            Thread.Sleep(30);
+            if (handlingTime == Now) {
+                updLock = false;
+            } else {
+                MainUpdater();
+            }
         }
-        // ReSharper disable once FunctionNeverReturns
     }
     
     void SmallSecondsUpdater() {
@@ -156,11 +182,6 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
             SSecs.Visibility = Settings.IsAccurate!.Value ? Visibility.Visible : Visibility.Collapsed;
         });
 
-    }
-    
-    readonly Dictionary<int,double> _tripleEaseCache = new Dictionary<int,double>();
-    double TripleEase(double tick,double scale = 1,double multiplier = 1) {
-        return multiplier * (double.Pow(tick * scale,3));
     }
     
     void SwapAnim(Label target,TranslateTransform targetTransform, string newContent) {
@@ -187,6 +208,6 @@ public partial class FluentClock : ComponentBase<FluentClockConfig> {
     }
     
     void FluentClock_OnLoaded(object sender,RoutedEventArgs e) {
-        new Thread(DetectCycle).Start();
+        new Thread(LoadedAction).Start();
     }
 }
