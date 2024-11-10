@@ -28,4 +28,18 @@ public class FluentClockConfig {
     public event Action? OnSecondsSmallChanged;
 
     public bool? IsSystemTime { get; set; }
+    
+    bool? _isOClockEmp;
+
+    public bool? IsOClockEmp {
+        get => _isOClockEmp;
+        set {
+            _isOClockEmp = value;
+            if (_isOClockEmp is true) {
+                OnOClockEmpEnabled?.Invoke();
+            }
+        }
+    }
+    
+    public event Action? OnOClockEmpEnabled;
 }

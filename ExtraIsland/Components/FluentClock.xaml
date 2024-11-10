@@ -8,65 +8,75 @@
                   xmlns:ci="http://classisland.tech/schemas/xaml/core"
                   mc:Ignorable="d"
                   Loaded="FluentClock_OnLoaded">
-    <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClock}}"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Label Grid.Column="0"
-               Content="--"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               FontSize="18"
-               Padding="2"
-               x:Name="LHours">
-            <Label.RenderTransform>
-                <TranslateTransform x:Name="HTt"/>
-            </Label.RenderTransform>
-        </Label>
-        <Label Grid.Column="1"
-               VerticalAlignment="Center"
-               FontSize="20"
-               Padding="0,0,0,3"
-               x:Name="SMins">:</Label>
-        <Label Grid.Column="2"
-               Content="--"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               Padding="2"
-               FontSize="18"
-               x:Name="LMins">
-            <Label.RenderTransform>
-                <TranslateTransform x:Name="MTt"/>
-            </Label.RenderTransform>
-        </Label>
-        <Label Grid.Column="3"
-               VerticalAlignment="Center"
-               FontSize="20"
-               Content=":"
-               Padding="0,0,0,3"
-               x:Name="SSecs">
-        </Label>
-        <Label Grid.Column="4"
-               Content="--"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               Padding="2"
-               FontSize="18"
-               x:Name="LSecs">
-            <Label.RenderTransform>
-                <TranslateTransform x:Name="STt"/>
-            </Label.RenderTransform>
-        </Label>
+    <Grid>
+        <Border 
+            Height="28"
+            CornerRadius="14"
+            Background="{DynamicResource PrimaryHueMidBrush}"
+            Opacity="0"
+            x:Name="EmpBack"/>
+        <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClock}}"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0"
+                   Content="--"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="18"
+                   Padding="2"
+                   x:Name="LHours">
+                <Label.RenderTransform>
+                    <TranslateTransform x:Name="HTt" />
+                </Label.RenderTransform>
+            </Label>
+            <Label Grid.Column="1"
+                   VerticalAlignment="Center"
+                   FontSize="20"
+                   Padding="0,0,0,3"
+                   x:Name="SMins">
+                :
+            </Label>
+            <Label Grid.Column="2"
+                   Content="--"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Padding="2"
+                   FontSize="18"
+                   x:Name="LMins">
+                <Label.RenderTransform>
+                    <TranslateTransform x:Name="MTt" />
+                </Label.RenderTransform>
+            </Label>
+            <Label Grid.Column="3"
+                   VerticalAlignment="Center"
+                   FontSize="20"
+                   Content=":"
+                   Padding="0,0,0,3"
+                   x:Name="SSecs">
+            </Label>
+            <Label Grid.Column="4"
+                   Content="--"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Padding="2"
+                   FontSize="18"
+                   x:Name="LSecs">
+                <Label.RenderTransform>
+                    <TranslateTransform x:Name="STt" />
+                </Label.RenderTransform>
+            </Label>
+        </Grid>
     </Grid>
 </ci:ComponentBase>

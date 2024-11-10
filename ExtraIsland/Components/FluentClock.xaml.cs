@@ -69,9 +69,13 @@ public partial class FluentClock {
         Settings.IsFocusedMode ??= false;
         Settings.IsSecondsSmall ??= false;
         Settings.IsSystemTime ??= false;
+        Settings.IsOClockEmp ??= true;
         //Register Events
         Settings.OnSecondsSmallChanged += SmallSecondsUpdater;
         Settings.OnAccurateChanged += AccurateModeUpdater;
+        Settings.OnOClockEmpEnabled += () => {
+            new Thread(ShowEmpEffect).Start();
+        };
         LessonsService.PostMainTimerTicked += (_,_) => {
             Now = !Settings.IsSystemTime!.Value ? 
                 ExactTimeService.GetCurrentLocalDateTime()
@@ -90,6 +94,9 @@ public partial class FluentClock {
         void MainUpdater() {
             var handlingTime = Now;
             if (hours != Now.Hour.ToString()) {
+                if (Settings.IsOClockEmp.Value & seconds == "0") {
+                    new Thread(ShowEmpEffect).Start();
+                }
                 hours = Now.Hour.ToString();
                 var h = hours;
                 SwapAnim(LHours,HTt,h);
@@ -161,6 +168,24 @@ public partial class FluentClock {
             } else {
                 MainUpdater();
             }
+        }
+    }
+
+    void ShowEmpEffect() {
+        for (int x = 0; x <= 40; x++) {
+            int x1 = x;
+            this.Invoke(() => {
+                EmpBack.Opacity = (1 - (40 - x1) / 40.0);
+            });
+            Thread.Sleep(1);
+        }
+        Thread.Sleep(3000);
+        for (int  x = 0;  x <= 40;  x++) {
+            int x1 = x;
+            this.Invoke(() => {
+                EmpBack.Opacity = (40 - x1) / 40.0;
+            });
+            Thread.Sleep(1);
         }
     }
     
