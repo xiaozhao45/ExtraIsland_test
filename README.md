@@ -4,6 +4,8 @@
 
 为[ClassIsland](https://classisland.tech/)扩充一些小小的功能
 
+🧐最新 commit 尝鲜可以前往 [GitLab Pipeline](https://gitlab.com/LiPolymer/ExtraIsland/-/pipelines) 获取[未打包](https://docs.classisland.tech/dev/plugins/publishing.html#%E6%89%93%E5%8C%85%E6%8F%92%E4%BB%B6)的构建
+
 *持续开发中*
 
 本项目处于起步阶段☝🤓
