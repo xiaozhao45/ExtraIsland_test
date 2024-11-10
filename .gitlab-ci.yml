@@ -39,10 +39,10 @@ stages:
 
 build_job:
   stage: build
+  image: mcr.microsoft.com/dotnet/core/sdk:latest
   script:
-    - '& "$env:NUGET_PATH" restore'  # restore Nuget dependencies
-    - '& "$env:MSBUILD_PATH" /p:Configuration=Release'  # build the project
+    - '& "dotnet build -c release'
   artifacts:
     expire_in: 1 week  # save gitlab server space, we copy the files we need to deploy folder later on
     paths:
-      - '.\ExtraIsland\bin\Release\net8.0-windows'  # saving exe to copy to deploy folder
+      - '.\ExtraIsland\bin\Release'  # saving exe to copy to deploy folder
