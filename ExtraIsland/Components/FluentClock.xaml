@@ -8,17 +8,21 @@
                   xmlns:ci="http://classisland.tech/schemas/xaml/core"
                   mc:Ignorable="d"
                   Loaded="FluentClock_OnLoaded">
-    <Grid Margin="0">
+    <Grid>
         <Border
             Height="28"
             CornerRadius="14"
             Margin="0"
-            Background="{DynamicResource SecondaryHueDarkBrush}"
+            Background="{DynamicResource PrimaryHueMidBrush}"
             Opacity="0"
-            x:Name="EmpBack"/>
+            Width="90"
+            x:Name="EmpBack">
+            <Border.RenderTransform>
+                <TranslateTransform X="1" x:Name="BakT"/>
+            </Border.RenderTransform>
+        </Border>
         <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClock}}"
-              HorizontalAlignment="Center"
-              VerticalAlignment="Center">
+              HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -36,7 +40,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontSize="18"
-                   Padding="2"
+                   Padding="2,2,2,2"
                    x:Name="LHours">
                 <Label.RenderTransform>
                     <TranslateTransform x:Name="HTt" />
@@ -46,9 +50,8 @@
                    VerticalAlignment="Center"
                    FontSize="20"
                    Padding="0,0,0,3"
-                   x:Name="SMins">
-                :
-            </Label>
+                   Content=":"
+                   x:Name="SMins"/>
             <Label Grid.Column="2"
                    Content="--"
                    HorizontalAlignment="Center"
@@ -71,11 +74,12 @@
                    Content="--"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Padding="2"
+                   Padding="2,2,4,2"
                    FontSize="18"
                    x:Name="LSecs">
                 <Label.RenderTransform>
-                    <TranslateTransform x:Name="STt" />
+                    <TranslateTransform X="2"
+                        x:Name="STt"/>
                 </Label.RenderTransform>
             </Label>
         </Grid>

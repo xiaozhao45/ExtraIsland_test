@@ -208,6 +208,8 @@ public partial class FluentClock {
             SMins.Opacity = 1;
             LSecs.Visibility = Settings.IsAccurate!.Value ? Visibility.Visible : Visibility.Collapsed;
             SSecs.Visibility = Settings.IsAccurate!.Value ? Visibility.Visible : Visibility.Collapsed;
+            EmpBack.Width = Settings.IsAccurate!.Value ? 90 : 60;
+            BakT.X = Settings.IsAccurate!.Value ? 1 : 0;
         });
 
     }
