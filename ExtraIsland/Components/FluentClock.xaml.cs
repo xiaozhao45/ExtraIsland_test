@@ -61,6 +61,7 @@ public partial class FluentClock {
         string hours = string.Empty;
         string minutes = string.Empty;
         string seconds = string.Empty;
+        bool isFirstRun = true;
         
         bool sparkSeq = true;
         bool updLock = false;
@@ -90,11 +91,10 @@ public partial class FluentClock {
         SmallSecondsUpdater();
         AccurateModeUpdater();
         return;
-
         void MainUpdater() {
             var handlingTime = Now;
             if (hours != Now.Hour.ToString()) {
-                if (Settings.IsOClockEmp.Value & seconds == "0") {
+                if (Settings.IsOClockEmp.Value & Now.Second == 0) {
                     new Thread(ShowEmpEffect).Start();
                 }
                 hours = Now.Hour.ToString();
@@ -163,6 +163,7 @@ public partial class FluentClock {
                 }
             }
             // Unlocker
+            isFirstRun = false;
             if (handlingTime == Now) {
                 updLock = false;
             } else {

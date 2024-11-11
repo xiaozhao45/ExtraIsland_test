@@ -8,11 +8,12 @@
                   xmlns:ci="http://classisland.tech/schemas/xaml/core"
                   mc:Ignorable="d"
                   Loaded="FluentClock_OnLoaded">
-    <Grid>
-        <Border 
+    <Grid Margin="0">
+        <Border
             Height="28"
             CornerRadius="14"
-            Background="{DynamicResource PrimaryHueMidBrush}"
+            Margin="0"
+            Background="{DynamicResource SecondaryHueDarkBrush}"
             Opacity="0"
             x:Name="EmpBack"/>
         <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClock}}"
