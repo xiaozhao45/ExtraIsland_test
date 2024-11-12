@@ -65,8 +65,7 @@
                Content="SS"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               x:Name="LSecs"
-               >
+               x:Name="LSecs">
             <Label.RenderTransform>
                 <TranslateTransform x:Name="STt"/>
             </Label.RenderTransform>

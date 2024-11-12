@@ -61,8 +61,7 @@ public partial class FluentClock {
         string hours = string.Empty;
         string minutes = string.Empty;
         string seconds = string.Empty;
-        bool isFirstRun = true;
-        
+
         bool sparkSeq = true;
         bool updLock = false;
         //Null check
@@ -163,7 +162,6 @@ public partial class FluentClock {
                 }
             }
             // Unlocker
-            isFirstRun = false;
             if (handlingTime == Now) {
                 updLock = false;
             } else {
