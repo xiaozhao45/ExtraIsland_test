@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Core.Attributes;
@@ -58,9 +59,9 @@ public partial class FluentClock {
         //Prepare local variable
         LoadCache();
         
-        string hours = string.Empty;
-        string minutes = string.Empty;
-        string seconds = string.Empty;
+        string hours;
+        string minutes;
+        string seconds;
 
         bool sparkSeq = true;
         bool updLock = false;
@@ -70,6 +71,11 @@ public partial class FluentClock {
         Settings.IsSecondsSmall ??= false;
         Settings.IsSystemTime ??= false;
         Settings.IsOClockEmp ??= true;
+        //Initialization
+        SmallSecondsUpdater();
+        AccurateModeUpdater();
+        UpdateTime();
+        SilentUpdater();
         //Register Events
         Settings.OnSecondsSmallChanged += SmallSecondsUpdater;
         Settings.OnAccurateChanged += AccurateModeUpdater;
@@ -77,18 +83,13 @@ public partial class FluentClock {
             new Thread(ShowEmpEffect).Start();
         };
         LessonsService.PostMainTimerTicked += (_,_) => {
-            Now = !Settings.IsSystemTime!.Value ? 
-                ExactTimeService.GetCurrentLocalDateTime()
-                : DateTime.Now;
+            UpdateTime();
         };
         OnTimeChanged += () => {
             if (updLock) return;
             updLock = true;
             new Thread(MainUpdater).Start();
         };
-        //Initialization
-        SmallSecondsUpdater();
-        AccurateModeUpdater();
         return;
         void MainUpdater() {
             var handlingTime = Now;
@@ -168,8 +169,25 @@ public partial class FluentClock {
                 MainUpdater();
             }
         }
+        
+        void SilentUpdater(){
+            hours = Now.Hour.ToString();
+            minutes = Now.Minute.ToString();
+            seconds = Now.Second.ToString();
+            this.Invoke(() => {
+                LHours.Content = hours;
+                LMins.Content = minutes;
+                LSecs.Content = seconds;
+            });
+        }
     }
 
+    void UpdateTime() {
+        Now = !Settings.IsSystemTime!.Value ? 
+            ExactTimeService.GetCurrentLocalDateTime()
+            : DateTime.Now;
+    }
+    
     void ShowEmpEffect() {
         for (int x = 0; x <= 40; x++) {
             int x1 = x;
