@@ -40,7 +40,7 @@
                    Content="--"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   FontSize="18"
+                   FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
                    Padding="0,2,2,2"
                    x:Name="LHours">
                 <Label.RenderTransform>
@@ -58,7 +58,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Padding="2"
-                   FontSize="18"
+                   FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
                    x:Name="LMins">
                 <Label.RenderTransform>
                     <TranslateTransform x:Name="MTt" />
@@ -76,7 +76,7 @@
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Padding="2,2,0,2"
-                   FontSize="18"
+                   FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
                    x:Name="LSecs">
                 <Label.RenderTransform>
                     <TranslateTransform X="2"

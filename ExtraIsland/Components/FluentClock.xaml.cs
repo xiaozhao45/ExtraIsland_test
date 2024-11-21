@@ -71,14 +71,16 @@ public partial class FluentClock {
         Settings.IsSecondsSmall ??= false;
         Settings.IsSystemTime ??= false;
         Settings.IsOClockEmp ??= true;
+        Settings.UseCiFontSize ??= false;
         //Initialization
-        SmallSecondsUpdater();
+        CiFontChangedUpdater();
         AccurateModeUpdater();
         UpdateTime();
         SilentUpdater();
         //Register Events
         Settings.OnSecondsSmallChanged += SmallSecondsUpdater;
         Settings.OnAccurateChanged += AccurateModeUpdater;
+        Settings.OnUseCiFontSizeChanged += CiFontChangedUpdater;
         Settings.OnOClockEmpEnabled += () => {
             new Thread(ShowEmpEffect).Start();
         };
@@ -205,9 +207,26 @@ public partial class FluentClock {
             Thread.Sleep(1);
         }
     }
+
+    bool _firstLoad = true;
+    void CiFontChangedUpdater() {
+        if (Settings.UseCiFontSize!.Value) {
+            if (!_firstLoad) {
+                this.Invoke(InvalidateVisual);
+            }
+        } else {
+            this.Invoke(() => {
+                LHours.FontSize = 18;
+                LMins.FontSize = 18;
+            });
+            SmallSecondsUpdater();
+        }
+        _firstLoad = false;
+    }
     
     void SmallSecondsUpdater() {
         this.Invoke(() => {
+            if (Settings.UseCiFontSize!.Value) return;
             LSecs.FontSize = Settings.IsSecondsSmall!.Value ? 14 : 18;
             LSecs.Padding = Settings.IsSecondsSmall.Value ?
                 new Thickness(0,3,0,0)

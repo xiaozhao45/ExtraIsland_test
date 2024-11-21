@@ -7,7 +7,11 @@
                   xmlns:local="clr-namespace:ExtraIsland.Components"
                   xmlns:ci="http://classisland.tech/schemas/xaml/core"
                   mc:Ignorable="d"
-                  d:DesignHeight="300" d:DesignWidth="300">
+                  d:DesignHeight="300" d:DesignWidth="300"
+                  Loaded="FluentClockSettings_OnLoaded">
+    <ci:ComponentBase.Resources>
+        <ci:BooleanToVisibilityReConverter x:Key="BooleanToVisibilityReConverter"/>
+    </ci:ComponentBase.Resources>
     <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClockSettings}}">
         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
         <StackPanel Style="{StaticResource SettingsPageStackPanelStyle}">
@@ -24,10 +28,6 @@
                              Header="专注模式"
                              Description="启用后,秒数动画将被替换为微微闪烁,避免频繁的移动分散注意力"
                              IsOn="{Binding Settings.IsFocusedMode, Mode=TwoWay}"/>
-            <ci:SettingsCard IconGlyph="FontSize"
-                             Header="秒数小字号"
-                             Description="启用后,秒数将使用较小字体展示"
-                             IsOn="{Binding Settings.IsSecondsSmall, Mode=TwoWay}"/>
             <ci:SettingsCard IconGlyph="Computer"
                              Header="使用系统时间"
                              Description="启用后,将直接使用系统时间,无视ClassIsland设置"
@@ -36,6 +36,15 @@
                              Header="启用整点强调特效"
                              Description="启用后,整点时将显示一个强调特效"
                              IsOn="{Binding Settings.IsOClockEmp, Mode=TwoWay}"/>
+            <ci:SettingsCard IconGlyph="Wrench"
+                             Header="使用ClassIsland字体设置"
+                             Description="启用后,将读取ClassIsland组件字体设置"
+                             IsOn="{Binding Settings.UseCiFontSize, Mode=TwoWay}"/>
+            <ci:SettingsCard IconGlyph="FontSize"
+                             Header="秒数小字号"
+                             Description="启用后,秒数将使用较小字体展示"
+                             IsOn="{Binding Settings.IsSecondsSmall, Mode=TwoWay}"
+                             x:Name="SmallFontSettingCard"/>
             <Label HorizontalAlignment="Center" 
                    Foreground="{DynamicResource MaterialDesignBodyLight}">
                 Added by ExtraIsland

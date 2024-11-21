@@ -42,4 +42,15 @@ public class FluentClockConfig {
     }
     
     public event Action? OnOClockEmpEnabled;
+
+    bool? _useCiFontSize;
+    public bool? UseCiFontSize {
+        get => _useCiFontSize;
+        set {
+            if (_useCiFontSize == value) return;
+            _useCiFontSize = value;
+            OnUseCiFontSizeChanged?.Invoke();
+        }
+    }
+    public event Action? OnUseCiFontSizeChanged;
 }
