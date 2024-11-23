@@ -14,7 +14,17 @@ public class FluentClockConfig {
     }
     public event Action? OnAccurateChanged;
     
-    public bool? IsFocusedMode { get; set; }
+    bool? _isFocusedMode;
+    public bool? IsFocusedMode {
+        get => _isFocusedMode;
+        set {
+            if (_isFocusedMode == value) return;
+            _isFocusedMode = value;
+            OnFocusedModeChanged?.Invoke();         
+        }
+    }
+    
+    public event Action? OnFocusedModeChanged;
 
     bool? _isSecondsSmall;
     public bool? IsSecondsSmall {

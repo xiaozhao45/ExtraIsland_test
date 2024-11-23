@@ -7,10 +7,10 @@
                   xmlns:local="clr-namespace:ExtraIsland.Components"
                   xmlns:ci="http://classisland.tech/schemas/xaml/core"
                   mc:Ignorable="d"
-                  d:DesignHeight="300" d:DesignWidth="300"
-                  Loaded="FluentClockSettings_OnLoaded">
+                  d:DesignHeight="300" d:DesignWidth="300">
     <ci:ComponentBase.Resources>
         <ci:BooleanToVisibilityReConverter x:Key="BooleanToVisibilityReConverter"/>
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     </ci:ComponentBase.Resources>
     <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClockSettings}}">
         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
@@ -42,9 +42,9 @@
                              IsOn="{Binding Settings.UseCiFontSize, Mode=TwoWay}"/>
             <ci:SettingsCard IconGlyph="FontSize"
                              Header="秒数小字号"
+                             IsEnabled="{Binding Settings.UseCiFontSize, Converter={StaticResource InverseBooleanConverter}}"
                              Description="启用后,秒数将使用较小字体展示"
-                             IsOn="{Binding Settings.IsSecondsSmall, Mode=TwoWay}"
-                             x:Name="SmallFontSettingCard"/>
+                             IsOn="{Binding Settings.IsSecondsSmall, Mode=TwoWay}"/>
             <Label HorizontalAlignment="Center" 
                    Foreground="{DynamicResource MaterialDesignBodyLight}">
                 Added by ExtraIsland

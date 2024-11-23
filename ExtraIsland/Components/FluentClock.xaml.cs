@@ -4,6 +4,7 @@ using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Core.Attributes;
+using ExtraIsland.StutterEngine;
 using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
 
@@ -55,9 +56,17 @@ public partial class FluentClock {
         }
     }
     
+    Animator.ClockTransformControlAnimator? _hourAnimator;
+    Animator.ClockTransformControlAnimator? _minuAnimator;
+    Animator.ClockTransformControlAnimator? _secoAnimator;
+    
     void LoadedAction() {
         //Prepare local variable
-        LoadCache();
+        _hourAnimator ??= new Animator.ClockTransformControlAnimator(LHours);
+        _minuAnimator ??= new Animator.ClockTransformControlAnimator(LMins);
+        _secoAnimator ??= new Animator.ClockTransformControlAnimator(LSecs);
+        
+        var animator = new LegacyAnimator();
         
         string hours;
         string minutes;
@@ -77,10 +86,12 @@ public partial class FluentClock {
         AccurateModeUpdater();
         UpdateTime();
         SilentUpdater();
+        FocusModeUpdater();
         //Register Events
         Settings.OnSecondsSmallChanged += SmallSecondsUpdater;
         Settings.OnAccurateChanged += AccurateModeUpdater;
         Settings.OnUseCiFontSizeChanged += CiFontChangedUpdater;
+        Settings.OnUseCiFontSizeChanged += FocusModeUpdater;
         Settings.OnOClockEmpEnabled += () => {
             new Thread(ShowEmpEffect).Start();
         };
@@ -90,18 +101,20 @@ public partial class FluentClock {
         OnTimeChanged += () => {
             if (updLock) return;
             updLock = true;
-            new Thread(MainUpdater).Start();
+            this.BeginInvoke(MainUpdater);
         };
         return;
         void MainUpdater() {
             var handlingTime = Now;
             if (hours != Now.Hour.ToString()) {
                 if (Settings.IsOClockEmp.Value & Now.Second == 0) {
-                    new Thread(ShowEmpEffect).Start();
+                    this.BeginInvoke(()=> {
+                        animator.OpacityEmphasize(EmpBack,3000);
+                    });
                 }
                 hours = Now.Hour.ToString();
                 var h = hours;
-                SwapAnim(LHours,HTt,h);
+                _hourAnimator.TargetContent = h;
             }
             if (minutes != Now.Minute.ToString()) {
                 minutes = Now.Minute.ToString();
@@ -109,59 +122,23 @@ public partial class FluentClock {
                 if (m.Length == 1) {
                     m = "0" + m;
                 }
-                SwapAnim(LMins,MTt,m);
+                _minuAnimator.TargetContent = m;
             }
             if (seconds != Now.Second.ToString()) {
                 seconds = Now.Second.ToString();
                 if (Settings.IsAccurate.Value) {
-                    //Updater
                     var s = seconds;
                     if (s.Length == 1) {
                         s = "0" + s;
                     }
                     if (Settings.IsFocusedMode.Value) {
-                        // Second Sparkling
-                        for (int  x = 0;  x <= 40;  x++) {
-                            int x1 = x;
-                            this.Invoke(() => {
-                                LSecs.Opacity = (40 - x1) / 40.0 * 0.7 + 0.3;
-                            });
-                            Thread.Sleep(1);
-                        }
-                        this.Invoke(() => {
-                            LSecs.Content = s;
-                        });
-                        for (int x = 0; x <= 40; x++) {
-                            int x1 = x;
-                            this.Invoke(() => {
-                                LSecs.Opacity = (1 - (40 - x1) / 40.0) * 0.7 + 0.3;
-                            });
-                            Thread.Sleep(1);
-                        }
+                        _secoAnimator.Update(s,false);
                     } else {
-                        SwapAnim(LSecs,STt,s);
+                        _secoAnimator.TargetContent = s;
                     }
                 } else {
-                    //Separator Sparkling
-                    if (sparkSeq) {
-                        for (int  x = 0;  x <= 40;  x++) {
-                            int x1 = x;
-                            this.Invoke(() => {
-                                SMins.Opacity = (40 - x1) / 40.0;
-                            });
-                            Thread.Sleep(1);
-                        }
-                        sparkSeq = false;
-                    } else {
-                        for (int x = 0; x <= 40; x++) {
-                            int x1 = x;
-                            this.Invoke(() => {
-                                SMins.Opacity = 1 - (40 - x1) / 40.0;
-                            });
-                            Thread.Sleep(1);
-                        }
-                        sparkSeq = true;
-                    }
+                    animator.Fade(SMins,sparkSeq);
+                    sparkSeq = !sparkSeq;
                 }
             }
             // Unlocker
@@ -208,6 +185,12 @@ public partial class FluentClock {
         }
     }
 
+    void FocusModeUpdater() {
+        _secoAnimator!.IsSwapAnimEnabled = !Settings.IsFocusedMode!.Value;
+        _minuAnimator!.IsSwapAnimEnabled = !Settings.IsFocusedMode!.Value;
+        _hourAnimator!.IsSwapAnimEnabled = !Settings.IsFocusedMode!.Value;
+    }
+    
     bool _firstLoad = true;
     void CiFontChangedUpdater() {
         if (Settings.UseCiFontSize!.Value) {
@@ -273,6 +256,6 @@ public partial class FluentClock {
     }
     
     void FluentClock_OnLoaded(object sender,RoutedEventArgs e) {
-        new Thread(LoadedAction).Start();
+        this.Invoke(LoadedAction);
     }
 }
