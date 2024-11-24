@@ -44,7 +44,7 @@
                    Padding="0,2,2,2"
                    x:Name="LHours">
                 <Label.RenderTransform>
-                    <TranslateTransform x:Name="HTt" />
+                    <TranslateTransform />
                 </Label.RenderTransform>
             </Label>
             <Label Grid.Column="1"
@@ -61,7 +61,7 @@
                    FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
                    x:Name="LMins">
                 <Label.RenderTransform>
-                    <TranslateTransform x:Name="MTt" />
+                    <TranslateTransform />
                 </Label.RenderTransform>
             </Label>
             <Label Grid.Column="3"
@@ -79,8 +79,7 @@
                    FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
                    x:Name="LSecs">
                 <Label.RenderTransform>
-                    <TranslateTransform X="2"
-                        x:Name="STt"/>
+                    <TranslateTransform X="2" />
                 </Label.RenderTransform>
             </Label>
         </Grid>

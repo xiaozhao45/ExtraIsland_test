@@ -38,33 +38,20 @@ public partial class FluentClock {
     event Action? OnTimeChanged;
     
     Dictionary<int,double> _tripleEaseCache = new Dictionary<int,double>();
-    static double TripleEase(double tick,double scale = 1,double multiplier = 1) {
-        return multiplier * (double.Pow(tick * scale,3));
-    }
-    void LoadCache() {
-        try {
-            _tripleEaseCache = new Dictionary<int,double> { { 0,0.0 } };
-            for (int x = 1; x <= 40; x++) {
-                _tripleEaseCache.Add(x,40 * TripleEase(x / 40.0));
-            }
-            for (int x = 1; x <= 40; x++) {
-                _tripleEaseCache.Add(-x,-40 * TripleEase(1 - x / 40.0));
-            }
-        }
-        catch {
-            // ignored
-        }
-    }
     
     Animator.ClockTransformControlAnimator? _hourAnimator;
     Animator.ClockTransformControlAnimator? _minuAnimator;
     Animator.ClockTransformControlAnimator? _secoAnimator;
+    Animator.SeparatorControlAnimator? _separatorAnimator;
+    Animator.EmphasizeUiElementAnimator? _emphasizeAnimator;
     
     void LoadedAction() {
         //Prepare local variable
         _hourAnimator ??= new Animator.ClockTransformControlAnimator(LHours);
         _minuAnimator ??= new Animator.ClockTransformControlAnimator(LMins);
         _secoAnimator ??= new Animator.ClockTransformControlAnimator(LSecs);
+        _separatorAnimator ??= new Animator.SeparatorControlAnimator(SMins);
+        _emphasizeAnimator ??= new Animator.EmphasizeUiElementAnimator(EmpBack);
         
         var animator = new LegacyAnimator();
         
@@ -93,7 +80,10 @@ public partial class FluentClock {
         Settings.OnUseCiFontSizeChanged += CiFontChangedUpdater;
         Settings.OnUseCiFontSizeChanged += FocusModeUpdater;
         Settings.OnOClockEmpEnabled += () => {
-            new Thread(ShowEmpEffect).Start();
+            //new Thread(ShowEmpEffect).Start();
+            this.BeginInvoke(() => {
+                _emphasizeAnimator.Update();
+            });
         };
         LessonsService.PostMainTimerTicked += (_,_) => {
             UpdateTime();
@@ -101,7 +91,7 @@ public partial class FluentClock {
         OnTimeChanged += () => {
             if (updLock) return;
             updLock = true;
-            this.BeginInvoke(MainUpdater);
+            new Thread(MainUpdater).Start();
         };
         return;
         void MainUpdater() {
@@ -109,12 +99,14 @@ public partial class FluentClock {
             if (hours != Now.Hour.ToString()) {
                 if (Settings.IsOClockEmp.Value & Now.Second == 0) {
                     this.BeginInvoke(()=> {
-                        animator.OpacityEmphasize(EmpBack,3000);
+                        _emphasizeAnimator.Update();
                     });
                 }
                 hours = Now.Hour.ToString();
                 var h = hours;
-                _hourAnimator.TargetContent = h;
+                this.BeginInvoke(() => {
+                    _hourAnimator.TargetContent = h;
+                });
             }
             if (minutes != Now.Minute.ToString()) {
                 minutes = Now.Minute.ToString();
@@ -122,7 +114,9 @@ public partial class FluentClock {
                 if (m.Length == 1) {
                     m = "0" + m;
                 }
-                _minuAnimator.TargetContent = m;
+                this.BeginInvoke(() => {
+                    _minuAnimator.TargetContent = m;
+                });
             }
             if (seconds != Now.Second.ToString()) {
                 seconds = Now.Second.ToString();
@@ -132,12 +126,19 @@ public partial class FluentClock {
                         s = "0" + s;
                     }
                     if (Settings.IsFocusedMode.Value) {
-                        _secoAnimator.Update(s,false);
+                        this.BeginInvoke(() => {
+                            _secoAnimator.Update(s,false);
+                        });
                     } else {
-                        _secoAnimator.TargetContent = s;
+                        this.BeginInvoke(() => {
+                            _secoAnimator.Update(s);
+                        });
                     }
                 } else {
-                    animator.Fade(SMins,sparkSeq);
+                    bool seq = sparkSeq;
+                    this.BeginInvoke(() => {
+                        _separatorAnimator.Update(seq);
+                    });
                     sparkSeq = !sparkSeq;
                 }
             }
@@ -152,7 +153,13 @@ public partial class FluentClock {
         void SilentUpdater(){
             hours = Now.Hour.ToString();
             minutes = Now.Minute.ToString();
+            if (minutes.Length == 1) {
+                minutes = "0" + minutes;
+            }
             seconds = Now.Second.ToString();
+            if (seconds.Length == 1) {
+                seconds = "0" + seconds;
+            }
             this.Invoke(() => {
                 LHours.Content = hours;
                 LMins.Content = minutes;
@@ -230,29 +237,6 @@ public partial class FluentClock {
             BakT.X = Settings.IsAccurate!.Value ? 1 : 0;
         });
 
-    }
-    
-    void SwapAnim(Label target,TranslateTransform targetTransform, string newContent) {
-        for (int  x = 0;  x <= 40;  x++) {
-            int x1 = x;
-            this.Invoke(() => {
-                targetTransform.Y = _tripleEaseCache[x1];
-                target.Opacity = (40 - x1) / 40.0;
-            });
-            //AccurateWait(0.1);
-            Thread.Sleep(1);
-        }
-        this.Invoke(() => {
-            target.Content = newContent;
-        });
-        for (int  x = 0;  x <= 40;  x++) {
-            int x1 = x;
-            this.Invoke(() => {
-                targetTransform.Y = _tripleEaseCache[-x1];
-                target.Opacity =1 - (40 - x1) / 40.0;
-            });
-            Thread.Sleep(1);
-        }
     }
     
     void FluentClock_OnLoaded(object sender,RoutedEventArgs e) {

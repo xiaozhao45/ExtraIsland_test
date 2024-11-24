@@ -44,6 +44,10 @@
                     </Grid>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
+            <Label HorizontalAlignment="Center" 
+                   Foreground="{DynamicResource MaterialDesignBodyLight}">
+                Added by ExtraIsland
+            </Label>
         </StackPanel>
     </ScrollViewer>
 </ci:ComponentBase>
