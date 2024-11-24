@@ -72,7 +72,7 @@ public static class Animator {
             };
             _swapOutStoryboard.Completed += (_,_) => {
                 targetLabel.Content = _targetContent;
-                Thread.Sleep(1);
+                Task.Delay(1);
                 swapInStoryboard.Begin();
             };
             swapInStoryboard.Completed += (_,_) => {
