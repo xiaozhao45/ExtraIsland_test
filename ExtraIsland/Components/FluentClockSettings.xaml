@@ -36,13 +36,8 @@
                              Header="启用整点强调特效"
                              Description="启用后,整点时将显示一个强调特效"
                              IsOn="{Binding Settings.IsOClockEmp, Mode=TwoWay}"/>
-            <ci:SettingsCard IconGlyph="Wrench"
-                             Header="使用ClassIsland字体设置"
-                             Description="启用后,将读取ClassIsland组件字体设置"
-                             IsOn="{Binding Settings.UseCiFontSize, Mode=TwoWay}"/>
             <ci:SettingsCard IconGlyph="FontSize"
                              Header="秒数小字号"
-                             IsEnabled="{Binding Settings.UseCiFontSize, Converter={StaticResource InverseBooleanConverter}}"
                              Description="启用后,秒数将使用较小字体展示"
                              IsOn="{Binding Settings.IsSecondsSmall, Mode=TwoWay}"/>
             <Label HorizontalAlignment="Center" 

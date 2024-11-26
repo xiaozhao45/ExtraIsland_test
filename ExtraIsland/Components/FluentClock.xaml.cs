@@ -67,18 +67,13 @@ public partial class FluentClock {
         Settings.IsSecondsSmall ??= false;
         Settings.IsSystemTime ??= false;
         Settings.IsOClockEmp ??= true;
-        Settings.UseCiFontSize ??= false;
         //Initialization
-        CiFontChangedUpdater();
         AccurateModeUpdater();
         UpdateTime();
         SilentUpdater();
-        FocusModeUpdater();
         //Register Events
         Settings.OnSecondsSmallChanged += SmallSecondsUpdater;
         Settings.OnAccurateChanged += AccurateModeUpdater;
-        Settings.OnUseCiFontSizeChanged += CiFontChangedUpdater;
-        Settings.OnUseCiFontSizeChanged += FocusModeUpdater;
         Settings.OnOClockEmpEnabled += () => {
             //new Thread(ShowEmpEffect).Start();
             this.BeginInvoke(() => {
@@ -98,13 +93,13 @@ public partial class FluentClock {
             var handlingTime = Now;
             if (hours != Now.Hour.ToString()) {
                 if (Settings.IsOClockEmp.Value & Now.Second == 0) {
-                    this.BeginInvoke(()=> {
+                    this.Invoke(()=> {
                         _emphasizeAnimator.Update();
                     });
                 }
                 hours = Now.Hour.ToString();
                 var h = hours;
-                this.BeginInvoke(() => {
+                this.Invoke(() => {
                     _hourAnimator.TargetContent = h;
                 });
             }
@@ -114,7 +109,7 @@ public partial class FluentClock {
                 if (m.Length == 1) {
                     m = "0" + m;
                 }
-                this.BeginInvoke(() => {
+                this.Invoke(() => {
                     _minuAnimator.TargetContent = m;
                 });
             }
@@ -125,18 +120,12 @@ public partial class FluentClock {
                     if (s.Length == 1) {
                         s = "0" + s;
                     }
-                    if (Settings.IsFocusedMode.Value) {
-                        this.BeginInvoke(() => {
-                            _secoAnimator.Update(s,false);
-                        });
-                    } else {
-                        this.BeginInvoke(() => {
-                            _secoAnimator.Update(s);
-                        });
-                    }
+                    this.Invoke(() => {
+                        _secoAnimator.Update(s,!Settings.IsFocusedMode.Value);  
+                    });
                 } else {
                     bool seq = sparkSeq;
-                    this.BeginInvoke(() => {
+                    this.Invoke(() => {
                         _separatorAnimator.Update(seq);
                     });
                     sparkSeq = !sparkSeq;
@@ -191,40 +180,19 @@ public partial class FluentClock {
             Thread.Sleep(1);
         }
     }
-
-    void FocusModeUpdater() {
-        _secoAnimator!.IsSwapAnimEnabled = !Settings.IsFocusedMode!.Value;
-        _minuAnimator!.IsSwapAnimEnabled = !Settings.IsFocusedMode!.Value;
-        _hourAnimator!.IsSwapAnimEnabled = !Settings.IsFocusedMode!.Value;
-    }
     
     bool _firstLoad = true;
-    void CiFontChangedUpdater() {
-        if (Settings.UseCiFontSize!.Value) {
-            if (!_firstLoad) {
-                this.Invoke(InvalidateVisual);
-            }
-        } else {
-            this.Invoke(() => {
-                LHours.FontSize = 18;
-                LMins.FontSize = 18;
-            });
-            SmallSecondsUpdater();
-        }
-        _firstLoad = false;
-    }
     
     void SmallSecondsUpdater() {
         this.Invoke(() => {
-            if (Settings.UseCiFontSize!.Value) return;
-            LSecs.FontSize = Settings.IsSecondsSmall!.Value ? 14 : 18;
+            LSecs.FontSize = Settings.IsSecondsSmall!.Value ? 14 : LHours.FontSize;
             LSecs.Padding = Settings.IsSecondsSmall.Value ?
                 new Thickness(0,3,0,0)
                 : new Thickness(0);
             SSecs.Padding = Settings.IsSecondsSmall.Value ?
                 new Thickness(0,2,0,0)
                 : new Thickness(0,0,0,3);
-            SSecs.FontSize = Settings.IsSecondsSmall.Value ? 16 : 20;
+            SSecs.FontSize = Settings.IsSecondsSmall.Value ? 16 : SMins.FontSize;
         });
     }
 
@@ -236,7 +204,6 @@ public partial class FluentClock {
             EmpBack.Width = Settings.IsAccurate!.Value ? 95 : 60;
             BakT.X = Settings.IsAccurate!.Value ? 1 : 0;
         });
-
     }
     
     void FluentClock_OnLoaded(object sender,RoutedEventArgs e) {

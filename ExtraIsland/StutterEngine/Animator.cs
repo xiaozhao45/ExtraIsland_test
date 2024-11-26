@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace ExtraIsland.StutterEngine;
 
@@ -36,7 +37,7 @@ public static class Animator {
                     },
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(1),
-                        Value = 30,
+                        Value = 35,
                         EasingFunction = easeFunc
                     }
                 ],
@@ -72,10 +73,13 @@ public static class Animator {
             };
             _swapOutStoryboard.Completed += (_,_) => {
                 targetLabel.Content = _targetContent;
-                Task.Delay(1);
-                swapInStoryboard.Begin();
+                _swapOutStoryboard.Stop();
+                Dispatcher.CurrentDispatcher.Invoke(() => {
+                    swapInStoryboard.Begin();
+                });
             };
             swapInStoryboard.Completed += (_,_) => {
+                swapInStoryboard.Stop();
                 _renderLock = false;
             };
             Timeline.SetDesiredFrameRate(swapInStoryboard, 60);
@@ -89,9 +93,13 @@ public static class Animator {
             };
             _fadeOutStoryboard.Completed += (_,_) => {
                 targetLabel.Content = _targetContent;
-                fadeInStoryboard.Begin();
+                _fadeOutStoryboard.Stop();
+                Dispatcher.CurrentDispatcher.Invoke(() => {
+                    fadeInStoryboard.Begin();
+                });
             };
             fadeInStoryboard.Completed += (_,_) => {
+                fadeInStoryboard.Stop();
                 _renderLock = false;
             };
             Timeline.SetDesiredFrameRate(fadeInStoryboard, 60);
