@@ -37,8 +37,6 @@ public partial class FluentClock {
     }
     event Action? OnTimeChanged;
     
-    Dictionary<int,double> _tripleEaseCache = new Dictionary<int,double>();
-    
     Animator.ClockTransformControlAnimator? _hourAnimator;
     Animator.ClockTransformControlAnimator? _minuAnimator;
     Animator.ClockTransformControlAnimator? _secoAnimator;
@@ -161,24 +159,6 @@ public partial class FluentClock {
         Now = !Settings.IsSystemTime!.Value ? 
             ExactTimeService.GetCurrentLocalDateTime()
             : DateTime.Now;
-    }
-    
-    void ShowEmpEffect() {
-        for (int x = 0; x <= 40; x++) {
-            int x1 = x;
-            this.Invoke(() => {
-                EmpBack.Opacity = (1 - (40 - x1) / 40.0);
-            });
-            Thread.Sleep(1);
-        }
-        Thread.Sleep(3000);
-        for (int  x = 0;  x <= 40;  x++) {
-            int x1 = x;
-            this.Invoke(() => {
-                EmpBack.Opacity = (40 - x1) / 40.0;
-            });
-            Thread.Sleep(1);
-        }
     }
     
     bool _firstLoad = true;

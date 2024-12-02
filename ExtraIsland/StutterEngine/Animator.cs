@@ -1,116 +1,85 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
 
 namespace ExtraIsland.StutterEngine;
 
 public static class Animator {
     public class ClockTransformControlAnimator {
         public ClockTransformControlAnimator(Label targetLabel) {
+            _targetLabel = targetLabel;
             // ReSharper disable once SuggestVarOrType_SimpleTypes
-            var easeFunc = new CircleEase();
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation
-            {
-                From = 1,
-                To = 0,
-                Duration = new Duration(TimeSpan.FromMilliseconds(60))
-            };
-            Storyboard.SetTarget(fadeOutAnimation, targetLabel);
-            Storyboard.SetTargetProperty(fadeOutAnimation, new PropertyPath(UIElement.OpacityProperty));
-
-            DoubleAnimation fadeInAnimation = new DoubleAnimation
-            {
-                From = 0,
-                To = 1,
-                Duration = new Duration(TimeSpan.FromMilliseconds(60))
-            };
-            Storyboard.SetTarget(fadeInAnimation, targetLabel);
-            Storyboard.SetTargetProperty(fadeInAnimation, new PropertyPath(UIElement.OpacityProperty));
-            
-            DoubleAnimationUsingKeyFrames swapOutAnimation = new DoubleAnimationUsingKeyFrames {
+            DoubleAnimationUsingKeyFrames fadeAnimation = new DoubleAnimationUsingKeyFrames {
                 KeyFrames = [
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(0),
-                        Value = 0,
-                        EasingFunction = easeFunc
+                        Value = 1
+                    },
+                    new EasingDoubleKeyFrame {
+                        KeyTime = KeyTime.FromPercent(0.5),
+                        Value = 0
                     },
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(1),
-                        Value = 35,
-                        EasingFunction = easeFunc
+                        Value = 1
                     }
                 ],
-                Duration = new Duration(TimeSpan.FromMilliseconds(90))
+                Duration = new Duration(TimeSpan.FromMilliseconds(200))
             };
-            Storyboard.SetTarget(swapOutAnimation,targetLabel);
-            Storyboard.SetTargetProperty(swapOutAnimation, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.Y)"));
+            Storyboard.SetTarget(fadeAnimation, targetLabel);
+            Storyboard.SetTargetProperty(fadeAnimation, new PropertyPath(UIElement.OpacityProperty));
             
-            
-            DoubleAnimationUsingKeyFrames swapInAnimation = new DoubleAnimationUsingKeyFrames {
+            DoubleAnimationUsingKeyFrames swapAnimation = new DoubleAnimationUsingKeyFrames {
                 KeyFrames = [
                     new EasingDoubleKeyFrame {
-                        KeyTime = KeyTime.FromPercent(0),
-                        Value = -40,
-                        EasingFunction = easeFunc
+                        KeyTime = KeyTime.FromPercent(0.5),
+                        Value = 40,
+                        EasingFunction = new CubicEase {
+                            EasingMode = EasingMode.EaseIn
+                        }
+                    },
+                    new DiscreteDoubleKeyFrame {
+                        KeyTime = KeyTime.FromPercent(0.51),
+                        Value = -40
                     },
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(1),
                         Value = 0,
-                        EasingFunction = easeFunc
+                        EasingFunction = new CubicEase {
+                            EasingMode = EasingMode.EaseIn
+                        }
                     }
                 ],
-                Duration = new Duration(TimeSpan.FromMilliseconds(90))
+                Duration = new Duration(TimeSpan.FromMilliseconds(250)),
+                FillBehavior = FillBehavior.Stop
             };
-            Storyboard.SetTarget(swapInAnimation, targetLabel);
-            Storyboard.SetTargetProperty(swapInAnimation, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.Y)"));
-
-            Storyboard swapInStoryboard = new Storyboard {
-                Children = [fadeInAnimation, swapInAnimation]
+            Storyboard.SetTarget(swapAnimation,targetLabel);
+            Storyboard.SetTargetProperty(swapAnimation, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.Y)"));
+            
+            _swapStoryboard = new Storyboard {
+                Children = [swapAnimation]
             };
-            _swapOutStoryboard = new Storyboard {
-                Children = [fadeInAnimation, swapOutAnimation]
-            };
-            _swapOutStoryboard.Completed += (_,_) => {
-                targetLabel.Content = _targetContent;
-                _swapOutStoryboard.Stop();
-                Dispatcher.CurrentDispatcher.Invoke(() => {
-                    swapInStoryboard.Begin();
-                });
-            };
-            swapInStoryboard.Completed += (_,_) => {
-                swapInStoryboard.Stop();
+            _swapStoryboard.Completed += (_,_) => {
                 _renderLock = false;
             };
-            Timeline.SetDesiredFrameRate(swapInStoryboard, 60);
-            Timeline.SetDesiredFrameRate(_swapOutStoryboard, 60);
-
-            Storyboard fadeInStoryboard = new Storyboard {
-                Children = [fadeInAnimation]
+            Timeline.SetDesiredFrameRate(_swapStoryboard, 60);
+            
+            _fadeStoryboard = new Storyboard {
+                Children = [fadeAnimation]
             };
-            _fadeOutStoryboard = new Storyboard {
-                Children = [fadeOutAnimation]
-            };
-            _fadeOutStoryboard.Completed += (_,_) => {
-                targetLabel.Content = _targetContent;
-                _fadeOutStoryboard.Stop();
-                Dispatcher.CurrentDispatcher.Invoke(() => {
-                    fadeInStoryboard.Begin();
-                });
-            };
-            fadeInStoryboard.Completed += (_,_) => {
-                fadeInStoryboard.Stop();
+            _fadeStoryboard.Completed += (_,_) => {
                 _renderLock = false;
             };
-            Timeline.SetDesiredFrameRate(fadeInStoryboard, 60);
-            Timeline.SetDesiredFrameRate(_fadeOutStoryboard, 60);
+            Timeline.SetDesiredFrameRate(_fadeStoryboard, 60);
         }
 
-        readonly Storyboard _swapOutStoryboard;
+        readonly Storyboard _swapStoryboard;
 
-        readonly Storyboard _fadeOutStoryboard;
+        readonly Storyboard _fadeStoryboard;
 
         bool _renderLock;
+
+        readonly Label _targetLabel;
         
         string _targetContent = string.Empty;
         public string TargetContent {
@@ -120,18 +89,22 @@ public static class Animator {
                 Update(value);
             }
         }
-
-        public bool IsSwapAnimEnabled { get; set; }
         
         public void Update(string targetContent, bool isSwapAnimEnabled = true) {
             _targetContent = targetContent;
             if (_renderLock) return;
             _renderLock = true;
             if (isSwapAnimEnabled) {
-                _swapOutStoryboard.Begin();
+                _swapStoryboard.Begin();
             } else {
-                _fadeOutStoryboard.Begin();
+                _fadeStoryboard.Begin();
             }
+            new Thread(() => {
+                Thread.Sleep(90);
+                _targetLabel.Dispatcher.InvokeAsync(() => {
+                    _targetLabel.Content = _targetContent;
+                });
+            }).Start();
         }
     }
     
