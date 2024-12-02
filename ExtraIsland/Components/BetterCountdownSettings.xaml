@@ -14,15 +14,15 @@
         <StackPanel Style="{StaticResource SettingsPageStackPanelStyle}">
             <ci:InfoCard
                 IconKind="Alert"
-                Title="该组件尚在开发!">
-                如有不稳定,请到GitHub/GitLab提交一个Issue!
+                Title="该组件尚在开发，并且有尚未应用的修复!">
+                如有不稳定,请暂停使用,并到GitHub/GitLab提交一个Issue!
             </ci:InfoCard>
             <ci:SettingsCard IconGlyph="TagAdd" Header="前缀"
                              Description="显示在前">
                 <ci:SettingsCard.Switcher>
                     <Grid>
                         <TextBox Text="{Binding Settings.Prefix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="10 8 0 0" MinWidth="180"/>
+                                 Margin="10 8 0 0" MinWidth="120"/>
                     </Grid>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
@@ -31,12 +31,12 @@
                 <ci:SettingsCard.Switcher>
                     <Grid>
                         <TextBox Text="{Binding Settings.Suffix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="10 8 0 0" MinWidth="180"/>
+                                 Margin="10 8 0 0" MinWidth="120"/>
                     </Grid>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
             <ci:SettingsCard IconGlyph="Calendar" Header="目标日期"
-                             Description="显示在后">
+                             Description="倒计时设定的日期">
                 <ci:SettingsCard.Switcher>
                     <Grid>
                         <DatePicker SelectedDate="{Binding Settings.TargetDate, Mode=TwoWay}"

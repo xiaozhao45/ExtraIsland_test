@@ -79,7 +79,7 @@
                    FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
                    x:Name="LSecs">
                 <Label.RenderTransform>
-                    <TranslateTransform X="2" />
+                    <TranslateTransform />
                 </Label.RenderTransform>
             </Label>
         </Grid>

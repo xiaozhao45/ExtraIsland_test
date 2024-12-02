@@ -19,7 +19,7 @@ public static class Animator {
                         Value = 1
                     }
                 ],
-                Duration = new Duration(TimeSpan.FromMilliseconds(250))
+                Duration = new Duration(TimeSpan.FromMilliseconds(220))
             };
             Storyboard.SetTarget(fadeAnimation, targetLabel);
             Storyboard.SetTargetProperty(fadeAnimation, new PropertyPath(UIElement.OpacityProperty));
@@ -45,7 +45,7 @@ public static class Animator {
                         }
                     }
                 ],
-                Duration = new Duration(TimeSpan.FromMilliseconds(250)),
+                Duration = new Duration(TimeSpan.FromMilliseconds(220)),
                 FillBehavior = FillBehavior.Stop
             };
             Storyboard.SetTarget(swapAnimation,targetLabel);
@@ -95,7 +95,7 @@ public static class Animator {
                 _fadeStoryboard.Begin();
             }
             new Thread(() => {
-                Thread.Sleep(125);
+                Thread.Sleep(110);
                 _targetLabel.Dispatcher.InvokeAsync(() => {
                     _targetLabel.Content = _targetContent;
                 });
