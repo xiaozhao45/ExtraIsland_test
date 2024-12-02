@@ -1,11 +1,11 @@
 # ExtraIsland
-`R0.01.drop1` [`维护暂缓`](https://lipoly.ink/2024/announcement/)
+*⌈R0.10⌋* ⌈[维护暂缓](https://lipoly.ink/2024/announcement/)⌋
 
 为[ClassIsland](https://classisland.tech/)扩充一些小小的功能
 
 *持续开发中*
 
-_~~其实想直接贡献主程序的 但感觉我代码质量太低了 就写成了插件~~_
+*~~其实想直接贡献主程序的 但感觉我代码质量太低了 就写成了插件~~*
 
 ## 完成的功能:
 流畅时钟:
