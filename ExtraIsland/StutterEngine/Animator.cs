@@ -8,13 +8,8 @@ public static class Animator {
     public class ClockTransformControlAnimator {
         public ClockTransformControlAnimator(Label targetLabel) {
             _targetLabel = targetLabel;
-            // ReSharper disable once SuggestVarOrType_SimpleTypes
             DoubleAnimationUsingKeyFrames fadeAnimation = new DoubleAnimationUsingKeyFrames {
                 KeyFrames = [
-                    new EasingDoubleKeyFrame {
-                        KeyTime = KeyTime.FromPercent(0),
-                        Value = 1
-                    },
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(0.5),
                         Value = 0
@@ -24,7 +19,7 @@ public static class Animator {
                         Value = 1
                     }
                 ],
-                Duration = new Duration(TimeSpan.FromMilliseconds(200))
+                Duration = new Duration(TimeSpan.FromMilliseconds(250))
             };
             Storyboard.SetTarget(fadeAnimation, targetLabel);
             Storyboard.SetTargetProperty(fadeAnimation, new PropertyPath(UIElement.OpacityProperty));
@@ -100,7 +95,7 @@ public static class Animator {
                 _fadeStoryboard.Begin();
             }
             new Thread(() => {
-                Thread.Sleep(90);
+                Thread.Sleep(125);
                 _targetLabel.Dispatcher.InvokeAsync(() => {
                     _targetLabel.Content = _targetContent;
                 });
