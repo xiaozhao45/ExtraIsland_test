@@ -1,5 +1,5 @@
 # ExtraIsland
-`R0.01.drop1`
+`R0.01.drop1` [`维护暂缓`](https://lipoly.ink/2024/announcement/)
 
 为[ClassIsland](https://classisland.tech/)扩充一些小小的功能
 

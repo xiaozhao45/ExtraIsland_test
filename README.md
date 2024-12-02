@@ -1,6 +1,6 @@
 # ExtraIsland
 
-[GitHub](https://github.com/LiPolymer/ExtraIsland) [GitLab](https://gitlab.com/LiPolymer/ExtraIsland)
+[`GitHub`](https://github.com/LiPolymer/ExtraIsland) [`GitLab`](https://gitlab.com/LiPolymer/ExtraIsland)  [`维护暂缓`](https://lipoly.ink/2024/announcement/)
 
 为[ClassIsland](https://classisland.tech/)扩充一些小小的功能
 
@@ -20,7 +20,6 @@ _~~其实想直接贡献主程序的 但感觉我代码质量太低了 就写成
 - 支持关闭秒数
 - 支持秒数小字体显示
 - 从准确时间服务获取时间(支持禁用,可直接获取系统时间)
-- 整点强调特效
 ## 高可用的实验性功能(需获取[自动构建](https://gitlab.com/LiPolymer/ExtraIsland/-/pipelines))
 流畅时钟:
 - 整点强调特效
