@@ -18,9 +18,6 @@
             Opacity="0"
             Width="95"
             x:Name="EmpBack">
-            <Border.RenderTransform>
-                <TranslateTransform X="1" x:Name="BakT"/>
-            </Border.RenderTransform>
         </Border>
         <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClock}}"
               HorizontalAlignment="Center">

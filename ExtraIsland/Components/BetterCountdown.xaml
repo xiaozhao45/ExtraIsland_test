@@ -30,7 +30,7 @@
         <Label
             Grid.Column="0"
             Content="{Binding Settings.Prefix}"
-            x:Name="L1" />
+            x:Name="Lp" />
         <Label Grid.Column="1"
                Content="DDD"
                HorizontalAlignment="Center"

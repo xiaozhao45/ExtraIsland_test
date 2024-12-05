@@ -51,8 +51,6 @@ public partial class FluentClock {
         _separatorAnimator ??= new Animator.SeparatorControlAnimator(SMins);
         _emphasizeAnimator ??= new Animator.EmphasizeUiElementAnimator(EmpBack);
         
-        var animator = new LegacyAnimator();
-        
         string hours;
         string minutes;
         string seconds;
@@ -182,7 +180,6 @@ public partial class FluentClock {
             LSecs.Visibility = Settings.IsAccurate!.Value ? Visibility.Visible : Visibility.Collapsed;
             SSecs.Visibility = Settings.IsAccurate!.Value ? Visibility.Visible : Visibility.Collapsed;
             EmpBack.Width = Settings.IsAccurate!.Value ? 95 : 60;
-            BakT.X = Settings.IsAccurate!.Value ? 1 : 0;
         });
     }
     
