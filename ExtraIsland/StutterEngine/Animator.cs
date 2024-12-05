@@ -52,7 +52,7 @@ public static class Animator {
             Storyboard.SetTargetProperty(swapAnimation, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.Y)"));
             
             _swapStoryboard = new Storyboard {
-                Children = [swapAnimation]
+                Children = [swapAnimation,fadeAnimation]
             };
             _swapStoryboard.Completed += (_,_) => {
                 _renderLock = false;
