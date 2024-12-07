@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -40,15 +41,11 @@ public partial class BetterCountdown : ComponentBase<BetterCountdownConfig> {
     
     void OnLoad() {
         Settings.TargetDate ??= DateTime.Now.ToString("s");
-        if (Settings.Prefix == null) {
-            Settings.Prefix = "现在";
-            Lp.Content = Settings.Prefix;
-        }
-        if (Settings.Suffix == null) {
-            Settings.Suffix = "过去了";
-            Ls.Content = Settings.Suffix;
-        }
-        LessonsService.PostMainTimerTicked += DetectEvent;
+        Settings.IsSystemTime ??= false;
+        Settings.Prefix ??= "";
+        Settings.Suffix ??= "";
+        OnTimeChanged += DetectEvent;
+        LessonsService.PostMainTimerTicked += UpdateTime;
     }
 
     TimeSpan DiffDays(DateTime startTime, DateTime endTime) {
@@ -56,13 +53,30 @@ public partial class BetterCountdown : ComponentBase<BetterCountdownConfig> {
         return daysSpan;
     }
     
+    DateTime _nowTime;
+    DateTime Now {
+        get => _nowTime;
+        set {
+            if (_nowTime == value) return;
+            _nowTime = value;
+            OnTimeChanged?.Invoke();
+        }   
+    }
+    
+    event Action? OnTimeChanged;
+    
+    void UpdateTime(object? sender,EventArgs eventArgs) {
+        Now = !Settings.IsSystemTime!.Value ? 
+            ExactTimeService.GetCurrentLocalDateTime()
+            : DateTime.Now;
+    }
     
     string _days = string.Empty;
     string _hours = string.Empty;
     string _minutes = string.Empty;
     string _seconds = string.Empty;
-    void DetectEvent(object? sender, EventArgs e) {
-            var span = DiffDays(DateTime.Now, Convert.ToDateTime(Settings.TargetDate));
+    void DetectEvent() {
+            TimeSpan span = DiffDays(DateTime.Now, Convert.ToDateTime(Settings.TargetDate));
             if (_days != span.Days.ToString()) {
                 _days = span.Days.ToString();
                 _dyAnimator.TargetContent = _days;
@@ -91,5 +105,23 @@ public partial class BetterCountdown : ComponentBase<BetterCountdownConfig> {
     
     void BetterCountdown_OnLoaded(object sender, RoutedEventArgs e) {
         this.BeginInvoke(OnLoad);
+    }
+    
+    [ValueConversion(typeof(bool), typeof(bool))]
+    public class InverseBooleanConverter : IValueConverter
+    {
+        #region IValueConverter Members
+        public object Convert(object? value, Type targetType, object? parameter,
+            System.Globalization.CultureInfo culture) {
+            if (targetType != typeof(bool))
+                throw new InvalidOperationException("The target must be a boolean");
+            return !(bool)value!;
+        }
+        public object ConvertBack(object? value, Type targetType, object? parameter,
+            System.Globalization.CultureInfo culture) {
+            throw new NotSupportedException();
+        }
+
+        #endregion
     }
 }
