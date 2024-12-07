@@ -71,7 +71,6 @@ public partial class FluentClock {
         Settings.OnSecondsSmallChanged += SmallSecondsUpdater;
         Settings.OnAccurateChanged += AccurateModeUpdater;
         Settings.OnOClockEmpEnabled += () => {
-            //new Thread(ShowEmpEffect).Start();
             this.BeginInvoke(() => {
                 _emphasizeAnimator.Update();
             });
@@ -158,8 +157,6 @@ public partial class FluentClock {
             ExactTimeService.GetCurrentLocalDateTime()
             : DateTime.Now;
     }
-    
-    bool _firstLoad = true;
     
     void SmallSecondsUpdater() {
         this.Invoke(() => {

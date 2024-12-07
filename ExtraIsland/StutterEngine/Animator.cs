@@ -12,11 +12,17 @@ public static class Animator {
                 KeyFrames = [
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(0.5),
-                        Value = 0
+                        Value = 0,
+                        EasingFunction = new CubicEase {
+                            EasingMode = EasingMode.EaseInOut
+                        }
                     },
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(1),
-                        Value = 1
+                        Value = 1,
+                        EasingFunction = new CubicEase {
+                            EasingMode = EasingMode.EaseIn
+                        }
                     }
                 ],
                 Duration = new Duration(TimeSpan.FromMilliseconds(220))
@@ -34,7 +40,7 @@ public static class Animator {
                         }
                     },
                     new DiscreteDoubleKeyFrame {
-                        KeyTime = KeyTime.FromPercent(0.51),
+                        KeyTime = KeyTime.FromPercent(0.501),
                         Value = -40
                     },
                     new EasingDoubleKeyFrame {
