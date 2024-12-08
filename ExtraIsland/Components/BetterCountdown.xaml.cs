@@ -1,13 +1,7 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Forms.VisualStyles;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using ClassIsland.Core.Abstractions.Controls;
 using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Core.Attributes;
-using ClassIsland.Core.Controls.CommonDialog;
 using ExtraIsland.StutterEngine;
 using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
@@ -16,11 +10,11 @@ namespace ExtraIsland.Components;
 
 [ComponentInfo(
     "759FFA33-309F-6494-3903-E0693036197E",
-    "(未完成)更好的倒计时",
+    "更好的倒计时",
     PackIconKind.CalendarOutline,
-    "提供更高级的功能"
+    "提供更高级的功能与动画支持"
 )]
-public partial class BetterCountdown : ComponentBase<BetterCountdownConfig> {
+public partial class BetterCountdown {
     public BetterCountdown(ILessonsService lessonsService, IExactTimeService exactTimeService) {
         ExactTimeService = exactTimeService;
         LessonsService = lessonsService;
@@ -40,15 +34,26 @@ public partial class BetterCountdown : ComponentBase<BetterCountdownConfig> {
     readonly Animator.ClockTransformControlAnimator _scAnimator;
     
     void OnLoad() {
-        Settings.TargetDate ??= DateTime.Now.ToString("s");
-        Settings.IsSystemTime ??= false;
-        Settings.Prefix ??= "";
-        Settings.Suffix ??= "";
+        UpdateAccuracy();
         OnTimeChanged += DetectEvent;
+        Settings.OnAccuracyChanged += UpdateAccuracy;
         LessonsService.PostMainTimerTicked += UpdateTime;
     }
 
-    TimeSpan DiffDays(DateTime startTime, DateTime endTime) {
+    void UpdateAccuracy() {
+        LSecs.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 3);
+        SSec.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 3);
+        LMins.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 2);
+        SMin.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 2);
+        LHours.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 1);
+        SHour.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 1);
+    }
+
+    static Visibility BoolToCollapsedVisible(bool isVisible) {
+        return isVisible ? Visibility.Visible : Visibility.Collapsed;
+    }
+
+    static TimeSpan DiffDays(DateTime startTime, DateTime endTime) {
         TimeSpan daysSpan = new TimeSpan(endTime.Ticks - startTime.Ticks);
         return daysSpan;
     }
@@ -66,7 +71,7 @@ public partial class BetterCountdown : ComponentBase<BetterCountdownConfig> {
     event Action? OnTimeChanged;
     
     void UpdateTime(object? sender,EventArgs eventArgs) {
-        Now = !Settings.IsSystemTime!.Value ? 
+        Now = !Settings.IsSystemTime ? 
             ExactTimeService.GetCurrentLocalDateTime()
             : DateTime.Now;
     }
@@ -76,7 +81,7 @@ public partial class BetterCountdown : ComponentBase<BetterCountdownConfig> {
     string _minutes = string.Empty;
     string _seconds = string.Empty;
     void DetectEvent() {
-            TimeSpan span = DiffDays(DateTime.Now, Convert.ToDateTime(Settings.TargetDate));
+            TimeSpan span = DiffDays(Now, Convert.ToDateTime(Settings.TargetDate));
             if (_days != span.Days.ToString()) {
                 _days = span.Days.ToString();
                 _dyAnimator.TargetContent = _days;
@@ -93,9 +98,10 @@ public partial class BetterCountdown : ComponentBase<BetterCountdownConfig> {
                 }
                 _mnAnimator.TargetContent = m;
             }
+            // ReSharper disable once InvertIf
             if (_seconds != span.Seconds.ToString()) {
                 _seconds = span.Seconds.ToString();
-                var s = _seconds;
+                string s = _seconds;
                 if (s.Length == 1) {
                     s = "0" + s;
                 }
@@ -105,23 +111,5 @@ public partial class BetterCountdown : ComponentBase<BetterCountdownConfig> {
     
     void BetterCountdown_OnLoaded(object sender, RoutedEventArgs e) {
         this.BeginInvoke(OnLoad);
-    }
-    
-    [ValueConversion(typeof(bool), typeof(bool))]
-    public class InverseBooleanConverter : IValueConverter
-    {
-        #region IValueConverter Members
-        public object Convert(object? value, Type targetType, object? parameter,
-            System.Globalization.CultureInfo culture) {
-            if (targetType != typeof(bool))
-                throw new InvalidOperationException("The target must be a boolean");
-            return !(bool)value!;
-        }
-        public object ConvertBack(object? value, Type targetType, object? parameter,
-            System.Globalization.CultureInfo culture) {
-            throw new NotSupportedException();
-        }
-
-        #endregion
     }
 }

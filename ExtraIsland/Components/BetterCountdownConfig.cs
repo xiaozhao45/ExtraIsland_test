@@ -1,16 +1,41 @@
-﻿namespace ExtraIsland.Components;
+﻿using System.ComponentModel;
+
+namespace ExtraIsland.Components;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 public class BetterCountdownConfig {
-    public string? TargetDate { get; set; }
-    public string? Prefix { get; set; }
-    public string? Suffix { get; set; }
-    public bool? IsSystemTime { get; set; }
+    public string TargetDate { get; set; } = DateTime.Now.ToString("s");
+    public string Prefix { get; set; } = "现在";
+    public string Suffix { get; set; } = "过去了";
+    public bool IsSystemTime { get; set; }
+    public CountdownSeparatorConfigs Separators { get; set; } = new CountdownSeparatorConfigs();
+    
+    CountdownAccuracy _accuracy = CountdownAccuracy.Minute;
+    public CountdownAccuracy Accuracy {
+        get => _accuracy;
+        set {
+            if (_accuracy == value) return;
+            _accuracy = value;
+            OnAccuracyChanged?.Invoke();
+        }
+    }
+    public event Action? OnAccuracyChanged;
 }
 
-enum CountdownAccuracy {
+public class CountdownSeparatorConfigs {
+    public string Day { get; set; } = "天";
+    public string Hour { get; set; } = "时";
+    public string Minute { get; set; } = "分";
+    public string Second { get; set; } = "秒";
+}
+
+public enum CountdownAccuracy {
+    [Description("天")]
     Day,
+    [Description("时")]
     Hour,
+    [Description("分")]
     Minute,
+    [Description("秒")]
     Second,
 }

@@ -12,11 +12,6 @@
     <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=components:BetterCountdownSettings}}">
         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
         <StackPanel Style="{StaticResource SettingsPageStackPanelStyle}">
-            <ci:InfoCard
-                IconKind="Alert"
-                Title="该组件尚在开发，并且有尚未应用的修复!">
-                如有不稳定,请暂停使用,并到GitHub/GitLab提交一个Issue!
-            </ci:InfoCard>
             <ci:SettingsCard IconGlyph="TagAdd" Header="前缀"
                              Description="显示在前">
                 <ci:SettingsCard.Switcher>
@@ -35,6 +30,40 @@
                     </Grid>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
+            <ci:SettingsCard IconGlyph="SlashForward" Header="分隔符"
+                             Description="用来分割不同的时间单位">
+                <ci:SettingsCard.Switcher>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Label Grid.Column="0">11</Label>
+                        <TextBox Grid.Column="1"
+                                 MinWidth="16"
+                                 Text="{Binding Settings.Separators.Day, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Grid.Column="2">4</Label>
+                        <TextBox Grid.Column="3"
+                                 MinWidth="16"
+                                 Text="{Binding Settings.Separators.Hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Grid.Column="4">5</Label>
+                        <TextBox Grid.Column="5"
+                                 MinWidth="16"
+                                 Text="{Binding Settings.Separators.Minute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Grid.Column="6">14</Label>
+                        <TextBox Grid.Column="7"
+                                 MinWidth="16"
+                                 Text="{Binding Settings.Separators.Second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
             <ci:SettingsCard IconGlyph="Calendar" Header="目标日期"
                              Description="倒计时设定的日期">
                 <ci:SettingsCard.Switcher>
@@ -44,6 +73,29 @@
                     </Grid>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
+            <ci:SettingsCard IconGlyph="Accelerometer" Header="时间精度"
+                             Description="倒计时显示的日期精度">
+                <ci:SettingsCard.Switcher>
+                    <Grid>
+                        <ComboBox
+                            MinWidth="20"
+                            SelectedItem="{Binding Settings.Accuracy}"
+                            ItemsSource="{Binding CountdownAccuracies}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <DataTemplate.Resources>
+                                        <components:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+                                    </DataTemplate.Resources>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Grid>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
+            <ci:SettingsCard IconGlyph="Laptop" Header="使用系统时间"
+                             Description="启用后,将直接使用系统时间,无视ClassIsland设置"
+                             IsOn="{Binding Settings.IsSystemTime, Mode=TwoWay}"/>
             <Label HorizontalAlignment="Center" 
                    Foreground="{DynamicResource MaterialDesignBodyLight}">
                 Added by ExtraIsland

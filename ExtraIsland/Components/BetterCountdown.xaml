@@ -27,12 +27,14 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Label
-            Grid.Column="0"
-            Content="{Binding Settings.Prefix}"
-            x:Name="Lp" />
+        <Label Grid.Column="0"
+               Padding="0"
+               VerticalAlignment="Center"
+               Content="{Binding Settings.Prefix}"
+               x:Name="Lp" />
         <Label Grid.Column="1"
-               Content="DDD"
+               Padding="0"
+               Content="---"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                x:Name="LDays" >
@@ -40,9 +42,13 @@
                 <TranslateTransform x:Name="DTt"/>
             </Label.RenderTransform>
         </Label>
-        <Label Grid.Column="2">d</Label>
+        <Label Grid.Column="2"
+               Padding="0"
+               VerticalAlignment="Center"
+               Content="{Binding Settings.Separators.Day}"/>
         <Label Grid.Column="3"
-               Content="HH"
+               Padding="0"
+               Content="--"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                x:Name="LHours">
@@ -50,9 +56,14 @@
                 <TranslateTransform x:Name="HTt"/>
             </Label.RenderTransform>
         </Label>
-        <Label Grid.Column="4">h</Label>
+        <Label Grid.Column="4"
+               Padding="0"
+               VerticalAlignment="Center"
+               Content="{Binding Settings.Separators.Hour}"
+               x:Name="SHour"/>
         <Label Grid.Column="5"
-               Content="MM"
+               Padding="0"
+               Content="--"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                x:Name="LMins">
@@ -60,18 +71,29 @@
                 <TranslateTransform x:Name="MTt"/>
             </Label.RenderTransform>
         </Label>
-        <Label Grid.Column="6">m</Label>
-        <Label Grid.Column="7"
-               Content="SS"
-               HorizontalAlignment="Center"
+        <Label Grid.Column="6"
+               Padding="0"
                VerticalAlignment="Center"
+               Content="{Binding Settings.Separators.Minute}"
+               x:Name="SMin"/>
+        <Label Grid.Column="7"
+               Padding="0"
+               VerticalAlignment="Center"
+               Content="--"
+               HorizontalAlignment="Center"
                x:Name="LSecs">
             <Label.RenderTransform>
                 <TranslateTransform x:Name="STt"/>
             </Label.RenderTransform>
         </Label>
-        <Label Grid.Column="8">s</Label>
+        <Label Grid.Column="8"
+               Padding="0.5"
+               VerticalAlignment="Center"
+               Content="{Binding Settings.Separators.Second}"
+               x:Name="SSec"/>
         <Label Grid.Column="9"
+               Padding="0"
+               VerticalAlignment="Center"
                Content="{Binding Settings.Suffix}"
                x:Name="Ls"/>
     </Grid>
