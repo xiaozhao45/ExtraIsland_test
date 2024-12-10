@@ -8,7 +8,7 @@ public static class Animator {
     public class ClockTransformControlAnimator {
         public ClockTransformControlAnimator(Label targetLabel) {
             _targetLabel = targetLabel;
-            DoubleAnimationUsingKeyFrames fadeAnimation = new DoubleAnimationUsingKeyFrames {
+            DoubleAnimationUsingKeyFrames swapFadeAnimation = new DoubleAnimationUsingKeyFrames {
                 KeyFrames = [
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(0.5),
@@ -23,6 +23,22 @@ public static class Animator {
                         EasingFunction = new CubicEase {
                             EasingMode = EasingMode.EaseIn
                         }
+                    }
+                ],
+                Duration = new Duration(TimeSpan.FromMilliseconds(220))
+            };
+            Storyboard.SetTarget(swapFadeAnimation, targetLabel);
+            Storyboard.SetTargetProperty(swapFadeAnimation, new PropertyPath(UIElement.OpacityProperty));
+            
+            DoubleAnimationUsingKeyFrames fadeAnimation = new DoubleAnimationUsingKeyFrames {
+                KeyFrames = [
+                    new EasingDoubleKeyFrame {
+                        KeyTime = KeyTime.FromPercent(0.5),
+                        Value = 0
+                    },
+                    new EasingDoubleKeyFrame {
+                        KeyTime = KeyTime.FromPercent(1),
+                        Value = 1
                     }
                 ],
                 Duration = new Duration(TimeSpan.FromMilliseconds(220))
@@ -58,12 +74,12 @@ public static class Animator {
             Storyboard.SetTargetProperty(swapAnimation, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.Y)"));
             
             _swapStoryboard = new Storyboard {
-                Children = [swapAnimation,fadeAnimation]
+                Children = [swapAnimation,swapFadeAnimation]
             };
             _swapStoryboard.Completed += (_,_) => {
                 _renderLock = false;
             };
-            Timeline.SetDesiredFrameRate(_swapStoryboard, 60);
+            //Timeline.SetDesiredFrameRate(_swapStoryboard, 60);
             
             _fadeStoryboard = new Storyboard {
                 Children = [fadeAnimation]
@@ -71,7 +87,7 @@ public static class Animator {
             _fadeStoryboard.Completed += (_,_) => {
                 _renderLock = false;
             };
-            Timeline.SetDesiredFrameRate(_fadeStoryboard, 60);
+            //Timeline.SetDesiredFrameRate(_fadeStoryboard, 60);
         }
 
         readonly Storyboard _swapStoryboard;
