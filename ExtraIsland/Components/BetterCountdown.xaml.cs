@@ -40,9 +40,9 @@ public partial class BetterCountdown {
         LessonsService.PostMainTimerTicked += UpdateTime;
     }
 
-    bool isAccurateChanged;
+    bool _isAccurateChanged;
     void UpdateAccuracy() {
-        isAccurateChanged = true;
+        _isAccurateChanged = true;
         LSecs.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 3);
         SSec.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 3);
         LMins.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 2);
@@ -82,37 +82,41 @@ public partial class BetterCountdown {
     string _hours = string.Empty;
     string _minutes = string.Empty;
     string _seconds = string.Empty;
+    bool _updateLock;
     void DetectEvent() {
-            TimeSpan span = DiffDays(Now, Convert.ToDateTime(Settings.TargetDate));
-            if (_days != span.Days.ToString()|isAccurateChanged) {
-                int dayI = span.Days;
-                _days = (int)Settings.Accuracy == 0 ? (dayI + 1).ToString() : dayI.ToString();
-                _dyAnimator.TargetContent = _days;
+        if (_updateLock) return;
+        _updateLock = true;
+        TimeSpan span = DiffDays(Now,Convert.ToDateTime(Settings.TargetDate));
+        if (_days != span.Days.ToString() | _isAccurateChanged) {
+            int dayI = span.Days;
+            _days = (int)Settings.Accuracy == 0 ? (dayI + 1).ToString() : dayI.ToString();
+            _dyAnimator.TargetContent = _days;
+        }
+        if ((_hours != span.Hours.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 1) {
+            int hourI = span.Hours;
+            _hours = (int)Settings.Accuracy == 1 ? (hourI + 1).ToString() : hourI.ToString();
+            _hrAnimator.TargetContent = _hours;
+        }
+        if ((_minutes != span.Minutes.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 2) {
+            int minuteI = span.Minutes;
+            _minutes = (int)Settings.Accuracy == 2 ? (minuteI + 1).ToString() : minuteI.ToString();
+            string m = _minutes;
+            if (m.Length == 1) {
+                m = "0" + m;
             }
-            if (_hours != span.Hours.ToString()|isAccurateChanged) {
-                int hourI = span.Hours;
-                _hours = (int)Settings.Accuracy == 1 ? (hourI + 1).ToString() : hourI.ToString();
-                _hrAnimator.TargetContent = _hours;
+            _mnAnimator.TargetContent = m;
+        }
+        // ReSharper disable once InvertIf
+        if ((_seconds != span.Seconds.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 3) {
+            _seconds = span.Seconds.ToString();
+            string s = _seconds;
+            if (s.Length == 1) {
+                s = "0" + s;
             }
-            if (_minutes != span.Minutes.ToString()|isAccurateChanged) {
-                int minuteI = span.Minutes;
-                _minutes = (int)Settings.Accuracy == 2 ? (minuteI + 1).ToString() : minuteI.ToString();
-                string m = _minutes;
-                if (m.Length == 1) {
-                    m = "0" + m;
-                }
-                _mnAnimator.TargetContent = m;
-            }
-            // ReSharper disable once InvertIf
-            if (_seconds != span.Seconds.ToString()|isAccurateChanged) {
-                _seconds = span.Seconds.ToString();
-                string s = _seconds;
-                if (s.Length == 1) {
-                    s = "0" + s;
-                }
-                _scAnimator.TargetContent = s;
-                isAccurateChanged = false;
-            }
+            _scAnimator.TargetContent = s;
+            _isAccurateChanged = false;
+        }
+        _updateLock = false;
     }
     
     void BetterCountdown_OnLoaded(object sender, RoutedEventArgs e) {
