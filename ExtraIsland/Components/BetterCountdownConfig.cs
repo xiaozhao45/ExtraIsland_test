@@ -9,6 +9,17 @@ public class BetterCountdownConfig {
     public string Suffix { get; set; } = "过去了";
     public bool IsSystemTime { get; set; }
     public CountdownSeparatorConfigs Separators { get; set; } = new CountdownSeparatorConfigs();
+
+    bool _isNoGapDisplay;
+    public bool IsNoGapDisplay {
+        get => _isNoGapDisplay;
+        set {
+            if (_isNoGapDisplay == value) return;
+            _isNoGapDisplay = value;
+            OnNoGapDisplayChanged?.Invoke();
+        }
+    }
+    public event Action? OnNoGapDisplayChanged;
     
     CountdownAccuracy _accuracy = CountdownAccuracy.Minute;
     public CountdownAccuracy Accuracy {

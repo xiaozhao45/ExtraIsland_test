@@ -96,6 +96,9 @@
             <ci:SettingsCard IconGlyph="Laptop" Header="使用系统时间"
                              Description="启用后,将直接使用系统时间,无视ClassIsland设置"
                              IsOn="{Binding Settings.IsSystemTime, Mode=TwoWay}"/>
+            <ci:SettingsCard IconGlyph="AlignHorizontalCenter" Header="无隙并置"
+                             Description="启用后,将移除不同元素间的间距"
+                             IsOn="{Binding Settings.IsNoGapDisplay, Mode=TwoWay}"/>
             <Label HorizontalAlignment="Center" 
                    Foreground="{DynamicResource MaterialDesignBodyLight}">
                 Added by ExtraIsland

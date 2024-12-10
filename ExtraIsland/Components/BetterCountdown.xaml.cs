@@ -35,8 +35,10 @@ public partial class BetterCountdown {
     
     void OnLoad() {
         UpdateAccuracy();
+        UpdateGap();
         OnTimeChanged += DetectEvent;
         Settings.OnAccuracyChanged += UpdateAccuracy;
+        Settings.OnNoGapDisplayChanged += UpdateGap;
         LessonsService.PostMainTimerTicked += UpdateTime;
     }
 
@@ -49,6 +51,20 @@ public partial class BetterCountdown {
         SMin.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 2);
         LHours.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 1);
         SHour.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 1);
+    }
+
+    readonly Thickness _noGapThick = new Thickness(0);
+    readonly Thickness _gapThick = new Thickness(2);
+    void UpdateGap() {
+        LSecs.Padding = Settings.IsNoGapDisplay ? _noGapThick : _gapThick;
+        SSec.Padding = Settings.IsNoGapDisplay ? _noGapThick : _gapThick;
+        LMins.Padding = Settings.IsNoGapDisplay ? _noGapThick : _gapThick;
+        SMin.Padding = Settings.IsNoGapDisplay ? _noGapThick : _gapThick;
+        LHours.Padding = Settings.IsNoGapDisplay ? _noGapThick : _gapThick;
+        SHour.Padding = Settings.IsNoGapDisplay ? _noGapThick : _gapThick;
+        LDays.Padding = Settings.IsNoGapDisplay ? _noGapThick : _gapThick;
+        Lp.Padding = Settings.IsNoGapDisplay ? _noGapThick : _gapThick;
+        Ls.Padding = Settings.IsNoGapDisplay ? _noGapThick : _gapThick;
     }
 
     static Visibility BoolToCollapsedVisible(bool isVisible) {
