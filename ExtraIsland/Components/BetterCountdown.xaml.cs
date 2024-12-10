@@ -40,7 +40,9 @@ public partial class BetterCountdown {
         LessonsService.PostMainTimerTicked += UpdateTime;
     }
 
+    bool isAccurateChanged;
     void UpdateAccuracy() {
+        isAccurateChanged = true;
         LSecs.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 3);
         SSec.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 3);
         LMins.Visibility = BoolToCollapsedVisible((int)Settings.Accuracy >= 2);
@@ -82,16 +84,19 @@ public partial class BetterCountdown {
     string _seconds = string.Empty;
     void DetectEvent() {
             TimeSpan span = DiffDays(Now, Convert.ToDateTime(Settings.TargetDate));
-            if (_days != span.Days.ToString()) {
-                _days = span.Days.ToString();
+            if (_days != span.Days.ToString()|isAccurateChanged) {
+                int dayI = span.Days;
+                _days = (int)Settings.Accuracy == 0 ? (dayI + 1).ToString() : dayI.ToString();
                 _dyAnimator.TargetContent = _days;
             }
-            if (_hours != span.Hours.ToString()) {
-                _hours = span.Hours.ToString();
+            if (_hours != span.Hours.ToString()|isAccurateChanged) {
+                int hourI = span.Hours;
+                _hours = (int)Settings.Accuracy == 1 ? (hourI + 1).ToString() : hourI.ToString();
                 _hrAnimator.TargetContent = _hours;
             }
-            if (_minutes != span.Minutes.ToString()) {
-                _minutes = span.Minutes.ToString();
+            if (_minutes != span.Minutes.ToString()|isAccurateChanged) {
+                int minuteI = span.Minutes;
+                _minutes = (int)Settings.Accuracy == 2 ? (minuteI + 1).ToString() : minuteI.ToString();
                 string m = _minutes;
                 if (m.Length == 1) {
                     m = "0" + m;
@@ -99,13 +104,14 @@ public partial class BetterCountdown {
                 _mnAnimator.TargetContent = m;
             }
             // ReSharper disable once InvertIf
-            if (_seconds != span.Seconds.ToString()) {
+            if (_seconds != span.Seconds.ToString()|isAccurateChanged) {
                 _seconds = span.Seconds.ToString();
                 string s = _seconds;
                 if (s.Length == 1) {
                     s = "0" + s;
                 }
                 _scAnimator.TargetContent = s;
+                isAccurateChanged = false;
             }
     }
     
