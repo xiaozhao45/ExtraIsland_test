@@ -67,6 +67,9 @@ public partial class FluentClock {
         AccurateModeUpdater();
         UpdateTime();
         SilentUpdater();
+        if (Settings.IsSecondsSmall.Value) {
+            SmallSecondsUpdater();
+        }
         //Register Events
         Settings.OnSecondsSmallChanged += SmallSecondsUpdater;
         Settings.OnAccurateChanged += AccurateModeUpdater;
