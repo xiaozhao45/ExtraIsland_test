@@ -171,6 +171,7 @@ public partial class FluentClock {
                 new Thickness(0,2,0,0)
                 : new Thickness(0,0,0,3);
             SSecs.FontSize = Settings.IsSecondsSmall.Value ? 16 : SMins.FontSize;
+            TSecs.X = Settings.IsSecondsSmall.Value ? 2 : 0;
         });
     }
 
