@@ -14,7 +14,7 @@ public partial class BetterCountdownSettings : ComponentBase<BetterCountdownConf
         InitializeComponent();
     }
     
-    public List<CountdownAccuracy> CountdownAccuracies { get; set; } = [
+    public List<CountdownAccuracy> CountdownAccuracies { get; } = [
         CountdownAccuracy.Day,
         CountdownAccuracy.Hour,
         CountdownAccuracy.Minute,

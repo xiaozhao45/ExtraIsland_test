@@ -12,58 +12,73 @@
     <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=components:BetterCountdownSettings}}">
         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
         <StackPanel Style="{StaticResource SettingsPageStackPanelStyle}">
-            <ci:SettingsCard IconGlyph="TagAdd" Header="前缀"
-                             Description="显示在前">
-                <ci:SettingsCard.Switcher>
-                    <Grid>
-                        <TextBox Text="{Binding Settings.Prefix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="10 8 0 0" MinWidth="120"/>
-                    </Grid>
-                </ci:SettingsCard.Switcher>
-            </ci:SettingsCard>
-            <ci:SettingsCard IconGlyph="TagApprove" Header="后缀"
-                             Description="显示在后">
-                <ci:SettingsCard.Switcher>
-                    <Grid>
-                        <TextBox Text="{Binding Settings.Suffix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="10 8 0 0" MinWidth="120"/>
-                    </Grid>
-                </ci:SettingsCard.Switcher>
-            </ci:SettingsCard>
-            <ci:SettingsCard IconGlyph="SlashForward" Header="分隔符"
-                             Description="用来分割不同的时间单位">
-                <ci:SettingsCard.Switcher>
-                    <Grid>
+            <materialDesign:Card
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Margin="0,6,0,6">
+                <Grid Margin="6,6,6,12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0"
+                          HorizontalAlignment="Left"
+                          Margin="5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        
-                        <Label Grid.Column="0">11</Label>
-                        <TextBox Grid.Column="1"
-                                 MinWidth="16"
-                                 Text="{Binding Settings.Separators.Day, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Grid.Column="2">4</Label>
-                        <TextBox Grid.Column="3"
-                                 MinWidth="16"
-                                 Text="{Binding Settings.Separators.Hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Grid.Column="4">5</Label>
-                        <TextBox Grid.Column="5"
-                                 MinWidth="16"
-                                 Text="{Binding Settings.Separators.Minute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <Label Grid.Column="6">14</Label>
-                        <TextBox Grid.Column="7"
-                                 MinWidth="16"
-                                 Text="{Binding Settings.Separators.Second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <materialDesign:PackIcon Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Kind="PencilAdd"/>
+                        <Label Grid.Column="1"
+                               VerticalContentAlignment="Center"
+                               VerticalAlignment="Center">
+                            文案编辑...
+                        </Label>
                     </Grid>
-                </ci:SettingsCard.Switcher>
-            </ci:SettingsCard>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0"
+                                 Text="{Binding Settings.Prefix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 MinWidth="16"/>
+                        <Label Grid.Column="1"
+                               VerticalContentAlignment="Center">11</Label>
+                        <TextBox Grid.Column="2"
+                                 MinWidth="16"
+                                 Text="{Binding Settings.Separators.Day, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Label Grid.Column="3"
+                               VerticalContentAlignment="Center">4</Label>
+                        <TextBox Grid.Column="4"
+                                 MinWidth="16"
+                                 Text="{Binding Settings.Separators.Hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Label Grid.Column="5"
+                               VerticalContentAlignment="Center">5</Label>
+                        <TextBox Grid.Column="6"
+                                 MinWidth="16"
+                                 Text="{Binding Settings.Separators.Minute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <Label Grid.Column="7"
+                               VerticalContentAlignment="Center">14</Label>
+                        <TextBox Grid.Column="8"
+                                 MinWidth="16"
+                                 Text="{Binding Settings.Separators.Second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBox Grid.Column="9" Text="{Binding Settings.Suffix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="2,0,0,0"
+                                 MinWidth="16"/>
+                    </Grid>  
+                </Grid>
+            </materialDesign:Card>
             <ci:SettingsCard IconGlyph="Calendar" Header="目标日期"
                              Description="倒计时设定的日期">
                 <ci:SettingsCard.Switcher>
