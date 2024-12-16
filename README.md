@@ -2,6 +2,9 @@
 
 [`GitHub`](https://github.com/LiPolymer/ExtraIsland) [`GitLab`](https://gitlab.com/LiPolymer/ExtraIsland)  [`维护暂缓`](https://lipoly.ink/2024/announcement/)
 
+> [!TIP]
+> 由于备考压力,部分问题可能无法及时处理,还请见谅😭🙏
+
 为[ClassIsland](https://classisland.tech/)扩充一些小小的功能
 
 🧐最新 commit 尝鲜可以前往 [GitLab Pipeline](https://gitlab.com/LiPolymer/ExtraIsland/-/pipelines) 获取[未打包](https://docs.classisland.tech/dev/plugins/publishing.html#%E6%89%93%E5%8C%85%E6%8F%92%E4%BB%B6)的构建
