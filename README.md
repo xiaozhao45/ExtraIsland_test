@@ -2,7 +2,7 @@
 
 [`GitHub`](https://github.com/LiPolymer/ExtraIsland) [`GitLab`](https://gitlab.com/LiPolymer/ExtraIsland)  [`维护暂缓`](https://lipoly.ink/2024/announcement/)
 
-> [!TIP]
+> [!IMPORTANT]
 >
 > 由于备考压力,部分问题可能无法及时处理,还请见谅😭🙏
 
