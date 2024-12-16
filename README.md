@@ -3,6 +3,7 @@
 [`GitHub`](https://github.com/LiPolymer/ExtraIsland) [`GitLab`](https://gitlab.com/LiPolymer/ExtraIsland)  [`维护暂缓`](https://lipoly.ink/2024/announcement/)
 
 > [!TIP]
+>
 > 由于备考压力,部分问题可能无法及时处理,还请见谅😭🙏
 
 为[ClassIsland](https://classisland.tech/)扩充一些小小的功能
