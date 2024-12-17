@@ -5,8 +5,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:ExtraIsland.StandaloneViews"
         mc:Ignorable="d"
-        Title="PopupNotification" Height="200" Width="300">
+        WindowStartupLocation="CenterScreen"
+        Title="ExtraIsland·弹出式通知"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="{DynamicResource MaterialDesignCardBackground}"
+        Height="200" Width="300">
     <Grid>
-        
+        <Button Background="Brown"
+                Margin="5"
+                Width="20" Height="20"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Click="ButtonBase_OnClick">×</Button>
     </Grid>
 </Window>
