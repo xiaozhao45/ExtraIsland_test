@@ -5,7 +5,7 @@ using MaterialDesignThemes.Wpf;
 
 namespace ExtraIsland.SettingsPages;
 
-[SettingsPageInfo("extraisland.debug", "ExtraIsland·调试", PackIconKind.Wrench, PackIconKind.Wrench)]
+[SettingsPageInfo("extraisland.debug", "ExtraIsland·调试", PackIconKind.WrenchOutline, PackIconKind.Wrench)]
 public partial class DebugSettingsPage {
     public DebugSettingsPage() {
         InitializeComponent();
