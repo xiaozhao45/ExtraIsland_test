@@ -11,7 +11,7 @@ public partial class DebugSettingsPage {
         InitializeComponent();
     }
     void ButtonBase_OnClick(object sender,RoutedEventArgs e) {
-        StandaloneViews.PopupNotification popup = new StandaloneViews.PopupNotification();
+        StandaloneViews.PopupNotification popup = new StandaloneViews.PopupNotification(350,575,5000);
         popup.Show();
     }
 }
