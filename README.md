@@ -1,6 +1,6 @@
-# ExtraIsland
+# ExtraIsland ![wakatime](https://wakatime.com/badge/user/0c9f5a71-56d1-4ba3-b95c-da9e563fa119/project/c6f9dda0-5282-4b6b-b0e1-4461c06a5b41.svg?style=flat)
 
-[`GitHub`](https://github.com/LiPolymer/ExtraIsland) [`GitLab`](https://gitlab.com/LiPolymer/ExtraIsland)  [`维护暂缓`](https://lipoly.ink/2024/announcement/)
+[`GitHub`](https://github.com/LiPolymer/ExtraIsland) [`GitLab`](https://gitlab.com/LiPolymer/ExtraIsland)  [`维护暂缓`](https://lipoly.ink/2024/announcement/) 
 
 > [!IMPORTANT]
 >
