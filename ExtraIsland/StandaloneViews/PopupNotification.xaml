@@ -14,19 +14,14 @@
         Topmost="True"
         Loaded="PopupNotification_OnLoaded"
         Height="350" Width="575">
-    <Grid>
+    <Grid DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:PopupNotification}}">
         <materialDesign:Card
             x:Name="BodyCard"
             Background = "{DynamicResource MaterialDesignCardBackground}"
             Margin="20,30,20,20"
             HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch">
-            <Grid x:Name="ContentGrid">
-                <Label HorizontalAlignment="Center"
-                       VerticalContentAlignment="Center">
-                    114514
-                </Label>
-            </Grid>
+            VerticalAlignment="Stretch"
+            Content="{Binding Body}">
         </materialDesign:Card>
         <Grid x:Name="HeaderGrid"
               HorizontalAlignment="Left"
@@ -36,10 +31,8 @@
                 Margin="35,18,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top">
-                <Label
-                    Margin="30,0,0,0">
-                    Title
-                </Label>
+                <Label Content="{Binding Header}"
+                    Margin="30,0,0,0"/>
                 <materialDesign:Chip.RenderTransform>
                     <TranslateTransform x:Name="TitleChipTranslate"/>
                 </materialDesign:Chip.RenderTransform>

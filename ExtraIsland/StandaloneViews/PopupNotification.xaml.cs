@@ -16,7 +16,7 @@ public partial class PopupNotification : Window {
         BodyCard.Margin = new Thickness(height / 2.0,width / 2.0,height / 2.0,width / 2.0);
         HeaderGridTranslate.Y = width / 2.0 - (IconCard.Width + IconCard.Margin.Left) / 2.0;
         HeaderGridTranslate.X = height / 2.0 - (IconCard.Height + IconCard.Margin.Top) / 2.0;
-        TitleChip.MaxWidth = 10;
+        TitleChip.MaxWidth = 10;   
         CloseButton.Opacity = 0;
         HeaderGrid.Opacity = 0;
         TimeProgressBar.Value = 0;
@@ -104,8 +104,8 @@ public partial class PopupNotification : Window {
             KeyFrames = [
                 new EasingDoubleKeyFrame {
                     KeyTime = KeyTime.FromPercent(1),
-                    Value = width * 0.5,
-                    EasingFunction = new SineEase()
+                    Value = width * 0.8,
+                    EasingFunction = new QuadraticEase()
                 }
             ],
             Duration = new Duration(TimeSpan.FromMilliseconds(1500))
@@ -179,11 +179,16 @@ public partial class PopupNotification : Window {
     
     readonly Storyboard _waitingStoryboard;
     readonly Storyboard _fadeStoryBoard;
+    public string? Header { get; set; }
+    public Control Body { get; set; }
 
     void ButtonBase_OnClick(object sender,RoutedEventArgs e) {
         _fadeStoryBoard.Begin();
     }
     void PopupNotification_OnLoaded(object sender,RoutedEventArgs e) {
+        if (Header == null) {
+            TitleChip.Visibility = Visibility.Hidden;
+        }
         _waitingStoryboard.Begin();
     }
 }
