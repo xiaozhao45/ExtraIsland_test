@@ -9,10 +9,7 @@ namespace ExtraIsland.StandaloneViews;
 
 public partial class PopupNotification : Window {
     public PopupNotification(int width,int height,int stayTime) {
-        Width = width;
-        Height = height;
         InitializeComponent();
-        
         BodyCard.Margin = new Thickness(height / 2.0,width / 2.0,height / 2.0,width / 2.0);
         HeaderGridTranslate.Y = width / 2.0 - (IconCard.Width + IconCard.Margin.Left) / 2.0;
         HeaderGridTranslate.X = height / 2.0 - (IconCard.Height + IconCard.Margin.Top) / 2.0;
@@ -28,7 +25,7 @@ public partial class PopupNotification : Window {
                     Value = 0
                 }
             ],
-            Duration = new Duration(TimeSpan.FromMilliseconds(300))
+            Duration = new Duration(TimeSpan.FromMilliseconds(150))
         };
         Storyboard.SetTarget(fadeAnimation, this);
         Storyboard.SetTargetProperty(fadeAnimation, new PropertyPath(OpacityProperty));
@@ -121,6 +118,7 @@ public partial class PopupNotification : Window {
                     EasingFunction = new SineEase()
                 }
             ],
+            BeginTime = TimeSpan.FromMilliseconds(500),
             Duration = new Duration(TimeSpan.FromMilliseconds(1000))
         };
         Storyboard.SetTarget(closeButtonOpacityAnimation, CloseButton);
@@ -148,7 +146,7 @@ public partial class PopupNotification : Window {
                     EasingFunction = new SineEase()
                 }
             ],
-            Duration = new Duration(TimeSpan.FromMilliseconds(2000))
+            Duration = new Duration(TimeSpan.FromMilliseconds(1000))
         };
         Storyboard.SetTarget(headerGridOpacityAnimation, HeaderGrid);
         Storyboard.SetTargetProperty(headerGridOpacityAnimation, new PropertyPath(OpacityProperty));
@@ -156,12 +154,12 @@ public partial class PopupNotification : Window {
         DoubleAnimationUsingKeyFrames timeInitAnimation = new DoubleAnimationUsingKeyFrames {
             KeyFrames = [
                 new EasingDoubleKeyFrame {
-                    KeyTime = KeyTime.FromPercent(0.6),
+                    KeyTime = KeyTime.FromPercent(1),
                     Value = 100,
                     EasingFunction = new SineEase()
                 }
             ],
-            Duration = new Duration(TimeSpan.FromMilliseconds(2000))
+            Duration = new Duration(TimeSpan.FromMilliseconds(1000))
         };
         Storyboard.SetTarget(timeInitAnimation, TimeProgressBar);
         Storyboard.SetTargetProperty(timeInitAnimation, new PropertyPath(RangeBase.ValueProperty));
@@ -180,8 +178,11 @@ public partial class PopupNotification : Window {
     readonly Storyboard _waitingStoryboard;
     readonly Storyboard _fadeStoryBoard;
     public string? Header { get; set; }
-    public Control Body { get; set; }
-
+    public Control Body { get; set; } = new Label {
+        HorizontalAlignment = HorizontalAlignment.Center,
+        VerticalAlignment = VerticalAlignment.Center,
+        Content = "Empty ;)"
+    };
     void ButtonBase_OnClick(object sender,RoutedEventArgs e) {
         _fadeStoryBoard.Begin();
     }

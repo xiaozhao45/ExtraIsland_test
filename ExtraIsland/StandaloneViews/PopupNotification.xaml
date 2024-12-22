@@ -34,7 +34,7 @@
                 <Label Content="{Binding Header}"
                     Margin="30,0,0,0"/>
                 <materialDesign:Chip.RenderTransform>
-                    <TranslateTransform x:Name="TitleChipTranslate"/>
+                    <TranslateTransform />
                 </materialDesign:Chip.RenderTransform>
             </materialDesign:Chip>
             <materialDesign:Card
@@ -73,10 +73,6 @@
         </Grid>
         <Button
             x:Name="CloseButton"
-            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-            materialDesign:ButtonProgressAssist.Value="85"
-            materialDesign:ButtonProgressAssist.IndicatorBackground="{DynamicResource MaterialDesignDivider}"
-            materialDesign:ButtonProgressAssist.IndicatorForeground="{DynamicResource MaterialDesignBodyLight}"
             Margin="10"
             Width="20" Height="20"
             HorizontalAlignment="Right"
