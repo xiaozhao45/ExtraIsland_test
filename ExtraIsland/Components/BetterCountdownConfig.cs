@@ -48,5 +48,5 @@ public enum CountdownAccuracy {
     [Description("分")]
     Minute,
     [Description("秒")]
-    Second,
+    Second
 }

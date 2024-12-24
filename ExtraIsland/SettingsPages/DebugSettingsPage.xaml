@@ -7,14 +7,47 @@
       xmlns:ci="http://classisland.tech/schemas/xaml/core"
       mc:Ignorable="d"
       Title="DebugSettingsPage">
-        <ScrollViewer>
+    <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DebugSettingsPage}}">
         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
         <StackPanel Style="{StaticResource SettingsPageStackPanelStyle}">
             <ci:SettingsCard IconGlyph="Notifications" Header="测试·弹出式通知"
                              Description="显示弹出式通知">
                 <ci:SettingsCard.Switcher>
                     <Grid>
-                        <Button Click="ButtonBase_OnClick">展示</Button>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" 
+                               VerticalContentAlignment="Center">H</Label>
+                        <TextBox Grid.Column="1" 
+                                 MinWidth="10"
+                                 Margin="3,0,3,0"
+                                 InputMethod.IsInputMethodEnabled="False"
+                                 PreviewTextInput="TextBoxNumberCheck"
+                                 Text="{Binding PopProps.Height}"/>
+                        <Label Grid.Column="2" 
+                               VerticalContentAlignment="Center">W</Label>
+                        <TextBox Grid.Column="3"
+                                 MinWidth="10"
+                                 Margin="3,0,3,0"
+                                 InputMethod.IsInputMethodEnabled="False"
+                                 PreviewTextInput="TextBoxNumberCheck"
+                                 Text="{Binding PopProps.Width}"/>
+                        <Label Grid.Column="4"
+                               VerticalContentAlignment="Center">T</Label>
+                        <TextBox Grid.Column="5"
+                                 MinWidth="10"
+                                 Margin="3,0,6,0"
+                                 InputMethod.IsInputMethodEnabled="False"
+                                 PreviewTextInput="TextBoxNumberCheck"
+                                 Text="{Binding PopProps.HoldTime}"/>
+                        <Button Grid.Column="6" Click="ButtonBase_OnClick">展示</Button>
                     </Grid>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
