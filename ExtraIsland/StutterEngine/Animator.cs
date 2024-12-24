@@ -34,7 +34,7 @@ public static class Animator {
                 KeyFrames = [
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(0.5),
-                        Value = 0
+                        Value = 0.1
                     },
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(1),
