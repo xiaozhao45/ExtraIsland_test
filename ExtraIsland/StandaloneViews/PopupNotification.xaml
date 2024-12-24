@@ -55,13 +55,9 @@
                         Foreground="{DynamicResource MaterialDesignBodyLight}"
                         Background="{DynamicResource MaterialDesignDivider}"
                         Style="{StaticResource MaterialDesignCircularProgressBar}" />
-                    <materialDesign:PackIcon
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Height="30"
-                        Width="30"
-                        Foreground="{DynamicResource MaterialDesignBody}"
-                        Kind="Info"/>
+                    <ScrollViewer x:Name="IconViewer"
+                                  Foreground="{DynamicResource MaterialDesignBody}"
+                                  Content="{Binding PackIconControl}"/>
                 </Grid>
                 <materialDesign:Card.RenderTransform>
                     <TranslateTransform x:Name="IconCardTranslate"/>

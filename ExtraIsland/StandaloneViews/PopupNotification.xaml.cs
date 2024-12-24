@@ -183,6 +183,14 @@ public partial class PopupNotification : Window {
         VerticalAlignment = VerticalAlignment.Center,
         Content = "Empty ;)"
     };
+
+    public PackIcon PackIconControl { get; set; } = new PackIcon {
+        Kind = PackIconKind.Info,
+        HorizontalAlignment = HorizontalAlignment.Center,
+        VerticalAlignment = VerticalAlignment.Center,
+        Height = 30, Width = 30
+    };
+
     void ButtonBase_OnClick(object sender,RoutedEventArgs e) {
         _fadeStoryBoard.Begin();
     }
