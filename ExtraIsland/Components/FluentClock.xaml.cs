@@ -114,6 +114,9 @@ public partial class FluentClock {
             if (seconds != Now.Second.ToString()) {
                 seconds = Now.Second.ToString();
                 if (Settings.IsAccurate.Value) {
+                    this.Invoke(() => {
+                        SMins.Opacity = 1;
+                    });
                     var s = seconds;
                     if (s.Length == 1) {
                         s = "0" + s;
