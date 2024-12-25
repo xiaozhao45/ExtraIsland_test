@@ -13,16 +13,15 @@ public partial class DebugSettingsPage {
         InitializeComponent();
     }
     void ButtonBase_OnClick(object sender,RoutedEventArgs e) {
-        StandaloneViews.PopupNotification popup = new StandaloneViews.PopupNotification(350,575,5000) {
+        StandaloneViews.PopupNotification popup = new StandaloneViews.PopupNotification(350,575,PopProps.GetHoldTime()) {
             Header = "ExtraIsland·弹出式通知[调试]",
             PackIconControl = new PackIcon {
                 Kind = PackIconKind.Wrench,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center,
                 Height = 25, Width = 25
             },
             Body = new Label {
                 Content = "114514",
+                FontSize = 50,
                 HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center
             }

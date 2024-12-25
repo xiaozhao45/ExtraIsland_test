@@ -124,7 +124,7 @@ public partial class PopupNotification : Window {
         Storyboard.SetTarget(closeButtonOpacityAnimation, CloseButton);
         Storyboard.SetTargetProperty(closeButtonOpacityAnimation, new PropertyPath(OpacityProperty));
         
-        Storyboard expandStoryboard = new Storyboard {
+        _expandStoryboard = new Storyboard {
             Children = [
                 bodyCardAnimation,
                 headerGridXAnimation,
@@ -134,7 +134,7 @@ public partial class PopupNotification : Window {
             ]
         };
 
-        expandStoryboard.Completed += (_,_) => {
+        _expandStoryboard.Completed += (_,_) => {
             if (stayTime != 0) holdStoryboard.Begin();
         };
         
@@ -146,7 +146,7 @@ public partial class PopupNotification : Window {
                     EasingFunction = new SineEase()
                 }
             ],
-            Duration = new Duration(TimeSpan.FromMilliseconds(1000))
+            Duration = new Duration(TimeSpan.FromMilliseconds(700))
         };
         Storyboard.SetTarget(headerGridOpacityAnimation, HeaderGrid);
         Storyboard.SetTargetProperty(headerGridOpacityAnimation, new PropertyPath(OpacityProperty));
@@ -159,7 +159,7 @@ public partial class PopupNotification : Window {
                     EasingFunction = new SineEase()
                 }
             ],
-            Duration = new Duration(TimeSpan.FromMilliseconds(1000))
+            Duration = new Duration(TimeSpan.FromMilliseconds(700))
         };
         Storyboard.SetTarget(timeInitAnimation, TimeProgressBar);
         Storyboard.SetTargetProperty(timeInitAnimation, new PropertyPath(RangeBase.ValueProperty));
@@ -171,11 +171,12 @@ public partial class PopupNotification : Window {
             ]
         };
         _waitingStoryboard.Completed += (_,_) => {
-            expandStoryboard.Begin();
+            _expandStoryboard.Begin();
         };
     }
     
     readonly Storyboard _waitingStoryboard;
+    readonly Storyboard _expandStoryboard;
     readonly Storyboard _fadeStoryBoard;
     public string? Header { get; set; }
     public Control Body { get; set; } = new Label {
@@ -183,11 +184,10 @@ public partial class PopupNotification : Window {
         VerticalAlignment = VerticalAlignment.Center,
         Content = "Empty ;)"
     };
+    public bool IsLoadAnimation { get; set; } = true;
 
     public PackIcon PackIconControl { get; set; } = new PackIcon {
         Kind = PackIconKind.Info,
-        HorizontalAlignment = HorizontalAlignment.Center,
-        VerticalAlignment = VerticalAlignment.Center,
         Height = 30, Width = 30
     };
 
@@ -198,6 +198,16 @@ public partial class PopupNotification : Window {
         if (Header == null) {
             TitleChip.Visibility = Visibility.Hidden;
         }
-        _waitingStoryboard.Begin();
+        if (IsLoadAnimation) {
+            _waitingStoryboard.Begin();
+        } else {
+            ImmediatelyLoadIn();
+            _expandStoryboard.Begin();
+        }
+    }
+
+    void ImmediatelyLoadIn() {
+        HeaderGrid.Opacity = 1;
+        TimeProgressBar.Value = 100;
     }
 }

@@ -117,7 +117,7 @@ public partial class FluentClock {
                     this.Invoke(() => {
                         SMins.Opacity = 1;
                     });
-                    var s = seconds;
+                    string s = seconds;
                     if (s.Length == 1) {
                         s = "0" + s;
                     }
