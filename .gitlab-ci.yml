@@ -40,6 +40,8 @@ stages:
 build_job:
   stage: build
   image: mcr.microsoft.com/dotnet/sdk:8.0
+  rules:
+    - if: '($CI_COMMIT_MESSAGE !~ /^doc:.*/ && $CI_COMMIT_MESSAGE !~ / !noCi/ && $CI_COMMIT_MESSAGE !~ /^chore:.*/) || $CI_COMMIT_MESSAGE =~ / !forceCi/'
   script:
     - 'dotnet build /p:EnableWindowsTargeting=true -c release'
     #- 'apt-get install zip'
