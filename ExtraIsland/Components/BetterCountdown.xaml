@@ -12,90 +12,79 @@
                   Loaded="BetterCountdown_OnLoaded">
     <Grid
         DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=components:BetterCountdown}}"
-        HorizontalAlignment="Center"
         VerticalAlignment="Center"
         TextElement.FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
         Row="2">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Label Grid.Column="0"
-               Padding="0"
-               VerticalAlignment="Center"
-               Content="{Binding Settings.Prefix}"
-               x:Name="Lp" />
-        <Label Grid.Column="1"
-               Padding="0"
-               Content="---"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               x:Name="LDays" >
-            <Label.RenderTransform>
-                <TranslateTransform x:Name="DTt"/>
-            </Label.RenderTransform>
-        </Label>
-        <Label Grid.Column="2"
-               Padding="0"
-               VerticalAlignment="Center"
-               Content="{Binding Settings.Separators.Day}"/>
-        <Label Grid.Column="3"
-               Padding="0"
-               Content="--"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               x:Name="LHours">
-            <Label.RenderTransform>
-                <TranslateTransform x:Name="HTt"/>
-            </Label.RenderTransform>
-        </Label>
-        <Label Grid.Column="4"
-               Padding="0"
-               VerticalAlignment="Center"
-               Content="{Binding Settings.Separators.Hour}"
-               x:Name="SHour"/>
-        <Label Grid.Column="5"
-               Padding="0"
-               Content="--"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               x:Name="LMins">
-            <Label.RenderTransform>
-                <TranslateTransform x:Name="MTt"/>
-            </Label.RenderTransform>
-        </Label>
-        <Label Grid.Column="6"
-               Padding="0"
-               VerticalAlignment="Center"
-               Content="{Binding Settings.Separators.Minute}"
-               x:Name="SMin"/>
-        <Label Grid.Column="7"
-               Padding="0"
-               VerticalAlignment="Center"
-               Content="--"
-               HorizontalAlignment="Center"
-               x:Name="LSecs">
-            <Label.RenderTransform>
-                <TranslateTransform x:Name="STt"/>
-            </Label.RenderTransform>
-        </Label>
-        <Label Grid.Column="8"
-               Padding="0.5"
-               VerticalAlignment="Center"
-               Content="{Binding Settings.Separators.Second}"
-               x:Name="SSec"/>
-        <Label Grid.Column="9"
-               Padding="0"
-               VerticalAlignment="Center"
-               Content="{Binding Settings.Suffix}"
-               x:Name="Ls"/>
+        <StackPanel Orientation="Horizontal">
+            <Label
+                Padding="0"
+                   VerticalAlignment="Center"
+                   Content="{Binding Settings.Prefix}"
+                   x:Name="Lp" />
+            <Label
+                Padding="0"
+                   Content="---"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   x:Name="LDays">
+                <Label.RenderTransform>
+                    <TranslateTransform x:Name="DTt" />
+                </Label.RenderTransform>
+            </Label>
+            <Label
+                Padding="0"
+                   VerticalAlignment="Center"
+                   Content="{Binding Settings.Separators.Day}" />
+            <Label
+                Padding="0"
+                   Content="--"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   x:Name="LHours">
+                <Label.RenderTransform>
+                    <TranslateTransform x:Name="HTt" />
+                </Label.RenderTransform>
+            </Label>
+            <Label
+                Padding="0"
+                   VerticalAlignment="Center"
+                   Content="{Binding Settings.Separators.Hour}"
+                   x:Name="SHour" />
+            <Label
+                Padding="0"
+                   Content="--"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   x:Name="LMins">
+                <Label.RenderTransform>
+                    <TranslateTransform x:Name="MTt" />
+                </Label.RenderTransform>
+            </Label>
+            <Label
+                Padding="0"
+                   VerticalAlignment="Center"
+                   Content="{Binding Settings.Separators.Minute}"
+                   x:Name="SMin" />
+            <Label
+                Padding="0"
+                   VerticalAlignment="Center"
+                   Content="--"
+                   HorizontalAlignment="Center"
+                   x:Name="LSecs">
+                <Label.RenderTransform>
+                    <TranslateTransform x:Name="STt" />
+                </Label.RenderTransform>
+            </Label>
+            <Label
+                Padding="0.5"
+                   VerticalAlignment="Center"
+                   Content="{Binding Settings.Separators.Second}"
+                   x:Name="SSec" />
+            <Label
+                Padding="0"
+                   VerticalAlignment="Center"
+                   Content="{Binding Settings.Suffix}"
+                   x:Name="Ls" />
+        </StackPanel>
     </Grid>
 </ci:ComponentBase>
