@@ -178,15 +178,16 @@ public partial class PopupNotification : Window {
     readonly Storyboard _waitingStoryboard;
     readonly Storyboard _expandStoryboard;
     readonly Storyboard _fadeStoryBoard;
-    public string? Header { get; set; }
-    public Control Body { get; set; } = new Label {
+    public string? Header { get; init; }
+    public Control Body { get; init; } = new Label {
         HorizontalAlignment = HorizontalAlignment.Center,
         VerticalAlignment = VerticalAlignment.Center,
         Content = "Empty ;)"
     };
-    public bool IsLoadAnimation { get; set; } = true;
 
-    public PackIcon PackIconControl { get; set; } = new PackIcon {
+    bool IsLoadAnimation { get; set; } = true;
+
+    public PackIcon PackIconControl { get; init; } = new PackIcon {
         Kind = PackIconKind.Info,
         Height = 30, Width = 30
     };
