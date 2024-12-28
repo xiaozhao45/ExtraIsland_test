@@ -9,7 +9,8 @@
                   xmlns:components="clr-namespace:ExtraIsland.Components"
                   mc:Ignorable="d"
                   d:DesignHeight="35"
-                  Loaded="BetterCountdown_OnLoaded">
+                  Loaded="BetterCountdown_OnLoaded"
+                  Unloaded="BetterCountdown_OnUnloaded">
     <Grid
         DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=components:BetterCountdown}}"
         VerticalAlignment="Center"

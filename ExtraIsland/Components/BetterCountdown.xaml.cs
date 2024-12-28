@@ -138,4 +138,10 @@ public partial class BetterCountdown {
     void BetterCountdown_OnLoaded(object sender, RoutedEventArgs e) {
         this.BeginInvoke(OnLoad);
     }
+    void BetterCountdown_OnUnloaded(object sender,RoutedEventArgs e) {
+        OnTimeChanged -= DetectEvent;
+        Settings.OnAccuracyChanged -= UpdateAccuracy;
+        Settings.OnNoGapDisplayChanged -= UpdateGap;
+        LessonsService.PostMainTimerTicked -= UpdateTime;
+    }
 }
