@@ -7,7 +7,8 @@
                   xmlns:local="clr-namespace:ExtraIsland.Components"
                   xmlns:ci="http://classisland.tech/schemas/xaml/core"
                   mc:Ignorable="d"
-                  Loaded="FluentClock_OnLoaded">
+                  Loaded="FluentClock_OnLoaded"
+                  Unloaded="FluentClock_OnUnloaded">
     <Grid Margin="0">
         <Border
             Height="28"
@@ -17,68 +18,56 @@
             Background="{DynamicResource PrimaryHueMidBrush}"
             Opacity="0"
             Width="95"
-            x:Name="EmpBack">
-        </Border>
-        <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClock}}"
-              HorizontalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
-                   Content="--"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
-                   Padding="0,2,2,2"
-                   x:Name="LHours">
+            x:Name="EmpBack" />
+        <StackPanel
+            DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClock}}"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <Label
+                Content="--"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
+                Padding="0,2,2,2"
+                x:Name="LHours">
                 <Label.RenderTransform>
                     <TranslateTransform />
                 </Label.RenderTransform>
             </Label>
-            <Label Grid.Column="1"
-                   VerticalAlignment="Center"
-                   FontSize="{DynamicResource MainWindowLargeFontSize}"
-                   Padding="0,0,0,3"
-                   Content=":"
-                   x:Name="SMins"/>
-            <Label Grid.Column="2"
-                   Content="--"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Padding="2"
-                   FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
-                   x:Name="LMins">
+            <Label
+                VerticalAlignment="Center"
+                FontSize="{DynamicResource MainWindowLargeFontSize}"
+                Padding="0,0,0,3"
+                Content=":"
+                x:Name="SMins" />
+            <Label
+                Content="--"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Padding="2"
+                FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
+                x:Name="LMins">
                 <Label.RenderTransform>
                     <TranslateTransform />
                 </Label.RenderTransform>
             </Label>
-            <Label Grid.Column="3"
-                   VerticalAlignment="Center"
-                   FontSize="{DynamicResource MainWindowLargeFontSize}"
-                   Content=":"
-                   Padding="0,0,0,3"
-                   x:Name="SSecs">
-            </Label>
-            <Label Grid.Column="4"
-                   Content="--"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Padding="2,2,0,2"
-                   FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
-                   x:Name="LSecs">
+            <Label
+                VerticalAlignment="Center"
+                FontSize="{DynamicResource MainWindowLargeFontSize}"
+                Content=":"
+                Padding="0,0,0,3"
+                x:Name="SSecs" />
+            <Label
+                Content="--"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Padding="2,2,0,2"
+                FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
+                x:Name="LSecs">
                 <Label.RenderTransform>
-                    <TranslateTransform x:Name="TSecs"/>
+                    <TranslateTransform x:Name="TSecs" />
                 </Label.RenderTransform>
             </Label>
-        </Grid>
+        </StackPanel>
     </Grid>
 </ci:ComponentBase>

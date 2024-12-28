@@ -21,6 +21,11 @@ public partial class FluentClock {
         ExactTimeService = exactTimeService;
         LessonsService = lessonsService;
         InitializeComponent();
+        _hourAnimator = new Animator.ClockTransformControlAnimator(LHours);
+        _minuAnimator = new Animator.ClockTransformControlAnimator(LMins);
+        _secoAnimator = new Animator.ClockTransformControlAnimator(LSecs);
+        _separatorAnimator = new Animator.SeparatorControlAnimator(SMins);
+        _emphasizeAnimator = new Animator.EmphasizeUiElementAnimator(EmpBack);
     }
 
     IExactTimeService ExactTimeService { get; }
@@ -36,20 +41,15 @@ public partial class FluentClock {
         }   
     }
     event Action? OnTimeChanged;
-    
-    Animator.ClockTransformControlAnimator? _hourAnimator;
-    Animator.ClockTransformControlAnimator? _minuAnimator;
-    Animator.ClockTransformControlAnimator? _secoAnimator;
-    Animator.SeparatorControlAnimator? _separatorAnimator;
-    Animator.EmphasizeUiElementAnimator? _emphasizeAnimator;
+
+    readonly Animator.ClockTransformControlAnimator _hourAnimator;
+    readonly Animator.ClockTransformControlAnimator _minuAnimator;
+    readonly Animator.ClockTransformControlAnimator _secoAnimator;
+    readonly Animator.SeparatorControlAnimator _separatorAnimator;
+    readonly Animator.EmphasizeUiElementAnimator _emphasizeAnimator;
     
     void LoadedAction() {
         //Prepare local variable
-        _hourAnimator ??= new Animator.ClockTransformControlAnimator(LHours);
-        _minuAnimator ??= new Animator.ClockTransformControlAnimator(LMins);
-        _secoAnimator ??= new Animator.ClockTransformControlAnimator(LSecs);
-        _separatorAnimator ??= new Animator.SeparatorControlAnimator(SMins);
-        _emphasizeAnimator ??= new Animator.EmphasizeUiElementAnimator(EmpBack);
         
         string hours;
         string minutes;
@@ -73,14 +73,8 @@ public partial class FluentClock {
         //Register Events
         Settings.OnSecondsSmallChanged += SmallSecondsUpdater;
         Settings.OnAccurateChanged += AccurateModeUpdater;
-        Settings.OnOClockEmpEnabled += () => {
-            this.BeginInvoke(() => {
-                _emphasizeAnimator.Update();
-            });
-        };
-        LessonsService.PostMainTimerTicked += (_,_) => {
-            UpdateTime();
-        };
+        Settings.OnOClockEmpEnabled += ShowEmphasise;
+        LessonsService.PostMainTimerTicked += UpdateTime;
         OnTimeChanged += () => {
             if (updLock) return;
             updLock = true;
@@ -157,6 +151,16 @@ public partial class FluentClock {
             });
         }
     }
+    
+    void ShowEmphasise() {
+        this.BeginInvoke(() => {
+            _emphasizeAnimator?.Update();
+        });
+    }
+    
+    void UpdateTime(object? sender,EventArgs e) {
+        UpdateTime();
+    }
 
     void UpdateTime() {
         Now = !Settings.IsSystemTime!.Value ? 
@@ -189,5 +193,11 @@ public partial class FluentClock {
     
     void FluentClock_OnLoaded(object sender,RoutedEventArgs e) {
         this.Invoke(LoadedAction);
+    }
+    void FluentClock_OnUnloaded(object sender,RoutedEventArgs e) {
+        Settings.OnAccurateChanged -= AccurateModeUpdater;
+        Settings.OnSecondsSmallChanged -= SmallSecondsUpdater;
+        Settings.OnOClockEmpEnabled -= ShowEmphasise;
+        LessonsService.PostMainTimerTicked -= UpdateTime;
     }
 }
