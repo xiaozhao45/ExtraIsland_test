@@ -36,6 +36,7 @@ public partial class BetterCountdown {
     void OnLoad() {
         UpdateAccuracy();
         UpdateGap();
+        SilentUpdater();
         OnTimeChanged += DetectEvent;
         Settings.OnAccuracyChanged += UpdateAccuracy;
         Settings.OnNoGapDisplayChanged += UpdateGap;
@@ -133,6 +134,38 @@ public partial class BetterCountdown {
             _isAccurateChanged = false;
         }
         _updateLock = false;
+    }
+
+    void SilentUpdater() {
+        TimeSpan span = DiffDays(Now,Convert.ToDateTime(Settings.TargetDate));
+        if (_days != span.Days.ToString() | _isAccurateChanged) {
+            int dayI = span.Days;
+            _days = (int)Settings.Accuracy == 0 ? (dayI + 1).ToString() : dayI.ToString();
+            LDays.Content = _days;
+        }
+        if ((_hours != span.Hours.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 1) {
+            int hourI = span.Hours;
+            _hours = (int)Settings.Accuracy == 1 ? (hourI + 1).ToString() : hourI.ToString();
+            LHours.Content = _hours;
+        }
+        if ((_minutes != span.Minutes.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 2) {
+            int minuteI = span.Minutes;
+            _minutes = (int)Settings.Accuracy == 2 ? (minuteI + 1).ToString() : minuteI.ToString();
+            string m = _minutes;
+            if (m.Length == 1) {
+                m = "0" + m;
+            }
+            LMins.Content = m;
+        }
+        // ReSharper disable once InvertIf
+        if ((_seconds != span.Seconds.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 3) {
+            _seconds = span.Seconds.ToString();
+            string s = _seconds;
+            if (s.Length == 1) {
+                s = "0" + s;
+            }
+            LSecs.Content = s;
+        }
     }
     
     void BetterCountdown_OnLoaded(object sender, RoutedEventArgs e) {
