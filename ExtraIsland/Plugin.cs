@@ -18,7 +18,6 @@ namespace ExtraIsland
             //Registering Services
             services.AddComponent<Components.BetterCountdown,Components.BetterCountdownSettings>();
             services.AddComponent<Components.FluentClock,Components.FluentClockSettings>();
-            services.AddComponent<Components.OnDuty>();
             #if DEBUG
                 services.AddComponent<Components.OnDuty>();
                 services.AddSettingsPage<SettingsPages.DebugSettingsPage>();
