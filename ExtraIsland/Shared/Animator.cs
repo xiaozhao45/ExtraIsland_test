@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
-namespace ExtraIsland.StutterEngine;
+namespace ExtraIsland.Shared;
 
 public static class Animator {
     public class ClockTransformControlAnimator {

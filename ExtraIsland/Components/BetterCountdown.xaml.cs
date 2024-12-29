@@ -2,7 +2,7 @@
 using System.Windows.Data;
 using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Core.Attributes;
-using ExtraIsland.StutterEngine;
+using ExtraIsland.Shared;
 using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
 

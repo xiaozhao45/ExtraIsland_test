@@ -4,7 +4,7 @@ using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Core.Attributes;
-using ExtraIsland.StutterEngine;
+using ExtraIsland.Shared;
 using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
 
