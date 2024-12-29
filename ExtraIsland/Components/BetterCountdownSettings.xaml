@@ -84,11 +84,11 @@
                 <ci:SettingsCard.Switcher>
                     <StackPanel Orientation="Horizontal">
                         <DatePicker SelectedDate="{Binding Settings.TargetDate, Mode=TwoWay}"
-                                    Margin="10 8 0 0" Width="120" />
+                                    Margin="10 8 0 0" Width="95" />
                         <materialDesign:TimePicker Is24Hours="True"
                                                    WithSeconds="True"
                                                    SelectedTime="{Binding Settings.TargetDate, Mode=TwoWay}"
-                                                   Margin="4 8 0 0" Width="120" />
+                                                   Margin="4 8 0 0" Width="76" />
                     </StackPanel>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
