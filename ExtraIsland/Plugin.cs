@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 namespace ExtraIsland
 {
     [PluginEntrance]
+    // ReSharper disable once UnusedType.Global
     public class Plugin : PluginBase
     {
         public override void Initialize(HostBuilderContext context, IServiceCollection services)
@@ -19,6 +20,7 @@ namespace ExtraIsland
             services.AddComponent<Components.BetterCountdown,Components.BetterCountdownSettings>();
             services.AddComponent<Components.FluentClock,Components.FluentClockSettings>();
             #if DEBUG
+                services.AddComponent<Components.Rhesis>();
                 services.AddComponent<Components.OnDuty>();
                 services.AddSettingsPage<SettingsPages.DebugSettingsPage>();
             #endif
