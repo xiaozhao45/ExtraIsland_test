@@ -1,4 +1,5 @@
 # ExtraIsland [![Downloads](https://img.shields.io/github/downloads/LiPolymer/ExtraIsland/total?style=flat&logo=github)](https://github.com/LiPolymer/ExtraIsland/releases)
+[![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FLiPolymer%2FExtraIsland&label=visits&countColor=%2337d67a&style=flat)](https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2FLiPolymer%2FExtraIsland)
 [![stars](https://img.shields.io/github/stars/LiPolymer/ExtraIsland?style=flat&color=red)](https://github.com/LiPolymer/ExtraIsland/stargazers)
 [![forks](https://img.shields.io/github/forks/LiPolymer/ExtraIsland?style=flat&color=blue)](https://github.com/LiPolymer/ExtraIsland/forks)
 [![Watchers](https://img.shields.io/github/watchers/LiPolymer/ExtraIsland?style=flat&color=green)](https://github.com/LiPolymer/ExtraIsland/watchers)
