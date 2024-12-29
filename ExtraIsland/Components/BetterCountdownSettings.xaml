@@ -79,8 +79,8 @@
                     </Grid>  
                 </Grid>
             </materialDesign:Card>
-            <ci:SettingsCard IconGlyph="Calendar" Header="目标日期"
-                             Description="倒计时设定的日期">
+            <ci:SettingsCard IconGlyph="Calendar" Header="目标时间"
+                             Description="倒计时设定的日期和时间">
                 <ci:SettingsCard.Switcher>
                     <StackPanel Orientation="Horizontal">
                         <DatePicker SelectedDate="{Binding Settings.TargetDate, Mode=TwoWay}"
