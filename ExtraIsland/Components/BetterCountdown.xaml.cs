@@ -19,19 +19,19 @@ public partial class BetterCountdown {
         ExactTimeService = exactTimeService;
         LessonsService = lessonsService;
         InitializeComponent();
-        _dyAnimator = new Animator.ClockTransformControlAnimator(LDays);
-        _hrAnimator = new Animator.ClockTransformControlAnimator(LHours);
-        _mnAnimator = new Animator.ClockTransformControlAnimator(LMins);
-        _scAnimator = new Animator.ClockTransformControlAnimator(LSecs);
+        _dyAnimator = new Animators.ClockTransformControlAnimator(LDays);
+        _hrAnimator = new Animators.ClockTransformControlAnimator(LHours);
+        _mnAnimator = new Animators.ClockTransformControlAnimator(LMins);
+        _scAnimator = new Animators.ClockTransformControlAnimator(LSecs);
     }
     
     IExactTimeService ExactTimeService { get; }
     ILessonsService LessonsService { get; }
 
-    readonly Animator.ClockTransformControlAnimator _dyAnimator;
-    readonly Animator.ClockTransformControlAnimator _hrAnimator;
-    readonly Animator.ClockTransformControlAnimator _mnAnimator;
-    readonly Animator.ClockTransformControlAnimator _scAnimator;
+    readonly Animators.ClockTransformControlAnimator _dyAnimator;
+    readonly Animators.ClockTransformControlAnimator _hrAnimator;
+    readonly Animators.ClockTransformControlAnimator _mnAnimator;
+    readonly Animators.ClockTransformControlAnimator _scAnimator;
     
     void OnLoad() {
         UpdateAccuracy();

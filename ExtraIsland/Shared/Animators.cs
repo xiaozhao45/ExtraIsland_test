@@ -4,7 +4,7 @@ using System.Windows.Media.Animation;
 
 namespace ExtraIsland.Shared;
 
-public static class Animator {
+public static class Animators {
     public class ClockTransformControlAnimator {
         public ClockTransformControlAnimator(Label targetLabel) {
             _targetLabel = targetLabel;

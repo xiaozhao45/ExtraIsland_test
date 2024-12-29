@@ -3,6 +3,7 @@ using ClassIsland.Core.Abstractions;
 using ClassIsland.Core.Attributes;
 using ClassIsland.Core.Controls.CommonDialog;
 using ClassIsland.Core.Extensions.Registry;
+using ExtraIsland.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -18,6 +19,7 @@ namespace ExtraIsland
             services.AddComponent<Components.FluentClock,Components.FluentClockSettings>();
             services.AddComponent<Components.OnDuty>();
             #if DEBUG
+                services.AddComponent<Components.OnDuty>();
                 services.AddSettingsPage<SettingsPages.DebugSettingsPage>();
             #endif
         }

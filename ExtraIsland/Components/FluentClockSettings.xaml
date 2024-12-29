@@ -8,10 +8,6 @@
                   xmlns:ci="http://classisland.tech/schemas/xaml/core"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="300">
-    <ci:ComponentBase.Resources>
-        <ci:BooleanToVisibilityReConverter x:Key="BooleanToVisibilityReConverter"/>
-        <local:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
-    </ci:ComponentBase.Resources>
     <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClockSettings}}">
         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
         <StackPanel Style="{StaticResource SettingsPageStackPanelStyle}">

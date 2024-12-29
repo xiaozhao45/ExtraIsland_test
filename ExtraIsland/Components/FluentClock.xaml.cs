@@ -21,11 +21,11 @@ public partial class FluentClock {
         ExactTimeService = exactTimeService;
         LessonsService = lessonsService;
         InitializeComponent();
-        _hourAnimator = new Animator.ClockTransformControlAnimator(LHours);
-        _minuAnimator = new Animator.ClockTransformControlAnimator(LMins);
-        _secoAnimator = new Animator.ClockTransformControlAnimator(LSecs);
-        _separatorAnimator = new Animator.SeparatorControlAnimator(SMins);
-        _emphasizeAnimator = new Animator.EmphasizeUiElementAnimator(EmpBack);
+        _hourAnimator = new Animators.ClockTransformControlAnimator(LHours);
+        _minuAnimator = new Animators.ClockTransformControlAnimator(LMins);
+        _secoAnimator = new Animators.ClockTransformControlAnimator(LSecs);
+        _separatorAnimator = new Animators.SeparatorControlAnimator(SMins);
+        _emphasizeAnimator = new Animators.EmphasizeUiElementAnimator(EmpBack);
     }
 
     IExactTimeService ExactTimeService { get; }
@@ -42,11 +42,11 @@ public partial class FluentClock {
     }
     event Action? OnTimeChanged;
 
-    readonly Animator.ClockTransformControlAnimator _hourAnimator;
-    readonly Animator.ClockTransformControlAnimator _minuAnimator;
-    readonly Animator.ClockTransformControlAnimator _secoAnimator;
-    readonly Animator.SeparatorControlAnimator _separatorAnimator;
-    readonly Animator.EmphasizeUiElementAnimator _emphasizeAnimator;
+    readonly Animators.ClockTransformControlAnimator _hourAnimator;
+    readonly Animators.ClockTransformControlAnimator _minuAnimator;
+    readonly Animators.ClockTransformControlAnimator _secoAnimator;
+    readonly Animators.SeparatorControlAnimator _separatorAnimator;
+    readonly Animators.EmphasizeUiElementAnimator _emphasizeAnimator;
     
     void LoadedAction() {
         //Prepare local variable

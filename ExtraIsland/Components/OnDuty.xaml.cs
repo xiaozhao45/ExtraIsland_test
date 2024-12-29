@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 using ClassIsland.Core.Abstractions.Controls;
 using ClassIsland.Core.Attributes;
+using ClassIsland.Core.Models.Plugin;
 using MaterialDesignThemes.Wpf;
 
 namespace ExtraIsland.Components;
