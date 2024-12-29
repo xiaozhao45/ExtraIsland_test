@@ -14,6 +14,7 @@ namespace ExtraIsland
     {
         public override void Initialize(HostBuilderContext context, IServiceCollection services)
         {
+            GlobalConstants.PluginConfigFolder = PluginConfigFolder;
             //Registering Services
             services.AddComponent<Components.BetterCountdown,Components.BetterCountdownSettings>();
             services.AddComponent<Components.FluentClock,Components.FluentClockSettings>();
