@@ -1,4 +1,8 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using ExtraIsland.Components;
 
 namespace ExtraIsland.Shared;
@@ -90,6 +94,10 @@ public class SainticData {
                 Catalog = $"{Data.Theme}-{Data.Catalog}",
             };
         }
+        
+        public static SainticData Fetch() {
+            return (new HttpClient()).GetFromJsonAsync<SainticData>("https://open.saintic.com/api/sentence/all.json").Result!;
+        }
     }
 
 public class JinrishiciData {
@@ -114,5 +122,9 @@ public class JinrishiciData {
                 Source = "今日诗词API",
                 Catalog = Category,
             };
+        }
+
+        public static JinrishiciData Fetch() {
+            return (new HttpClient()).GetFromJsonAsync<JinrishiciData>("https://v1.jinrishici.com/all.json").Result!;
         }
     }

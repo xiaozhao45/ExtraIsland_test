@@ -1,8 +1,10 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ClassIsland.Core.Attributes;
+using ExtraIsland.Shared;
 using MaterialDesignThemes.Wpf;
 
 namespace ExtraIsland.SettingsPages;
@@ -12,7 +14,7 @@ public partial class DebugSettingsPage {
     public DebugSettingsPage() {
         InitializeComponent();
     }
-    void ButtonBase_OnClick(object sender,RoutedEventArgs e) {
+    void PopButton_OnClick(object sender,RoutedEventArgs e) {
         StandaloneViews.PopupNotification popup = new StandaloneViews.PopupNotification(350,575,PopProps.GetHoldTime()) {
             Header = "ExtraIsland·弹出式通知[调试]",
             PackIconControl = new PackIcon {
@@ -36,6 +38,14 @@ public partial class DebugSettingsPage {
     void TextBoxNumberCheck(object sender,TextCompositionEventArgs e) {
         Regex re = NumberRegex();
         e.Handled = re.IsMatch(e.Text);
+    }
+    
+    public JinrishiciData Jinrishici { get; set; } = new JinrishiciData();
+    public SainticData Saintic { get; set; } = new SainticData();
+    void RequestButton_OnClick(object sender,RoutedEventArgs e) {
+        Jinrishici  = JinrishiciData.Fetch();
+        Saintic = SainticData.Fetch();
+        MessageBox.Show(Jinrishici.Content + "\r\n" + Saintic.ToRhesisData().Content);
     }
 }
 

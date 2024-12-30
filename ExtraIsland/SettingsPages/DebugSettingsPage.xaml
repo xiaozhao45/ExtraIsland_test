@@ -51,8 +51,18 @@
                                  InputMethod.IsInputMethodEnabled="False"
                                  PreviewTextInput="TextBoxNumberCheck"
                                  Text="{Binding PopProps.HoldTime}"/>
-                        <Button Grid.Column="6" Click="ButtonBase_OnClick">展示</Button>
+                        <Button Grid.Column="6" Click="PopButton_OnClick">展示</Button>
                     </Grid>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
+            <ci:SettingsCard IconGlyph="Link" Header="测试·获取诗词"
+                             Description="发送诗词句的获取请求">
+                <ci:SettingsCard.Switcher>
+                    <StackPanel Orientation="Horizontal">
+                        <Label VerticalContentAlignment="Center"
+                            Content="{Binding Jinrishici.Content,Mode=TwoWay}"/>
+                        <Button Click="RequestButton_OnClick">发送</Button>
+                    </StackPanel>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
         </StackPanel>
