@@ -1,4 +1,4 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Data;
 using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Core.Attributes;
@@ -34,6 +34,7 @@ public partial class BetterCountdown {
     readonly Animators.ClockTransformControlAnimator _scAnimator;
     
     void OnLoad() {
+        UpdateTime();
         UpdateAccuracy();
         UpdateGap();
         SilentUpdater();
@@ -89,7 +90,7 @@ public partial class BetterCountdown {
     
     event Action? OnTimeChanged;
     
-    void UpdateTime(object? sender,EventArgs eventArgs) {
+    void UpdateTime(object? sender = null,EventArgs? eventArgs = null) {
         Now = !Settings.IsSystemTime ? 
             ExactTimeService.GetCurrentLocalDateTime()
             : DateTime.Now;
