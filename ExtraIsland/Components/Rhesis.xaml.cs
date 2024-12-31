@@ -4,6 +4,7 @@ using ClassIsland.Core.Abstractions.Controls;
 using ClassIsland.Core.Attributes;
 using ClassIsland.Core.Models.Plugin;
 using ExtraIsland.Shared;
+using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
 
 namespace ExtraIsland.Components;
@@ -17,7 +18,9 @@ namespace ExtraIsland.Components;
 public partial class Rhesis : ComponentBase {
     public Rhesis() {
         InitializeComponent();
+        ShowingContent = _rhesisHandler.Get();
     }
-    
-    public RhesisData ShowingContent { get; set; } = new RhesisData();
+
+    readonly RhesisHandler.Instance _rhesisHandler = new RhesisHandler.Instance();
+    public RhesisData ShowingContent { get; }
 }

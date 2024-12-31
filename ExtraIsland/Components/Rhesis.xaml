@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:ExtraIsland.Components"
              xmlns:ci="http://classisland.tech/schemas/xaml/core"
              mc:Ignorable="d">
-    <Grid>
-        <Label/>
+    <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:Rhesis}}">
+        <Label VerticalAlignment="Center"
+               FontSize="{DynamicResource MainWindowLargeFontSize}"
+               Content="{Binding ShowingContent.Content}"/>
     </Grid>
 </ci:ComponentBase>
