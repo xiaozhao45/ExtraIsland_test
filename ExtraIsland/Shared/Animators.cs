@@ -123,6 +123,11 @@ public static class Animators {
                 });
             }).Start();
         }
+        
+        public void SilentUpdate(string targetContent) {
+            _targetContent = targetContent;
+            _targetLabel.Content = _targetContent;
+        }
     }
     
     public class SeparatorControlAnimator {

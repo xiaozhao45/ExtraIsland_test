@@ -142,12 +142,12 @@ public partial class BetterCountdown {
         if (_days != span.Days.ToString() | _isAccurateChanged) {
             int dayI = span.Days;
             _days = (int)Settings.Accuracy == 0 ? (dayI + 1).ToString() : dayI.ToString();
-            LDays.Content = _days;
+            _dyAnimator.SilentUpdate(_days);
         }
         if ((_hours != span.Hours.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 1) {
             int hourI = span.Hours;
             _hours = (int)Settings.Accuracy == 1 ? (hourI + 1).ToString() : hourI.ToString();
-            LHours.Content = _hours;
+            _hrAnimator.SilentUpdate(_hours);
         }
         if ((_minutes != span.Minutes.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 2) {
             int minuteI = span.Minutes;
@@ -156,7 +156,7 @@ public partial class BetterCountdown {
             if (m.Length == 1) {
                 m = "0" + m;
             }
-            LMins.Content = m;
+            _mnAnimator.SilentUpdate(m);
         }
         // ReSharper disable once InvertIf
         if ((_seconds != span.Seconds.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 3) {
@@ -165,7 +165,7 @@ public partial class BetterCountdown {
             if (s.Length == 1) {
                 s = "0" + s;
             }
-            LSecs.Content = s;
+            _scAnimator.SilentUpdate(s);
         }
     }
     

@@ -145,9 +145,9 @@ public partial class FluentClock {
                 seconds = "0" + seconds;
             }
             this.Invoke(() => {
-                LHours.Content = hours;
-                LMins.Content = minutes;
-                LSecs.Content = seconds;
+                _hourAnimator.SilentUpdate(hours);
+                _minuAnimator.SilentUpdate(minutes);
+                _secoAnimator.SilentUpdate(seconds);
             });
         }
     }
