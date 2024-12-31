@@ -7,8 +7,41 @@ using ExtraIsland.Components;
 
 namespace ExtraIsland.Shared;
 
-public class RhesisHandler {
-    
+public static class RhesisHandler {
+    public static bool HitokotoLimitation { get; set; }
+
+    public class Instance {
+        readonly Random _random = new Random();
+        public RhesisData Get(RhesisDataSource rhesisDataSource = RhesisDataSource.All 
+            ,string? hitokotoRequestUrl = null) {
+            return rhesisDataSource switch {
+                RhesisDataSource.All => _random.Next(4) switch {
+                    0 => RhesisDataSource.Jinrishici,
+                    //今日诗词接口内容较少,故概率较低
+                    1 => RhesisDataSource.Saint,
+                    2 => RhesisDataSource.Saint,
+                    3 => RhesisDataSource.Hitokoto,
+                    4 => RhesisDataSource.Hitokoto,
+                    _ => rhesisDataSource
+                },
+                RhesisDataSource.SaintJinrishici => _random.Next(2) switch {
+                    0 => RhesisDataSource.Jinrishici,
+                    //今日诗词接口内容较少,故概率较低
+                    1 => RhesisDataSource.Saint,
+                    2 => RhesisDataSource.Saint,
+                    _ => rhesisDataSource
+                },
+                _ => rhesisDataSource
+            } switch {
+                RhesisDataSource.Jinrishici => JinrishiciData.Fetch().ToRhesisData(),
+                RhesisDataSource.Saint => SainticData.Fetch().ToRhesisData(),
+                RhesisDataSource.Hitokoto => HitokotoData.Fetch(hitokotoRequestUrl).ToRhesisData(),
+                RhesisDataSource.SaintJinrishici => new RhesisData {Content = "处理时出现错误"},
+                RhesisDataSource.All => new RhesisData {Content = "处理时出现错误"},
+                _ => new RhesisData {Content = "处理时出现错误"}
+            };
+        }   
+    }
 }
 
 public class RhesisData {
@@ -90,13 +123,15 @@ public class SainticData {
                 Author = Data.Author,
                 Title = Data.Name,
                 Content = Data.Sentence,
-                Source = "SainticAPI",
+                Source = "诏预API",
                 Catalog = $"{Data.Theme}-{Data.Catalog}",
             };
         }
         
         public static SainticData Fetch() {
-            return (new HttpClient()).GetFromJsonAsync<SainticData>("https://open.saintic.com/api/sentence/all.json").Result!;
+            return new HttpClient()
+                .GetFromJsonAsync<SainticData>("https://open.saintic.com/api/sentence/all.json")
+                .Result!;
         }
     }
 
@@ -125,6 +160,107 @@ public class JinrishiciData {
         }
 
         public static JinrishiciData Fetch() {
-            return (new HttpClient()).GetFromJsonAsync<JinrishiciData>("https://v1.jinrishici.com/all.json").Result!;
+            return new HttpClient()
+                .GetFromJsonAsync<JinrishiciData>("https://v1.jinrishici.com/all.json")
+                .Result!;
         }
     }
+    
+public class HitokotoData {
+    [JsonPropertyName("id")] 
+    public int Id { get; set; } = 0;
+    
+    [JsonPropertyName("uuid")]
+    public string Uuid { get; set; } = string.Empty;
+
+    [JsonPropertyName("hitokoto")]
+    public string Hitokoto { get; set; } = string.Empty;
+
+    [JsonPropertyName("type")]
+    public string Type { get; set; } = string.Empty;
+
+    [JsonPropertyName("from")]
+    public string From { get; set; } = string.Empty;
+
+    [JsonPropertyName("from_who")]
+    public string FromWho { get; set; } = string.Empty;
+
+    [JsonPropertyName("creator")]
+    public string Creator { get; set; } = string.Empty;
+
+    [JsonPropertyName("creator_uid")] 
+    public int CreatorUid { get; set; } = 0;
+
+    [JsonPropertyName("reviewer")] 
+    public int Reviewer { get; set; } = 0;
+
+    [JsonPropertyName("commit_from")]
+    public string CommitFrom { get; set; } = string.Empty;
+
+    [JsonPropertyName("created_at")]
+    public string CreatedAt { get; set; } = string.Empty;
+
+    [JsonPropertyName("length")]
+    public int Length { get; set; } = 0;
+    
+    public RhesisData ToRhesisData() {
+        return new RhesisData {
+            Author = FromWho,
+            Title = From,
+            Content = Hitokoto,
+            Source = "一言API",
+            Catalog = ConvertTypeToString(Type),
+        };
+    }
+
+    static string ConvertTypeToString(string type) {
+        string result = type switch {
+            "a" => "动画",
+            "b" => "漫画",
+            "c" => "游戏",
+            "d" => "文学",
+            "e" => "原创",
+            "f" => "网络",
+            "g" => "其他",
+            "h" => "影视",
+            "i" => "诗词",
+            "j" => "网易云",
+            "k" => "哲学",
+            "l" => "抖机灵",
+            _ => string.Empty
+        };
+        return result;
+    }
+    
+    public static HitokotoData Fetch(string? requestUrl = null) {
+        requestUrl ??= "https://v1.hitokoto.cn/";
+        if (RhesisHandler.HitokotoLimitation) {
+            return new HitokotoData {
+                Hitokoto = "已达到一言接口限制"
+            };
+        }
+        RhesisHandler.HitokotoLimitation = true;
+        new Thread(() => {
+            Thread.Sleep(700);
+            RhesisHandler.HitokotoLimitation = false;
+        }).Start();
+        try {
+            return new HttpClient()
+                .GetFromJsonAsync<HitokotoData>(requestUrl)
+                .Result!;
+        }
+        catch (Exception ex) {
+            return new HitokotoData {
+                Hitokoto = $"获取时发生错误 {ex.Message}"
+            };
+        }
+    }
+}
+
+public enum RhesisDataSource {
+    SaintJinrishici = -1,
+    All = 0,
+    Saint = 1,
+    Jinrishici = 2,
+    Hitokoto = 3
+}

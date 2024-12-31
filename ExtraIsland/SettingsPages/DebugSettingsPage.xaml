@@ -59,9 +59,8 @@
                              Description="发送诗词句的获取请求">
                 <ci:SettingsCard.Switcher>
                     <StackPanel Orientation="Horizontal">
-                        <Label VerticalContentAlignment="Center"
-                            Content="{Binding Jinrishici.Content,Mode=TwoWay}"/>
-                        <Button Click="RequestButton_OnClick">发送</Button>
+                        <Button Click="RandRequestButton_OnClick" Margin="3">随机</Button>
+                        <Button Click="RequestButton_OnClick">全测</Button>
                     </StackPanel>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>

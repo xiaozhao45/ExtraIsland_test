@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using ClassIsland.Core.Attributes;
+using ClassIsland.Core.Controls.CommonDialog;
 using ExtraIsland.Shared;
 using MaterialDesignThemes.Wpf;
 
@@ -40,12 +41,33 @@ public partial class DebugSettingsPage {
         e.Handled = re.IsMatch(e.Text);
     }
     
-    public JinrishiciData Jinrishici { get; set; } = new JinrishiciData();
-    public SainticData Saintic { get; set; } = new SainticData();
+    JinrishiciData Jinrishici { get; set; } = new JinrishiciData();
+    SainticData Saintic { get; set; } = new SainticData();
+    HitokotoData Hitokoto { get; set; } = new HitokotoData();
     void RequestButton_OnClick(object sender,RoutedEventArgs e) {
         Jinrishici  = JinrishiciData.Fetch();
         Saintic = SainticData.Fetch();
-        MessageBox.Show(Jinrishici.Content + "\r\n" + Saintic.ToRhesisData().Content);
+        Hitokoto = HitokotoData.Fetch();
+        CommonDialog.ShowInfo(message:
+            $"今日诗词 | {Jinrishici.ToRhesisData().Title} - {Jinrishici.ToRhesisData().Author}"
+            + "\r\n         |" + Jinrishici.ToRhesisData().Catalog
+            + "\r\n         |" + Jinrishici.ToRhesisData().Content
+            + "\r\n"
+            + "\r\n" + $"    诏预 | {Saintic.ToRhesisData().Title} - {Saintic.ToRhesisData().Author}"
+            + "\r\n         |" + Saintic.ToRhesisData().Catalog
+            + "\r\n         |" + Saintic.ToRhesisData().Content
+            + "\r\n"
+            + "\r\n" + $"    一言 | {Hitokoto.ToRhesisData().Title} - {Hitokoto.ToRhesisData().Author}"
+            + "\r\n         |" + Hitokoto.ToRhesisData().Catalog
+            + "\r\n         |" + Hitokoto.ToRhesisData().Content);
+    }
+    
+    void RandRequestButton_OnClick(object sender,RoutedEventArgs e) {
+        RhesisData rhesis = new RhesisHandler.Instance().Get();
+        CommonDialog.ShowInfo(message:
+            $"{rhesis.Source} | {rhesis.Title} - {rhesis.Author}"
+            + "\r\n         |" + rhesis.Catalog
+            + "\r\n         |" + rhesis.Content);
     }
 }
 
