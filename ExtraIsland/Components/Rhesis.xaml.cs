@@ -11,9 +11,9 @@ namespace ExtraIsland.Components;
 
 [ComponentInfo(
     "FBB380C2-5480-4FED-8349-BA5F4EAD2688",
-    "(未完成)古诗名言",
+    "(未完成)名句一言",
     PackIconKind.MessageOutline,
-    "显示一句名言"
+    "[早期阶段]显示一句古今名言,可使用三个API"
 )]
 public partial class Rhesis : ComponentBase {
     public Rhesis() {
