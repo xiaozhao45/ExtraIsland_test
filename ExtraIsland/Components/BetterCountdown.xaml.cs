@@ -1,5 +1,4 @@
 using System.Windows;
-using System.Windows.Data;
 using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Core.Attributes;
 using ExtraIsland.Shared;

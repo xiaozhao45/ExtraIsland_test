@@ -1,6 +1,4 @@
-﻿using ClassIsland.Core.Abstractions.Controls;
-
-namespace ExtraIsland.Components;
+﻿namespace ExtraIsland.Components;
 
 public partial class BetterCountdownSettings {
     public BetterCountdownSettings() {
