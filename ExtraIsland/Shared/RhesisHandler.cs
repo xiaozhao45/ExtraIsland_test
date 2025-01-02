@@ -1,9 +1,6 @@
-﻿using System.Net;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using ExtraIsland.Components;
 
 namespace ExtraIsland.Shared;
 
@@ -12,7 +9,7 @@ public static class RhesisHandler {
 
     public class Instance {
         readonly Random _random = new Random();
-        public RhesisData Get(RhesisDataSource rhesisDataSource = RhesisDataSource.All 
+        public RhesisData Get(RhesisDataSource rhesisDataSource = RhesisDataSource.All
             ,string? hitokotoRequestUrl = null) {
             return rhesisDataSource switch {
                 RhesisDataSource.All => _random.Next(4) switch {
@@ -36,11 +33,11 @@ public static class RhesisHandler {
                 RhesisDataSource.Jinrishici => JinrishiciData.Fetch().ToRhesisData(),
                 RhesisDataSource.Saint => SainticData.Fetch().ToRhesisData(),
                 RhesisDataSource.Hitokoto => HitokotoData.Fetch(hitokotoRequestUrl).ToRhesisData(),
-                RhesisDataSource.SaintJinrishici => new RhesisData {Content = "处理时出现错误"},
-                RhesisDataSource.All => new RhesisData {Content = "处理时出现错误"},
-                _ => new RhesisData {Content = "处理时出现错误"}
+                RhesisDataSource.SaintJinrishici => new RhesisData { Content = "处理时出现错误" },
+                RhesisDataSource.All => new RhesisData { Content = "处理时出现错误" },
+                _ => new RhesisData { Content = "处理时出现错误" }
             };
-        }   
+        }
     }
 }
 
@@ -49,160 +46,141 @@ public class RhesisData {
     public string Content { get; set; } = string.Empty;
     public string Author { get; set; } = string.Empty;
     public string Source { get; set; } = string.Empty;
-    
+
     public string Catalog { get; set; } = string.Empty;
 }
 
 public class SainticData {
-        
-        [JsonPropertyName("code")]
-        public int StatusCode { get; set; } = -1;
-        
-        [JsonPropertyName("data")]
-        public SainticRhesisData Data { get; set; } = new SainticRhesisData();
-        
-        [JsonPropertyName("msg")]
-        public string? Message { get; set; }
-        
-        [JsonPropertyName("q")]
-        public QueueInfoData QueueInfo { get; set; } = new QueueInfoData();
 
-        public class SainticRhesisData {
-            
-            [JsonPropertyName("author")]
-            public string Author { get; set; } = string.Empty;
-            
-            [JsonPropertyName("author_pinyin")]
-            public string AuthorPinyin { get; set; } = string.Empty;
-            
-            [JsonPropertyName("catalog")]
-            public string Catalog { get; set; } = string.Empty;
-            
-            [JsonPropertyName("catalog_pinyin")]
-            public string CatalogPinyin { get; set; } = string.Empty;
+    [JsonPropertyName("code")] public int StatusCode { get; set; } = -1;
 
-            [JsonPropertyName("ctime")]
-            public int Ctime { get; set; } = 0;
+    [JsonPropertyName("data")] public SainticRhesisData Data { get; set; } = new SainticRhesisData();
 
-            [JsonPropertyName("id")]
-            public int Id { get; set; } = 0;
+    [JsonPropertyName("msg")] public string? Message { get; set; }
 
-            [JsonPropertyName("name")]
-            public string Name { get; set; } = string.Empty;
+    [JsonPropertyName("q")] public QueueInfoData QueueInfo { get; set; } = new QueueInfoData();
 
-            [JsonPropertyName("sentence")]
-            public string Sentence { get; set; } = string.Empty;
-            
-            [JsonPropertyName("src_url")]
-            public string SrcUrl { get; set; } = string.Empty;
+    public class SainticRhesisData {
 
-            [JsonPropertyName("theme")]
-            public string Theme { get; set; } = string.Empty;
+        [JsonPropertyName("author")] public string Author { get; set; } = string.Empty;
 
-            [JsonPropertyName("theme_pinyin")]
-            public string ThemePinyin { get; set; } = string.Empty;
-        }
+        [JsonPropertyName("author_pinyin")] public string AuthorPinyin { get; set; } = string.Empty;
 
-        public class QueueInfoData {
+        [JsonPropertyName("catalog")] public string Catalog { get; set; } = string.Empty;
 
-            [JsonPropertyName("author")]
-            public string Author { get; set; } = string.Empty;
-            
-            [JsonPropertyName("catalog")]
-            public string Catalog { get; set; } = string.Empty;
+        [JsonPropertyName("catalog_pinyin")] public string CatalogPinyin { get; set; } = string.Empty;
 
-            [JsonPropertyName("suffix")]
-            public string Suffix { get; set; } = string.Empty;
+        [JsonPropertyName("ctime")] public int Ctime { get; set; } = 0;
 
-            [JsonPropertyName("theme")]
-            public string Theme { get; set; } = string.Empty;
-        }
-        
-        public RhesisData ToRhesisData() {
-            return new RhesisData {
-                Author = Data.Author,
-                Title = Data.Name,
-                Content = Data.Sentence,
-                Source = "诏预API",
-                Catalog = $"{Data.Theme}-{Data.Catalog}",
-            };
-        }
-        
-        public static SainticData Fetch() {
+        [JsonPropertyName("id")] public int Id { get; set; } = 0;
+
+        [JsonPropertyName("name")] public string Name { get; set; } = string.Empty;
+
+        [JsonPropertyName("sentence")] public string Sentence { get; set; } = string.Empty;
+
+        [JsonPropertyName("src_url")] public string SrcUrl { get; set; } = string.Empty;
+
+        [JsonPropertyName("theme")] public string Theme { get; set; } = string.Empty;
+
+        [JsonPropertyName("theme_pinyin")] public string ThemePinyin { get; set; } = string.Empty;
+    }
+
+    public class QueueInfoData {
+
+        [JsonPropertyName("author")] public string Author { get; set; } = string.Empty;
+
+        [JsonPropertyName("catalog")] public string Catalog { get; set; } = string.Empty;
+
+        [JsonPropertyName("suffix")] public string Suffix { get; set; } = string.Empty;
+
+        [JsonPropertyName("theme")] public string Theme { get; set; } = string.Empty;
+    }
+
+    public RhesisData ToRhesisData() {
+        return new RhesisData {
+            Author = Data.Author,
+            Title = Data.Name,
+            Content = Data.Sentence,
+            Source = "诏预API",
+            Catalog = $"{Data.Theme}-{Data.Catalog}",
+        };
+    }
+
+    public static SainticData Fetch() {
+        try {
             return new HttpClient()
                 .GetFromJsonAsync<SainticData>("https://open.saintic.com/api/sentence/all.json")
                 .Result!;
         }
-    }
-
-public class JinrishiciData {
-        
-        [JsonPropertyName("content")]
-        public string Content { get; set; } = string.Empty;
-        
-        [JsonPropertyName("origin")]
-        public string Origin { get; set; } = string.Empty;
-        
-        [JsonPropertyName("author")]
-        public string Author { get; set; } = string.Empty;
-        
-        [JsonPropertyName("category")]
-        public string Category { get; set; } = string.Empty;
-        
-        public RhesisData ToRhesisData() {
-            return new RhesisData {
-                Author = Author,
-                Title = Origin,
-                Content = Content,
-                Source = "今日诗词API",
-                Catalog = Category,
+        catch (Exception ex) {
+            return new SainticData {
+                Data = new SainticRhesisData {
+                    Sentence = $"获取时发生错误 {ex.Message}"
+                }
             };
         }
+    }
+}
 
-        public static JinrishiciData Fetch() {
+public class JinrishiciData {
+
+    [JsonPropertyName("content")] public string Content { get; set; } = string.Empty;
+
+    [JsonPropertyName("origin")] public string Origin { get; set; } = string.Empty;
+
+    [JsonPropertyName("author")] public string Author { get; set; } = string.Empty;
+
+    [JsonPropertyName("category")] public string Category { get; set; } = string.Empty;
+
+    public RhesisData ToRhesisData() {
+        return new RhesisData {
+            Author = Author,
+            Title = Origin,
+            Content = Content,
+            Source = "今日诗词API",
+            Catalog = Category,
+        };
+    }
+
+    public static JinrishiciData Fetch() {
+        try {
             return new HttpClient()
                 .GetFromJsonAsync<JinrishiciData>("https://v1.jinrishici.com/all.json")
                 .Result!;
         }
+        catch (Exception ex) {
+            return new JinrishiciData {
+                Content = $"获取时发生错误 {ex.Message}"
+            };
+        }
     }
-    
+}
+
 public class HitokotoData {
-    [JsonPropertyName("id")] 
-    public int Id { get; set; } = 0;
-    
-    [JsonPropertyName("uuid")]
-    public string Uuid { get; set; } = string.Empty;
+    [JsonPropertyName("id")] public int Id { get; set; } = 0;
 
-    [JsonPropertyName("hitokoto")]
-    public string Hitokoto { get; set; } = string.Empty;
+    [JsonPropertyName("uuid")] public string Uuid { get; set; } = string.Empty;
 
-    [JsonPropertyName("type")]
-    public string Type { get; set; } = string.Empty;
+    [JsonPropertyName("hitokoto")] public string Hitokoto { get; set; } = string.Empty;
 
-    [JsonPropertyName("from")]
-    public string From { get; set; } = string.Empty;
+    [JsonPropertyName("type")] public string Type { get; set; } = string.Empty;
 
-    [JsonPropertyName("from_who")]
-    public string FromWho { get; set; } = string.Empty;
+    [JsonPropertyName("from")] public string From { get; set; } = string.Empty;
 
-    [JsonPropertyName("creator")]
-    public string Creator { get; set; } = string.Empty;
+    [JsonPropertyName("from_who")] public string FromWho { get; set; } = string.Empty;
 
-    [JsonPropertyName("creator_uid")] 
-    public int CreatorUid { get; set; } = 0;
+    [JsonPropertyName("creator")] public string Creator { get; set; } = string.Empty;
 
-    [JsonPropertyName("reviewer")] 
-    public int Reviewer { get; set; } = 0;
+    [JsonPropertyName("creator_uid")] public int CreatorUid { get; set; } = 0;
 
-    [JsonPropertyName("commit_from")]
-    public string CommitFrom { get; set; } = string.Empty;
+    [JsonPropertyName("reviewer")] public int Reviewer { get; set; } = 0;
 
-    [JsonPropertyName("created_at")]
-    public string CreatedAt { get; set; } = string.Empty;
+    [JsonPropertyName("commit_from")] public string CommitFrom { get; set; } = string.Empty;
 
-    [JsonPropertyName("length")]
-    public int Length { get; set; } = 0;
-    
+    [JsonPropertyName("created_at")] public string CreatedAt { get; set; } = string.Empty;
+
+    [JsonPropertyName("length")] public int Length { get; set; } = 0;
+
     public RhesisData ToRhesisData() {
         return new RhesisData {
             Author = FromWho,
@@ -231,7 +209,7 @@ public class HitokotoData {
         };
         return result;
     }
-    
+
     public static HitokotoData Fetch(string? requestUrl = null) {
         requestUrl ??= "https://v1.hitokoto.cn/";
         if (RhesisHandler.HitokotoLimitation) {
