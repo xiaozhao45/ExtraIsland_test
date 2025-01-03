@@ -2,6 +2,8 @@
 using ClassIsland.Core.Abstractions.Controls;
 using ClassIsland.Core.Attributes;
 using ClassIsland.Core.Models.Plugin;
+using ExtraIsland.ConfigHandlers;
+using ExtraIsland.Shared;
 using MaterialDesignThemes.Wpf;
 
 namespace ExtraIsland.Components;
@@ -14,6 +16,14 @@ namespace ExtraIsland.Components;
 )]
 public partial class OnDuty : ComponentBase {
     public OnDuty() {
+        Settings = GlobalConstants.ConfigHandlers.OnDuty!;
         InitializeComponent();
+        OnOnDutyUpdated();
+        Settings.OnDutyUpdated += OnOnDutyUpdated;
     }
+    void OnOnDutyUpdated() {
+        NameLabel.Content = Settings.PeopleOnDuty.Name;
+    }
+
+    OnDutyPersistedConfig Settings { get; }
 }
