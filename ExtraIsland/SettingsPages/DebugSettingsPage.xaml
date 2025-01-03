@@ -5,11 +5,26 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:ExtraIsland.SettingsPages"
       xmlns:ci="http://classisland.tech/schemas/xaml/core"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d"
       Title="DebugSettingsPage">
     <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DebugSettingsPage}}">
         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
         <StackPanel Style="{StaticResource SettingsPageStackPanelStyle}">
+            <Label FontSize="20"
+                   VerticalAlignment="Center"
+                   Foreground="{DynamicResource MaterialDesignBodyLight}">
+                ExtraIsland Developing
+            </Label>
+            <StackPanel Orientation="Horizontal" Margin="0,4,0,10">
+                <materialDesign:PackIcon
+                    Height="50"
+                    Width="50"
+                    Kind="Wrench"
+                    Foreground="{DynamicResource MaterialDesignBodyLight}"
+                    VerticalAlignment="Center" />
+                <Label VerticalAlignment="Center" FontSize="30">全局 · 调试</Label>
+            </StackPanel>
             <ci:SettingsCard IconGlyph="Notifications" Header="测试·弹出式通知"
                              Description="显示弹出式通知">
                 <ci:SettingsCard.Switcher>
