@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using ClassIsland.Core.Abstractions.Controls;
 using ClassIsland.Core.Attributes;
 using ClassIsland.Core.Models.Plugin;
@@ -24,6 +25,8 @@ public partial class OnDuty : ComponentBase {
     void OnOnDutyUpdated() {
         NameLabel.Content = Settings.PeopleOnDuty.Name;
     }
-
     OnDutyPersistedConfig Settings { get; }
+    void OnDuty_OnUnloaded(object sender,RoutedEventArgs e) {
+        Settings.OnDutyUpdated -= OnOnDutyUpdated;
+    }
 }

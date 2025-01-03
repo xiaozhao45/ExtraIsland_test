@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ExtraIsland.Components"
              xmlns:ci="http://classisland.tech/schemas/xaml/core"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             Unloaded="OnDuty_OnUnloaded">
     <Grid DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:OnDuty}}">
         <Label VerticalAlignment="Center" 
                VerticalContentAlignment="Center"
