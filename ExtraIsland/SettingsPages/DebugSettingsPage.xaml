@@ -28,46 +28,31 @@
             <ci:SettingsCard IconGlyph="Notifications" Header="测试·弹出式通知"
                              Description="显示弹出式通知">
                 <ci:SettingsCard.Switcher>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Label Grid.Column="0"
-                               Visibility="Hidden"
+                    <StackPanel Orientation="Horizontal">
+                        <Label Visibility="Hidden"
                                VerticalContentAlignment="Center">H</Label>
-                        <TextBox Grid.Column="1" 
-                                 Visibility="Hidden"
+                        <TextBox Visibility="Hidden"
                                  MinWidth="10"
                                  Margin="3,0,3,0"
                                  InputMethod.IsInputMethodEnabled="False"
                                  PreviewTextInput="TextBoxNumberCheck"
                                  Text="{Binding PopProps.Height}"/>
-                        <Label Grid.Column="2" 
-                               Visibility="Hidden"
+                        <Label Visibility="Hidden"
                                VerticalContentAlignment="Center">W</Label>
-                        <TextBox Grid.Column="3"
-                                 Visibility="Hidden"
+                        <TextBox Visibility="Hidden"
                                  MinWidth="10"
                                  Margin="3,0,3,0"
                                  InputMethod.IsInputMethodEnabled="False"
                                  PreviewTextInput="TextBoxNumberCheck"
                                  Text="{Binding PopProps.Width}"/>
-                        <Label Grid.Column="4"
-                               VerticalContentAlignment="Center">T</Label>
-                        <TextBox Grid.Column="5"
-                                 MinWidth="10"
+                        <Label VerticalContentAlignment="Center">T</Label>
+                        <TextBox MinWidth="10"
                                  Margin="3,0,6,0"
                                  InputMethod.IsInputMethodEnabled="False"
                                  PreviewTextInput="TextBoxNumberCheck"
                                  Text="{Binding PopProps.HoldTime}"/>
-                        <Button Grid.Column="6" Click="PopButton_OnClick">展示</Button>
-                    </Grid>
+                        <Button Click="PopButton_OnClick">展示</Button>
+                    </StackPanel>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
             <ci:SettingsCard IconGlyph="Link" Header="测试·获取诗词"

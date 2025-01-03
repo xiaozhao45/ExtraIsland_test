@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ClassIsland.Core.Attributes;
 using ExtraIsland.ConfigHandlers;
 using ExtraIsland.Shared;
@@ -20,6 +22,10 @@ public partial class DutySettingsPage {
     
     public string PeopleOnDuty { get; set; } = string.Empty;
 
+    void DutySettingsPage_OnUnloaded(object sender,RoutedEventArgs e) {
+        Settings.Save();
+        UpdateOnDuty();
+    }
     void DataGrid_SelectedCellsChanged(object sender,SelectedCellsChangedEventArgs e) {
         Settings.Save();
         UpdateOnDuty();
@@ -42,5 +48,12 @@ public partial class DutySettingsPage {
 
     void UpdateOnDuty() {
         PeopleOnDutyLabel.Content = Settings.PeopleOnDuty.Name;
+    }
+    
+    [GeneratedRegex("[^0-9.-]+")]
+    private static partial Regex NumberRegex();
+    void TextBoxNumberCheck(object sender,TextCompositionEventArgs e) {
+        Regex re = NumberRegex();
+        e.Handled = re.IsMatch(e.Text);
     }
 }

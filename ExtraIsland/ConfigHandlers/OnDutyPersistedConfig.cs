@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Text.Json.Serialization;
 using System.Windows.Forms;
 using ClassIsland.Shared.Helpers;
 using ExtraIsland.Shared;
@@ -116,7 +117,22 @@ public class OnDutyPersistedConfigData {
     public enum DutyStateData {
         [Description("单人值日")] Single,
         [Description("双人值日")] Double,
-        [Description("内/外 轮换值日")] InOut,
+        [Description("内/外 双人轮换值日")] InOut
+    }
+
+    TimeSpan _dutyChangeDuration;
+    public TimeSpan DutyChangeDuration {
+        get => _dutyChangeDuration;
+        set {
+            _dutyChangeDuration = value;
+            PropertyChanged?.Invoke();
+        }
+    }
+
+    [JsonIgnore]
+    public double DutyChangeDurationDays {
+        get => DutyChangeDuration.TotalDays;
+        set => DutyChangeDuration = TimeSpan.FromDays(value);
     }
 
     public PeopleItem GetWhoOnDuty() {
@@ -129,7 +145,7 @@ public class OnDutyPersistedConfigData {
     }
 
     public class PeopleItem {
-        public string Name { get; set; } = "--";
-        public int Index { get; set; } = -1;
+        public string Name { get; set; } = string.Empty;
+        public int Index { get; set; }
     }
 }
