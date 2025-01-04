@@ -32,8 +32,38 @@
                     VerticalAlignment="Center" />
                 <Label VerticalAlignment="Center" FontSize="30">全局 · 值日设置</Label>
             </StackPanel>
+            <materialDesign:ColorZone Background="#1500F0F0" Panel.ZIndex="1" Margin="0 0 0 0" MaxWidth="670" HorizontalAlignment="Left">
+                <Grid>
+                    <DockPanel Margin="8 4">
+                        <materialDesign:PackIcon Kind="Warning"
+                                                 VerticalAlignment="Center"
+                                                 Height="20" Width="20"/>
+                        <TextBlock TextWrapping="Wrap"
+                                   VerticalAlignment="Center"
+                                   Margin="4 0 0 0" >
+                            <Run>你正在使用值日功能的早期版本，此版本仅供尝鲜使用，不建议用于生产环境。此功能在未来可能会产生较大的变动，并且</Run>
+                            <Bold>可能无法保证配置文件完全向下兼容。</Bold>
+                            <Run>欢迎前往</Run>
+                            <ci:NavHyperlink CommandParameter="https://github.com/LiPolymer/ExtraIsland/discussions/8">
+                            <materialDesign:PackIcon
+                                VerticalAlignment="Center"
+                                Width="12"
+                                Height="12"
+                                Kind="Github"/>
+                            <materialDesign:PackIcon
+                                VerticalAlignment="Center"
+                                Width="12"
+                                Height="12"
+                                Kind="Message"/>
+                                LiPolymer/ExtraIsland #8
+                            </ci:NavHyperlink>
+                            <Run>进行反馈交流!</Run>
+                        </TextBlock>
+                    </DockPanel>
+                </Grid>
+            </materialDesign:ColorZone>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <materialDesign:Card Margin="0,6,0,6" MinWidth="335">
+                <materialDesign:Card Margin="0,6,0,6">
                     <StackPanel Orientation="Vertical" Margin="12,6,10,6">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon

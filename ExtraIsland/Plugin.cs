@@ -21,9 +21,9 @@ namespace ExtraIsland
             services.AddComponent<Components.BetterCountdown,Components.BetterCountdownSettings>();
             services.AddComponent<Components.FluentClock,Components.FluentClockSettings>();
             services.AddComponent<Components.Rhesis>();
+            services.AddComponent<Components.OnDuty>();
+            services.AddSettingsPage<SettingsPages.DutySettingsPage>();
             #if DEBUG
-                services.AddComponent<Components.OnDuty>();
-                services.AddSettingsPage<SettingsPages.DutySettingsPage>();
                 services.AddSettingsPage<SettingsPages.DebugSettingsPage>();
             #endif
         }
