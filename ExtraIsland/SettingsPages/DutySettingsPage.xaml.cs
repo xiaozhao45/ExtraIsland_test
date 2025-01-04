@@ -12,13 +12,13 @@ namespace ExtraIsland.SettingsPages;
 [SettingsPageInfo("extraisland.duty","ExtraIsland·值日",PackIconKind.UsersOutline,PackIconKind.Users)]
 public partial class DutySettingsPage {
     public DutySettingsPage() {
-        Settings = GlobalConstants.ConfigHandlers.OnDuty!;
+        Settings = GlobalConstants.Handlers.OnDuty!;
         InitializeComponent();
         UpdateOnDuty();
         Settings.OnDutyUpdated += UpdateOnDuty;
     }
 
-    public OnDutyPersistedConfig Settings { get; set; }
+    public OnDutyPersistedConfigHandler Settings { get; set; }
     
     public string PeopleOnDuty { get; set; } = string.Empty;
 

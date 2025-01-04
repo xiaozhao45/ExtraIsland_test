@@ -16,7 +16,7 @@ namespace ExtraIsland
         public override void Initialize(HostBuilderContext context, IServiceCollection services)
         {
             GlobalConstants.PluginConfigFolder = PluginConfigFolder;
-            GlobalConstants.ConfigHandlers.OnDuty = new ConfigHandlers.OnDutyPersistedConfig();
+            GlobalConstants.Handlers.OnDuty = new ConfigHandlers.OnDutyPersistedConfigHandler();
             //Registering Services
             services.AddComponent<Components.BetterCountdown,Components.BetterCountdownSettings>();
             services.AddComponent<Components.FluentClock,Components.FluentClockSettings>();

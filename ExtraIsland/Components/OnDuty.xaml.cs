@@ -17,7 +17,7 @@ namespace ExtraIsland.Components;
 )]
 public partial class OnDuty : ComponentBase {
     public OnDuty() {
-        Settings = GlobalConstants.ConfigHandlers.OnDuty!;
+        Settings = GlobalConstants.Handlers.OnDuty!;
         InitializeComponent();
         OnOnDutyUpdated();
         Settings.OnDutyUpdated += OnOnDutyUpdated;
@@ -25,7 +25,7 @@ public partial class OnDuty : ComponentBase {
     void OnOnDutyUpdated() {
         NameLabel.Content = Settings.PeoplesOnDutyString;
     }
-    OnDutyPersistedConfig Settings { get; }
+    OnDutyPersistedConfigHandler Settings { get; }
     void OnDuty_OnUnloaded(object sender,RoutedEventArgs e) {
         Settings.OnDutyUpdated -= OnOnDutyUpdated;
     }

@@ -8,8 +8,8 @@ using ExtraIsland.Shared;
 
 namespace ExtraIsland.ConfigHandlers;
 
-public class OnDutyPersistedConfig {
-    public OnDutyPersistedConfig() {
+public class OnDutyPersistedConfigHandler {
+    public OnDutyPersistedConfigHandler() {
         Data = new OnDutyPersistedConfigData();
         if (!File.Exists(Path.Combine(GlobalConstants.PluginConfigFolder!,"Persisted/OnDuty.json"))) {
             if (!Directory.Exists(Path.Combine(GlobalConstants.PluginConfigFolder!,"Persisted/"))) {
