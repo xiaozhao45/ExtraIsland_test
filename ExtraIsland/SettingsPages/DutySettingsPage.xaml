@@ -13,6 +13,7 @@
     <ci:SettingsPageBase.Resources>
         <sc:IntToStringConverter x:Key="IntToStringConverter"/>
         <sc:DoubleToStringConverter x:Key="DoubleToStringConverter"/>
+        <sc:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
     </ci:SettingsPageBase.Resources>
     <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DutySettingsPage}}">
         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
@@ -128,6 +129,23 @@
                                      InputMethod.IsInputMethodEnabled="False"
                                      PreviewTextInput="TextBoxNumberCheck"
                                      Text="{Binding Settings.Data.DutyChangeDurationDays, Converter={StaticResource DoubleToStringConverter}}"/>
+                        </ci:SettingsCard.Switcher>
+                    </ci:SettingsCard>
+                    <ci:SettingsCard IconGlyph="SwitchAccount" Header="轮换方式"
+                                     Description="选择值日生轮换方法">
+                        <ci:SettingsCard.Switcher>
+                            <Grid>
+                                <ComboBox
+                                    MinWidth="20"
+                                    SelectedItem="{Binding Settings.Data.DutyState}"
+                                    ItemsSource="{Binding DutyStates}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </Grid>
                         </ci:SettingsCard.Switcher>
                     </ci:SettingsCard>
                 </StackPanel>

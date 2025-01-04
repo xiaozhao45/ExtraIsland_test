@@ -29,7 +29,7 @@ public class OnDutyPersistedConfig {
                 Path.Combine(GlobalConstants.PluginConfigFolder!,"Persisted/OnDuty.json"),
                 Data);
         }
-        PeopleOnDuty = Data.GetWhoOnDuty();
+        PeoplesOnDuty = Data.GetWhoOnDuty();
         Data.PropertyChanged += Save;
     }
 
@@ -41,11 +41,22 @@ public class OnDutyPersistedConfig {
     }
 
     public void UpdateOnDuty() {
-        PeopleOnDuty = Data.GetWhoOnDuty();
+        PeoplesOnDuty = Data.GetWhoOnDuty();
         OnDutyUpdated?.Invoke();
     }
+    
+    public List<OnDutyPersistedConfigData.PeopleItem> PeoplesOnDuty { get; set; }
 
-    public OnDutyPersistedConfigData.PeopleItem PeopleOnDuty { get; set; }
+    public string PeoplesOnDutyString {
+        get {
+            return Data.DutyState switch {
+                OnDutyPersistedConfigData.DutyStateData.Single => PeoplesOnDuty[0].Name,
+                OnDutyPersistedConfigData.DutyStateData.Double => $"{PeoplesOnDuty[0].Name} {PeoplesOnDuty[1].Name}",
+                OnDutyPersistedConfigData.DutyStateData.InOut => $"内:{PeoplesOnDuty[0].Name} 外:{PeoplesOnDuty[1].Name}",
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+    }
 
     public OnDutyPersistedConfigData Data { get; set; }
     
@@ -135,8 +146,37 @@ public class OnDutyPersistedConfigData {
         set => DutyChangeDuration = TimeSpan.FromDays(value);
     }
 
-    public PeopleItem GetWhoOnDuty() {
-        PeopleItem? item = Peoples.FirstOrDefault(p => p.Index == CurrentPeopleIndex);
+    public List<PeopleItem> GetWhoOnDuty() {
+        return DutyState switch {
+            DutyStateData.Single => [
+                GetPeopleOnDuty(CurrentPeopleIndex)
+            ],
+            DutyStateData.Double => Utils.IsOdd(CurrentPeopleIndex) switch {
+                true => [
+                    GetPeopleOnDuty(CurrentPeopleIndex - 1),
+                    GetPeopleOnDuty(CurrentPeopleIndex)
+                ],
+                false => [
+                    GetPeopleOnDuty(CurrentPeopleIndex),
+                    GetPeopleOnDuty(CurrentPeopleIndex + 1)
+                ]
+            },
+            DutyStateData.InOut => Utils.IsOdd(CurrentPeopleIndex) switch {
+                true => [
+                    GetPeopleOnDuty(CurrentPeopleIndex),
+                    GetPeopleOnDuty(CurrentPeopleIndex - 1)
+                ],
+                false => [
+                    GetPeopleOnDuty(CurrentPeopleIndex),
+                    GetPeopleOnDuty(CurrentPeopleIndex + 1)
+                ]
+            },
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+    
+    public PeopleItem GetPeopleOnDuty(int index) {
+        PeopleItem? item = Peoples.FirstOrDefault(p => p.Index == index);
         item ??= new PeopleItem {
             Index = CurrentPeopleIndex,
             Name = "没有值日生"

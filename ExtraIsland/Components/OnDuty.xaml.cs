@@ -23,7 +23,7 @@ public partial class OnDuty : ComponentBase {
         Settings.OnDutyUpdated += OnOnDutyUpdated;
     }
     void OnOnDutyUpdated() {
-        NameLabel.Content = Settings.PeopleOnDuty.Name;
+        NameLabel.Content = Settings.PeoplesOnDutyString;
     }
     OnDutyPersistedConfig Settings { get; }
     void OnDuty_OnUnloaded(object sender,RoutedEventArgs e) {

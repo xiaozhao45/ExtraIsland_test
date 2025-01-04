@@ -7,7 +7,6 @@ using ClassIsland.Core.Attributes;
 using ExtraIsland.ConfigHandlers;
 using ExtraIsland.Shared;
 using MaterialDesignThemes.Wpf;
-
 namespace ExtraIsland.SettingsPages;
 
 [SettingsPageInfo("extraisland.duty","ExtraIsland·值日",PackIconKind.UsersOutline,PackIconKind.Users)]
@@ -16,6 +15,7 @@ public partial class DutySettingsPage {
         Settings = GlobalConstants.ConfigHandlers.OnDuty!;
         InitializeComponent();
         UpdateOnDuty();
+        Settings.OnDutyUpdated += UpdateOnDuty;
     }
 
     public OnDutyPersistedConfig Settings { get; set; }
@@ -23,12 +23,11 @@ public partial class DutySettingsPage {
     public string PeopleOnDuty { get; set; } = string.Empty;
 
     void DutySettingsPage_OnUnloaded(object sender,RoutedEventArgs e) {
+        Settings.OnDutyUpdated -= UpdateOnDuty;
         Settings.Save();
-        UpdateOnDuty();
     }
     void DataGrid_SelectedCellsChanged(object sender,SelectedCellsChangedEventArgs e) {
         Settings.Save();
-        UpdateOnDuty();
     }
     void DeleteButton_Click(object sender,RoutedEventArgs e) {
         Button button = (sender as Button)!;
@@ -43,11 +42,10 @@ public partial class DutySettingsPage {
             Name = "新同学"
         });
         Settings.Save();
-        UpdateOnDuty();
     }
 
     void UpdateOnDuty() {
-        PeopleOnDutyLabel.Content = Settings.PeopleOnDuty.Name;
+        PeopleOnDutyLabel.Content = Settings.PeoplesOnDutyString;
     }
     
     [GeneratedRegex("[^0-9.-]+")]
@@ -56,4 +54,10 @@ public partial class DutySettingsPage {
         Regex re = NumberRegex();
         e.Handled = re.IsMatch(e.Text);
     }
+    
+    public List<OnDutyPersistedConfigData.DutyStateData> DutyStates { get; } = [
+        OnDutyPersistedConfigData.DutyStateData.Single,
+        OnDutyPersistedConfigData.DutyStateData.Double,
+        OnDutyPersistedConfigData.DutyStateData.InOut
+    ]; 
 }
