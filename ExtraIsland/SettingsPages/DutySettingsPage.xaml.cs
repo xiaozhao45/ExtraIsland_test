@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.IO;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,6 +9,8 @@ using ClassIsland.Core.Attributes;
 using ExtraIsland.ConfigHandlers;
 using ExtraIsland.Shared;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
+
 namespace ExtraIsland.SettingsPages;
 
 [SettingsPageInfo("extraisland.duty","ExtraIsland·值日",PackIconKind.UsersOutline,PackIconKind.Users)]
@@ -46,9 +50,10 @@ public partial class DutySettingsPage {
 
     void UpdateOnDuty() {
         PeopleOnDutyLabel.Content = Settings.PeoplesOnDutyString;
+        LastUpdateLabel.Content = Settings.LastUpdateString;
     }
     
-    [GeneratedRegex("[^0-9.-]+")]
+    [GeneratedRegex("[^0-9]+")]
     private static partial Regex NumberRegex();
     void TextBoxNumberCheck(object sender,TextCompositionEventArgs e) {
         Regex re = NumberRegex();
@@ -59,5 +64,29 @@ public partial class DutySettingsPage {
         OnDutyPersistedConfigData.DutyStateData.Single,
         OnDutyPersistedConfigData.DutyStateData.Double,
         OnDutyPersistedConfigData.DutyStateData.InOut
-    ]; 
+    ];
+
+    void ClearTimeButton_OnClick(object sender,RoutedEventArgs e) {
+        Settings.Data.LastUpdate = Settings.Data.LastUpdate.Date;
+    }
+    void ImportButton_OnClick(object sender,RoutedEventArgs e) {
+        OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog {
+            DefaultExt = ".txt",
+            Filter = "文本文档 (.txt)|*.txt"
+        };
+        bool? result = dialog.ShowDialog();
+        if (result != true) return;
+        string[] list = File.ReadAllLines(dialog.FileName);
+        ObservableCollection<OnDutyPersistedConfigData.PeopleItem> peoples = [];
+        int i = 0;
+        foreach (var name in list) {
+            peoples.Add(new OnDutyPersistedConfigData.PeopleItem {
+                Index = i,
+                Name = name
+            });
+            i++;
+        }
+        Settings.Data.Peoples = peoples;
+        PeopleDataGrid.ItemsSource = Settings.Data.Peoples;
+    }
 }

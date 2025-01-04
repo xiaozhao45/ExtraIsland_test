@@ -1,10 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Text.Json.Serialization;
 using System.Windows.Forms;
+using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Shared.Helpers;
 using ExtraIsland.Shared;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace ExtraIsland.ConfigHandlers;
 
@@ -30,9 +33,14 @@ public class OnDutyPersistedConfigHandler {
                 Data);
         }
         PeoplesOnDuty = Data.GetWhoOnDuty();
+        _updateThread = new Thread(TickerAction);
         Data.PropertyChanged += Save;
+        _updateThread.Start();
     }
-
+    
+    // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
+    readonly Thread _updateThread;
+    
     public void Save() {
         ConfigureFileHelper.SaveConfig<OnDutyPersistedConfigData>(
             Path.Combine(GlobalConstants.PluginConfigFolder!,"Persisted/OnDuty.json"),
@@ -59,8 +67,27 @@ public class OnDutyPersistedConfigHandler {
     }
 
     public OnDutyPersistedConfigData Data { get; set; }
+
+    public string LastUpdateString {
+        get => Data.LastUpdate.ToString(CultureInfo.InvariantCulture);
+    }
     
     public event Action? OnDutyUpdated;
+    
+    void TickerAction() {
+        if (EiUtils.GetDateTimeSpan(Data.LastUpdate,DateTime.Now) >= Data.DutyChangeDuration) {
+            Data.LastUpdate = DateTime.Now;
+            if (Data.DutyState == OnDutyPersistedConfigData.DutyStateData.Double) {
+                Data.CurrentPeopleIndex += 2;
+            } else {
+                Data.CurrentPeopleIndex++;   
+            }
+            if (Data.CurrentPeopleIndex >= PeoplesOnDuty.Count & Data.IsCycled) {
+                Data.CurrentPeopleIndex = 0;
+            }
+        }
+        Thread.Sleep(200);
+    }
 }
 
 public class OnDutyPersistedConfigData {
@@ -151,7 +178,7 @@ public class OnDutyPersistedConfigData {
             DutyStateData.Single => [
                 GetPeopleOnDuty(CurrentPeopleIndex)
             ],
-            DutyStateData.Double => Utils.IsOdd(CurrentPeopleIndex) switch {
+            DutyStateData.Double => EiUtils.IsOdd(CurrentPeopleIndex) switch {
                 true => [
                     GetPeopleOnDuty(CurrentPeopleIndex - 1),
                     GetPeopleOnDuty(CurrentPeopleIndex)
@@ -161,7 +188,7 @@ public class OnDutyPersistedConfigData {
                     GetPeopleOnDuty(CurrentPeopleIndex + 1)
                 ]
             },
-            DutyStateData.InOut => Utils.IsOdd(CurrentPeopleIndex) switch {
+            DutyStateData.InOut => EiUtils.IsOdd(CurrentPeopleIndex) switch {
                 true => [
                     GetPeopleOnDuty(CurrentPeopleIndex),
                     GetPeopleOnDuty(CurrentPeopleIndex - 1)
@@ -179,7 +206,7 @@ public class OnDutyPersistedConfigData {
         PeopleItem? item = Peoples.FirstOrDefault(p => p.Index == index);
         item ??= new PeopleItem {
             Index = CurrentPeopleIndex,
-            Name = "没有值日生"
+            Name = "无值日生"
         };
         return item;
     }

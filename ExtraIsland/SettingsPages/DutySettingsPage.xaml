@@ -57,7 +57,8 @@
                             </materialDesign:Chip>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                                <DataGrid Margin="6,6,6,0"
+                                <DataGrid x:Name="PeopleDataGrid"
+                                          Margin="6,6,6,0"
                                           IsReadOnly="False"
                                           AutoGenerateColumns="False"
                                           CanUserResizeColumns="False"
@@ -86,21 +87,62 @@
                                         </DataGridTemplateColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                            <Button HorizontalAlignment="Left"
+                            <StackPanel Orientation="Horizontal">
+                                <Button HorizontalAlignment="Left"
                                         Width="30"
                                         Height="30"
-                                        Margin="6,3,3,3"
+                                        Margin="6,6,3,3"
                                         Padding="0"
                                         Background="{DynamicResource MaterialDesignDivider}"
                                         BorderBrush="Transparent"
+                                        ToolTip="新建"
                                         Click="AddButton_Click">
-                                <materialDesign:PackIcon Kind="Add" Foreground="LightGreen" />
-                            </Button>
+                                    <materialDesign:PackIcon Kind="Add" Foreground="LightGreen" />
+                                </Button>
+                                <Button HorizontalAlignment="Left"
+                                        Width="30"
+                                        Height="30"
+                                        Margin="3,6,3,3"
+                                        Padding="0"
+                                        Background="{DynamicResource MaterialDesignDivider}"
+                                        BorderBrush="Transparent"
+                                        ToolTip="从文本文件导入"
+                                        Click="ImportButton_OnClick">
+                                    <materialDesign:PackIcon Kind="Import" Foreground="LightBlue" />
+                                </Button>
+                                <Button HorizontalAlignment="Left"
+                                        Visibility="Collapsed"
+                                        Width="30"
+                                        Height="30"
+                                        Margin="3,6,3,3"
+                                        Padding="0"
+                                        Background="{DynamicResource MaterialDesignDivider}"
+                                        BorderBrush="Transparent"
+                                        ToolTip="全部删除">
+                                    <materialDesign:PackIcon Kind="DeleteAlert" Foreground="PaleVioletRed" />
+                                </Button>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </materialDesign:Card>
                 <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
                 <StackPanel Orientation="Vertical" Margin="8,6,0,0" Style="{StaticResource SettingsPageStackPanelStyle}">
+                    <materialDesign:Card Margin="0,0,0,6" Padding="7,0,0,0" Height="30">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Label>上次更新</Label>
+                            <Label x:Name="LastUpdateLabel"/>
+                            <Button Click="ClearTimeButton_OnClick"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    Foreground="{DynamicResource PrimaryHueLightBrush}"
+                                    ToolTip="时间抹零"
+                                    Padding="3,0,3,0"
+                                    Height="20">
+                                <materialDesign:PackIcon
+                                    Kind="DeleteClock"/>
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:Card>
                     <ci:SettingsCard IconGlyph="Restart"
                                      Header="循环"
                                      Description="开启后,每当列表遍历完毕,索引将自动归零"
@@ -120,7 +162,7 @@
                     </ci:SettingsCard>
                     <ci:SettingsCard IconGlyph="Stopwatch"
                                      Header="轮换间隔"
-                                     Description="轮换到下一位间隔的天数 (浮点数)">
+                                     Description="轮换到下一位间隔的天数">
                         <ci:SettingsCard.Switcher>
                             <TextBox Grid.Column="5"
                                      MinWidth="20"

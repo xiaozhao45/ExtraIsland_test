@@ -71,11 +71,6 @@ public partial class BetterCountdown {
     static Visibility BoolToCollapsedVisible(bool isVisible) {
         return isVisible ? Visibility.Visible : Visibility.Collapsed;
     }
-
-    static TimeSpan DiffDays(DateTime startTime, DateTime endTime) {
-        TimeSpan daysSpan = new TimeSpan(endTime.Ticks - startTime.Ticks);
-        return daysSpan;
-    }
     
     DateTime _nowTime;
     DateTime Now {
@@ -103,7 +98,7 @@ public partial class BetterCountdown {
     void DetectEvent() {
         if (_updateLock) return;
         _updateLock = true;
-        TimeSpan span = DiffDays(Now,Convert.ToDateTime(Settings.TargetDate));
+        TimeSpan span = EiUtils.GetDateTimeSpan(Now,Convert.ToDateTime(Settings.TargetDate));
         if (_days != span.Days.ToString() | _isAccurateChanged) {
             int dayI = span.Days;
             _days = (int)Settings.Accuracy == 0 ? (dayI + 1).ToString() : dayI.ToString();
@@ -137,7 +132,7 @@ public partial class BetterCountdown {
     }
 
     void SilentUpdater() {
-        TimeSpan span = DiffDays(Now,Convert.ToDateTime(Settings.TargetDate));
+        TimeSpan span = EiUtils.GetDateTimeSpan(Now,Convert.ToDateTime(Settings.TargetDate));
         if (_days != span.Days.ToString() | _isAccurateChanged) {
             int dayI = span.Days;
             _days = (int)Settings.Accuracy == 0 ? (dayI + 1).ToString() : dayI.ToString();

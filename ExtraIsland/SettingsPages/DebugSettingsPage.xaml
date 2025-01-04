@@ -18,8 +18,8 @@
             </Label>
             <StackPanel Orientation="Horizontal" Margin="0,4,0,10">
                 <materialDesign:PackIcon
-                    Height="50"
-                    Width="50"
+                    Height="45"
+                    Width="60"
                     Kind="Wrench"
                     Foreground="{DynamicResource MaterialDesignBodyLight}"
                     VerticalAlignment="Center" />
