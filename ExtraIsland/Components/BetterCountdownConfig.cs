@@ -8,6 +8,7 @@ public class BetterCountdownConfig {
     public string Prefix { get; set; } = "现在";
     public string Suffix { get; set; } = "过去了";
     public bool IsSystemTime { get; set; }
+    public bool IsCorrectorEnabled { get; set; } = true;
     public CountdownSeparatorConfigs Separators { get; set; } = new CountdownSeparatorConfigs();
 
     bool _isNoGapDisplay;

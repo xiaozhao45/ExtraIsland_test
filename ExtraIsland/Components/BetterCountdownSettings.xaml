@@ -118,6 +118,9 @@
             <ci:SettingsCard IconGlyph="AlignHorizontalCenter" Header="无隙并置"
                              Description="启用后,将移除不同元素间的间距"
                              IsOn="{Binding Settings.IsNoGapDisplay, Mode=TwoWay}"/>
+            <ci:SettingsCard IconGlyph="ClockCheck" Header="差一矫正"
+                             Description="启用后,使用低精度时末位将向上取整"
+                             IsOn="{Binding Settings.IsCorrectorEnabled, Mode=TwoWay}"/>
             <Label HorizontalAlignment="Center" 
                    Foreground="{DynamicResource MaterialDesignBodyLight}">
                 Added by ExtraIsland

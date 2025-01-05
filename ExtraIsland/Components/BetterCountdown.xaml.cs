@@ -101,17 +101,17 @@ public partial class BetterCountdown {
         TimeSpan span = EiUtils.GetDateTimeSpan(Now,Convert.ToDateTime(Settings.TargetDate));
         if (_days != span.Days.ToString() | _isAccurateChanged) {
             int dayI = span.Days;
-            _days = (int)Settings.Accuracy == 0 ? (dayI + 1).ToString() : dayI.ToString();
+            _days = (int)Settings.Accuracy == 0 & Settings.IsCorrectorEnabled ? (dayI + 1).ToString() : dayI.ToString();
             _dyAnimator.TargetContent = _days;
         }
         if ((_hours != span.Hours.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 1) {
             int hourI = span.Hours;
-            _hours = (int)Settings.Accuracy == 1 ? (hourI + 1).ToString() : hourI.ToString();
+            _hours = (int)Settings.Accuracy == 1 & Settings.IsCorrectorEnabled ? (hourI + 1).ToString() : hourI.ToString();
             _hrAnimator.TargetContent = _hours;
         }
         if ((_minutes != span.Minutes.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 2) {
             int minuteI = span.Minutes;
-            _minutes = (int)Settings.Accuracy == 2 ? (minuteI + 1).ToString() : minuteI.ToString();
+            _minutes = (int)Settings.Accuracy == 2 & Settings.IsCorrectorEnabled ? (minuteI + 1).ToString() : minuteI.ToString();
             string m = _minutes;
             if (m.Length == 1) {
                 m = "0" + m;
