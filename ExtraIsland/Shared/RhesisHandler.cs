@@ -115,7 +115,7 @@ public class SainticData {
         catch (Exception ex) {
             return new SainticData {
                 Data = new SainticRhesisData {
-                    Sentence = $"获取时发生错误 {ex.Message}"
+                    Sentence = $"获取时发生错误"
                 }
             };
         }
@@ -150,7 +150,7 @@ public class JinrishiciData {
         }
         catch (Exception ex) {
             return new JinrishiciData {
-                Content = $"获取时发生错误 {ex.Message}"
+                Content = $"获取时发生错误"
             };
         }
     }
@@ -229,7 +229,7 @@ public class HitokotoData {
         }
         catch (Exception ex) {
             return new HitokotoData {
-                Hitokoto = $"获取时发生错误 {ex.Message}"
+                Hitokoto = $"获取时发生错误"
             };
         }
     }
