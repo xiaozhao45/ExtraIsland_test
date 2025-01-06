@@ -3,11 +3,8 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Text.Json.Serialization;
-using System.Windows.Forms;
-using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Shared.Helpers;
 using ExtraIsland.Shared;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace ExtraIsland.ConfigHandlers;
 
@@ -76,17 +73,21 @@ public class OnDutyPersistedConfigHandler {
     
     void TickerAction() {
         if (EiUtils.GetDateTimeSpan(Data.LastUpdate,DateTime.Now) >= Data.DutyChangeDuration) {
-            Data.LastUpdate = DateTime.Now;
-            if (Data.DutyState == OnDutyPersistedConfigData.DutyStateData.Double) {
-                Data.CurrentPeopleIndex += 2;
-            } else {
-                Data.CurrentPeopleIndex++;   
-            }
-            if (Data.CurrentPeopleIndex >= PeoplesOnDuty.Count & Data.IsCycled) {
-                Data.CurrentPeopleIndex = 0;
-            }
+            SwapOnDuty();
         }
         Thread.Sleep(200);
+    }
+
+    public void SwapOnDuty() {
+        Data.LastUpdate = DateTime.Now;
+        if (Data.DutyState == OnDutyPersistedConfigData.DutyStateData.Double) {
+            Data.CurrentPeopleIndex += 2;
+        } else {
+            Data.CurrentPeopleIndex++;   
+        }
+        if (Data.CurrentPeopleIndex >= Data.Peoples.Count & Data.IsCycled) {
+            Data.CurrentPeopleIndex = 0;
+        }
     }
 }
 

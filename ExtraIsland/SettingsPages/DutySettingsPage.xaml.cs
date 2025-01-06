@@ -79,7 +79,7 @@ public partial class DutySettingsPage {
         string[] list = File.ReadAllLines(dialog.FileName);
         ObservableCollection<OnDutyPersistedConfigData.PeopleItem> peoples = [];
         int i = 0;
-        foreach (var name in list) {
+        foreach (string name in list) {
             peoples.Add(new OnDutyPersistedConfigData.PeopleItem {
                 Index = i,
                 Name = name
