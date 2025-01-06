@@ -18,8 +18,7 @@ namespace ExtraIsland.Components;
 public partial class Rhesis : ComponentBase {
     public Rhesis() {
         InitializeComponent();
-        this.BeginInvoke(() =>
-        {
+        this.BeginInvoke(() => {
             ShowingContent = _rhesisHandler.Get(); 
         });
     }

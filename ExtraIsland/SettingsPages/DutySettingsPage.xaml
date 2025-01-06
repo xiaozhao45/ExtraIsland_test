@@ -95,7 +95,7 @@
                                           CanUserReorderColumns="False"
                                           CanUserAddRows="False"
                                           SelectedCellsChanged="DataGrid_SelectedCellsChanged"
-                                          Height="180"
+                                          Height="240"
                                           ItemsSource="{Binding Settings.Data.Peoples, Mode=TwoWay}">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="索引" Width="60" Binding="{Binding Index}" />
