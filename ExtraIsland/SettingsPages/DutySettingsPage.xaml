@@ -141,15 +141,15 @@
                                     <materialDesign:PackIcon Kind="Import" Foreground="LightBlue" />
                                 </Button>
                                 <Button HorizontalAlignment="Left"
-                                        Visibility="Collapsed"
                                         Width="30"
                                         Height="30"
                                         Margin="3,6,3,3"
                                         Padding="0"
                                         Background="{DynamicResource MaterialDesignDivider}"
                                         BorderBrush="Transparent"
-                                        ToolTip="全部删除">
-                                    <materialDesign:PackIcon Kind="DeleteAlert" Foreground="PaleVioletRed" />
+                                        ToolTip="自动重新索引"
+                                        Click="AutoSort_OnClick">
+                                    <materialDesign:PackIcon Kind="Tags" Foreground="LightYellow" />
                                 </Button>
                                 <Button HorizontalAlignment="Right"
                                         Visibility="Collapsed"

@@ -68,6 +68,25 @@ public class OnDutyPersistedConfigHandler {
     public string LastUpdateString {
         get => Data.LastUpdate.ToString(CultureInfo.InvariantCulture);
     }
+
+    public void SortCollectionByIndex() {
+        ObservableCollection<OnDutyPersistedConfigData.PeopleItem> newPeoplesList = [];
+        int maxIndex = Data.Peoples.Count;
+        int i = 0;
+        for (int l = 0; l <= maxIndex; l++) {
+            while (true) {
+                OnDutyPersistedConfigData.PeopleItem? item = Data.Peoples.FirstOrDefault(p => p.Index == l);
+                if (item is null) break;
+                Data.Peoples.Remove(item);
+                newPeoplesList.Add(new OnDutyPersistedConfigData.PeopleItem {
+                    Index = i,
+                    Name = item.Name
+                });
+                i++;
+            }
+        }
+        Data.Peoples = newPeoplesList;
+    }
     
     public event Action? OnDutyUpdated;
     

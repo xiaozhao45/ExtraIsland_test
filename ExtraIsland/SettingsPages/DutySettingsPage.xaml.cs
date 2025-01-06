@@ -89,4 +89,11 @@ public partial class DutySettingsPage {
         Settings.Data.Peoples = peoples;
         PeopleDataGrid.ItemsSource = Settings.Data.Peoples;
     }
+    void DebugButton_OnClick(object sender,RoutedEventArgs e) {
+        Settings.SwapOnDuty();
+    }
+    void AutoSort_OnClick(object sender,RoutedEventArgs e) {
+        Settings.SortCollectionByIndex();
+        PeopleDataGrid.ItemsSource = Settings.Data.Peoples;
+    }
 }
