@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace ExtraIsland.Shared;
+﻿namespace ExtraIsland.Shared;
 
 public static class EiUtils {
     public static bool IsOdd(int n) {

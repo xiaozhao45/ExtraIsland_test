@@ -185,6 +185,10 @@
                             </Button>
                         </StackPanel>
                     </materialDesign:Card>
+                    <ci:SettingsCard IconGlyph="ScissorsCutting"
+                                     Header="自动时间抹零"
+                                     Description="开启后,每次更新都将只记录日期数据"
+                                     IsOn="{Binding Settings.Data.IsAutoShearEnabled, Mode=TwoWay}"/>
                     <ci:SettingsCard IconGlyph="Restart"
                                      Header="循环"
                                      Description="开启后,每当列表遍历完毕,索引将自动归零"
