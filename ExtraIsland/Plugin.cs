@@ -20,7 +20,7 @@ namespace ExtraIsland
             //Registering Services
             services.AddComponent<Components.BetterCountdown,Components.BetterCountdownSettings>();
             services.AddComponent<Components.FluentClock,Components.FluentClockSettings>();
-            services.AddComponent<Components.Rhesis>();
+            services.AddComponent<Components.Rhesis,Components.RhesisSettings>();
             services.AddComponent<Components.OnDuty>();
             services.AddSettingsPage<SettingsPages.DutySettingsPage>();
             #if DEBUG
