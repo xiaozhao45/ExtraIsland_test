@@ -1,9 +1,11 @@
 ﻿using System.Text.Json.Serialization;
+using System.Windows;
 using System.Windows.Controls;
 using ClassIsland.Core.Abstractions.Controls;
 using ClassIsland.Core.Attributes;
 using ClassIsland.Core.Models.Plugin;
 using ExtraIsland.Shared;
+using Google.Protobuf;
 using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
 
@@ -15,16 +17,15 @@ namespace ExtraIsland.Components;
     PackIconKind.MessageOutline,
     "[早期阶段]显示一句古今名言,可使用三个API"
 )]
-public partial class Rhesis : ComponentBase {
+public partial class Rhesis {
     public Rhesis() {
         InitializeComponent();
-        this.BeginInvoke(() => {
-            ShowingContent = _rhesisHandler.Get(); 
-        });
     }
 
     readonly RhesisHandler.Instance _rhesisHandler = new RhesisHandler.Instance();
-    public RhesisData ShowingContent { get; private set; } = new RhesisData() {
-        Content = ":)"
-    };
+    void Rhesis_OnLoaded(object sender,RoutedEventArgs e) {
+        this.BeginInvoke(() => {
+            Label.Content = _rhesisHandler.Get(Settings.DataSource).Content; 
+        });
+    }
 }
