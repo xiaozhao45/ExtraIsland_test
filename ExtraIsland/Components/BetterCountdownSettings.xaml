@@ -121,6 +121,10 @@
             <ci:SettingsCard IconGlyph="ClockCheck" Header="差一矫正"
                              Description="启用后,使用低精度时末位将向上取整"
                              IsOn="{Binding Settings.IsCorrectorEnabled, Mode=TwoWay}"/>
+            <ci:SettingsCard IconGlyph="Microscope"
+                             Header="专注模式"
+                             Description="启用后,秒数动画将被替换为微微闪烁,避免频繁的移动分散注意力"
+                             IsOn="{Binding Settings.IsFocusedModeEnabled, Mode=TwoWay}"/>
             <Label HorizontalAlignment="Center" 
                    Foreground="{DynamicResource MaterialDesignBodyLight}">
                 Added by ExtraIsland

@@ -32,6 +32,8 @@ public class BetterCountdownConfig {
         }
     }
     public event Action? OnAccuracyChanged;
+    
+    public bool IsFocusedModeEnabled { get; set; } = false;
 }
 
 public class CountdownSeparatorConfigs {

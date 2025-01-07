@@ -125,7 +125,7 @@ public partial class BetterCountdown {
             if (s.Length == 1) {
                 s = "0" + s;
             }
-            _scAnimator.TargetContent = s;
+            _scAnimator.Update(s,!Settings.IsFocusedModeEnabled);
             _isAccurateChanged = false;
         }
         _updateLock = false;
