@@ -15,17 +15,19 @@ namespace ExtraIsland.Components;
     "FBB380C2-5480-4FED-8349-BA5F4EAD2688",
     "(未完成)名句一言",
     PackIconKind.MessageOutline,
-    "[早期阶段]显示一句古今名言,可使用三个API"
+    "显示一句古今名言,可使用三个API"
 )]
 public partial class Rhesis {
     public Rhesis() {
         InitializeComponent();
     }
-
+    
+    public string Showing { get; private set; } = string.Empty;
     readonly RhesisHandler.Instance _rhesisHandler = new RhesisHandler.Instance();
     void Rhesis_OnLoaded(object sender,RoutedEventArgs e) {
         this.BeginInvoke(() => {
-            Label.Content = _rhesisHandler.Get(Settings.DataSource).Content; 
+            Showing = _rhesisHandler.Get(Settings.DataSource).Content; 
+            Label.Content = Showing;
         });
     }
 }

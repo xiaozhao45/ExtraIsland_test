@@ -188,9 +188,12 @@ public class OnDutyPersistedConfigData {
     }
 
     public enum DutyStateData {
-        [Description("单人值日")] Single,
-        [Description("双人值日")] Double,
-        [Description("内/外 双人轮换值日")] InOut
+        [Description("单人值日")] 
+        Single,
+        [Description("双人值日")] 
+        Double,
+        [Description("内/外 双人轮换值日")] 
+        InOut
     }
 
     TimeSpan _dutyChangeDuration;

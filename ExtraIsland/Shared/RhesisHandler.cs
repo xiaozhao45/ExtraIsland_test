@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.ComponentModel;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 
@@ -52,48 +53,67 @@ public class RhesisData {
 
 public class SainticData {
 
-    [JsonPropertyName("code")] public int StatusCode { get; set; } = -1;
+    [JsonPropertyName("code")] 
+    public int StatusCode { get; set; } = -1;
 
-    [JsonPropertyName("data")] public SainticRhesisData Data { get; set; } = new SainticRhesisData();
+    [JsonPropertyName("data")] 
+    public SainticRhesisData Data { get; set; } = new SainticRhesisData();
 
-    [JsonPropertyName("msg")] public string? Message { get; set; }
-
-    [JsonPropertyName("q")] public QueueInfoData QueueInfo { get; set; } = new QueueInfoData();
+    [JsonPropertyName("msg")] 
+    public string? Message { get; set; }
+    
+    [JsonPropertyName("q")] 
+    public QueueInfoData QueueInfo { get; set; } = new QueueInfoData();
 
     public class SainticRhesisData {
 
-        [JsonPropertyName("author")] public string Author { get; set; } = string.Empty;
+        [JsonPropertyName("author")]
+        public string Author { get; set; } = string.Empty;
 
-        [JsonPropertyName("author_pinyin")] public string AuthorPinyin { get; set; } = string.Empty;
+        [JsonPropertyName("author_pinyin")]
+        public string AuthorPinyin { get; set; } = string.Empty;
 
-        [JsonPropertyName("catalog")] public string Catalog { get; set; } = string.Empty;
+        [JsonPropertyName("catalog")] 
+        public string Catalog { get; set; } = string.Empty;
 
-        [JsonPropertyName("catalog_pinyin")] public string CatalogPinyin { get; set; } = string.Empty;
+        [JsonPropertyName("catalog_pinyin")] 
+        public string CatalogPinyin { get; set; } = string.Empty;
 
-        [JsonPropertyName("ctime")] public int Ctime { get; set; } = 0;
+        [JsonPropertyName("ctime")] 
+        public int Ctime { get; set; } = 0;
 
-        [JsonPropertyName("id")] public int Id { get; set; } = 0;
+        [JsonPropertyName("id")] 
+        public int Id { get; set; } = 0;
 
-        [JsonPropertyName("name")] public string Name { get; set; } = string.Empty;
+        [JsonPropertyName("name")] 
+        public string Name { get; set; } = string.Empty;
 
-        [JsonPropertyName("sentence")] public string Sentence { get; set; } = string.Empty;
+        [JsonPropertyName("sentence")] 
+        public string Sentence { get; set; } = string.Empty;
 
-        [JsonPropertyName("src_url")] public string SrcUrl { get; set; } = string.Empty;
+        [JsonPropertyName("src_url")]
+        public string SrcUrl { get; set; } = string.Empty;
 
-        [JsonPropertyName("theme")] public string Theme { get; set; } = string.Empty;
+        [JsonPropertyName("theme")]
+        public string Theme { get; set; } = string.Empty;
 
-        [JsonPropertyName("theme_pinyin")] public string ThemePinyin { get; set; } = string.Empty;
+        [JsonPropertyName("theme_pinyin")] 
+        public string ThemePinyin { get; set; } = string.Empty;
     }
 
     public class QueueInfoData {
 
-        [JsonPropertyName("author")] public string Author { get; set; } = string.Empty;
+        [JsonPropertyName("author")] 
+        public string Author { get; set; } = string.Empty;
 
-        [JsonPropertyName("catalog")] public string Catalog { get; set; } = string.Empty;
+        [JsonPropertyName("catalog")]
+        public string Catalog { get; set; } = string.Empty;
 
-        [JsonPropertyName("suffix")] public string Suffix { get; set; } = string.Empty;
+        [JsonPropertyName("suffix")] 
+        public string Suffix { get; set; } = string.Empty;
 
-        [JsonPropertyName("theme")] public string Theme { get; set; } = string.Empty;
+        [JsonPropertyName("theme")] 
+        public string Theme { get; set; } = string.Empty;
     }
 
     public RhesisData ToRhesisData() {
@@ -124,13 +144,17 @@ public class SainticData {
 
 public class JinrishiciData {
 
-    [JsonPropertyName("content")] public string Content { get; set; } = string.Empty;
+    [JsonPropertyName("content")]
+    public string Content { get; set; } = string.Empty;
 
-    [JsonPropertyName("origin")] public string Origin { get; set; } = string.Empty;
+    [JsonPropertyName("origin")] 
+    public string Origin { get; set; } = string.Empty;
 
-    [JsonPropertyName("author")] public string Author { get; set; } = string.Empty;
+    [JsonPropertyName("author")] 
+    public string Author { get; set; } = string.Empty;
 
-    [JsonPropertyName("category")] public string Category { get; set; } = string.Empty;
+    [JsonPropertyName("category")] 
+    public string Category { get; set; } = string.Empty;
 
     public RhesisData ToRhesisData() {
         return new RhesisData {
@@ -157,29 +181,41 @@ public class JinrishiciData {
 }
 
 public class HitokotoData {
-    [JsonPropertyName("id")] public int Id { get; set; } = 0;
+    [JsonPropertyName("id")] 
+    public int Id { get; set; } = 0;
 
-    [JsonPropertyName("uuid")] public string Uuid { get; set; } = string.Empty;
+    [JsonPropertyName("uuid")]
+    public string Uuid { get; set; } = string.Empty;
 
-    [JsonPropertyName("hitokoto")] public string Hitokoto { get; set; } = string.Empty;
+    [JsonPropertyName("hitokoto")] 
+    public string Hitokoto { get; set; } = string.Empty;
 
-    [JsonPropertyName("type")] public string Type { get; set; } = string.Empty;
+    [JsonPropertyName("type")]
+    public string Type { get; set; } = string.Empty;
 
-    [JsonPropertyName("from")] public string From { get; set; } = string.Empty;
+    [JsonPropertyName("from")]
+    public string From { get; set; } = string.Empty;
 
-    [JsonPropertyName("from_who")] public string FromWho { get; set; } = string.Empty;
+    [JsonPropertyName("from_who")] 
+    public string FromWho { get; set; } = string.Empty;
 
-    [JsonPropertyName("creator")] public string Creator { get; set; } = string.Empty;
+    [JsonPropertyName("creator")] 
+    public string Creator { get; set; } = string.Empty;
 
-    [JsonPropertyName("creator_uid")] public int CreatorUid { get; set; } = 0;
+    [JsonPropertyName("creator_uid")] 
+    public int CreatorUid { get; set; } = 0;
 
-    [JsonPropertyName("reviewer")] public int Reviewer { get; set; } = 0;
+    [JsonPropertyName("reviewer")] 
+    public int Reviewer { get; set; } = 0;
 
-    [JsonPropertyName("commit_from")] public string CommitFrom { get; set; } = string.Empty;
+    [JsonPropertyName("commit_from")] 
+    public string CommitFrom { get; set; } = string.Empty;
 
-    [JsonPropertyName("created_at")] public string CreatedAt { get; set; } = string.Empty;
+    [JsonPropertyName("created_at")]
+    public string CreatedAt { get; set; } = string.Empty;
 
-    [JsonPropertyName("length")] public int Length { get; set; } = 0;
+    [JsonPropertyName("length")] 
+    public int Length { get; set; } = 0;
 
     public RhesisData ToRhesisData() {
         return new RhesisData {
@@ -236,9 +272,14 @@ public class HitokotoData {
 }
 
 public enum RhesisDataSource {
+    [Description("仅古诗文(诏预 + 今日诗词)")]
     SaintJinrishici = -1,
+    [Description("全部启用")]
     All = 0,
+    [Description("诏预")]
     Saint = 1,
+    [Description("今日诗词")]
     Jinrishici = 2,
+    [Description("一言")]
     Hitokoto = 3
 }

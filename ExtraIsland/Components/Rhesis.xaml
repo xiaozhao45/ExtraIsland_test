@@ -12,6 +12,6 @@
         <Label x:Name="Label"
                VerticalAlignment="Center"
                FontSize="{DynamicResource MainWindowLargeFontSize}"
-               Content=":)" />
+               Content="{Binding Showing, Mode=OneWay}" />
     </Grid>
 </ci:ComponentBase>
