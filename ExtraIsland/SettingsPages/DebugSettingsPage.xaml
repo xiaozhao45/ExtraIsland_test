@@ -64,30 +64,6 @@
                     </StackPanel>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
-            <Grid VerticalAlignment="Bottom">
-                <Border Background="{DynamicResource PrimaryHueMidBrush}"
-                        Height="{Binding ActualHeight, ElementName=BorderStroke}"
-                        ClipToBounds="True"
-                        BorderThickness="1"
-                        Padding="8 0"
-                        Opacity="0.3"
-                        VerticalAlignment="Bottom"
-                        CornerRadius="20">
-                </Border>
-                <Border ClipToBounds="True"
-                        BorderBrush="{DynamicResource PrimaryHueMidBrush}"
-                        BorderThickness="1"
-                        Padding="8 0"
-                        x:Name="BorderStroke"
-                        VerticalAlignment="Bottom"
-                        CornerRadius="20">
-                    <Grid>
-                        <TextBlock FontSize="20" VerticalAlignment="Center">
-                            awa
-                        </TextBlock>
-                    </Grid>
-                </Border>
-            </Grid>
         </StackPanel>
     </ScrollViewer>
 </ci:SettingsPageBase>

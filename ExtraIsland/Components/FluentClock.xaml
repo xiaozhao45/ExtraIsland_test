@@ -10,7 +10,8 @@
                   Loaded="FluentClock_OnLoaded"
                   Unloaded="FluentClock_OnUnloaded">
     <Grid Margin="0">
-        <Grid x:Name="EmpBack">
+        <Grid x:Name="EmpBack"
+              Opacity="0">
             <Border Background="{DynamicResource PrimaryHueMidBrush}"
                     Height="28"
                     ClipToBounds="True"
