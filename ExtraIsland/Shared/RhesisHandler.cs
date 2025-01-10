@@ -11,7 +11,7 @@ public static class RhesisHandler {
     public class Instance {
         readonly Random _random = new Random();
         public RhesisData Get(RhesisDataSource rhesisDataSource = RhesisDataSource.All
-            ,string? hitokotoRequestUrl = null) {
+            ,string? hitokotoRequestUrl = null,string? sainticRequestUrl = null) {
             return rhesisDataSource switch {
                 RhesisDataSource.All => _random.Next(4) switch {
                     0 => RhesisDataSource.Jinrishici,
@@ -126,10 +126,11 @@ public class SainticData {
         };
     }
 
-    public static SainticData Fetch() {
+    public static SainticData Fetch(string? requestUrl = null) {
         try {
+            requestUrl ??= "https://open.saintic.com/api/sentence/all.json";
             return new HttpClient()
-                .GetFromJsonAsync<SainticData>("https://open.saintic.com/api/sentence/all.json")
+                .GetFromJsonAsync<SainticData>(requestUrl)
                 .Result!;
         }
         catch (Exception ex) {

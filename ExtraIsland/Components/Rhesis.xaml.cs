@@ -26,7 +26,14 @@ public partial class Rhesis {
     readonly RhesisHandler.Instance _rhesisHandler = new RhesisHandler.Instance();
     void Rhesis_OnLoaded(object sender,RoutedEventArgs e) {
         this.BeginInvoke(() => {
-            Showing = _rhesisHandler.Get(Settings.DataSource).Content; 
+            Showing = _rhesisHandler.Get(Settings.DataSource,Settings.HitokotoProp switch {
+                "" => "https://v1.hitokoto.cn/",
+                _ => $"https://v1.hitokoto.cn/?{Settings.HitokotoProp}"
+            },
+            Settings.SainticProp switch {
+                "" => "https://open.saintic.com/api/sentence/",
+                _ => $"https://open.saintic.com/api/sentence/{Settings.HitokotoProp}.json"
+            }).Content; 
             Label.Content = Showing;
         });
     }

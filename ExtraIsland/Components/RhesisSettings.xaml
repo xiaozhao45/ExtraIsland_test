@@ -32,6 +32,38 @@
                     </Grid>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
+            <ci:SettingsCard IconGlyph="Api" Header="一言 - 接口参数"
+                             Description="自定义接口参数,留空即不应用">
+                <ci:SettingsCard.Switcher>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Foreground="{DynamicResource MaterialDesignBodyLight}"
+                               VerticalContentAlignment="Center" VerticalAlignment="Center">
+                            v1.hitokoto.cn/?
+                        </Label>
+                        <TextBox Text="{Binding Settings.HitokotoProp, Mode=TwoWay}"
+                                 VerticalAlignment="Center"
+                                 MinWidth="30"/>
+                    </StackPanel>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
+            <ci:SettingsCard IconGlyph="Api" Header="诏预 - 接口参数"
+                             Description="自定义接口参数,留空即不应用">
+                <ci:SettingsCard.Switcher>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Foreground="{DynamicResource MaterialDesignBodyLight}"
+                               VerticalContentAlignment="Center" VerticalAlignment="Center">
+                            open.saintic.com/api/sentence/
+                        </Label>
+                        <TextBox Text="{Binding Settings.SainticProp, Mode=TwoWay}"
+                                 VerticalAlignment="Center"
+                                 MinWidth="30"/>
+                        <Label Foreground="{DynamicResource MaterialDesignBodyLight}"
+                               VerticalContentAlignment="Center" VerticalAlignment="Center">
+                            .json
+                        </Label>
+                    </StackPanel>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
             <Label HorizontalAlignment="Center" 
                    Foreground="{DynamicResource MaterialDesignBodyLight}">
                 Added by ExtraIsland
