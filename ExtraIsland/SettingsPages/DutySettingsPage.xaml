@@ -151,8 +151,9 @@
                                         Click="AutoSort_OnClick">
                                     <materialDesign:PackIcon Kind="Tags" Foreground="LightYellow" />
                                 </Button>
-                                <Button HorizontalAlignment="Right"
-                                        Visibility="Collapsed"
+                                <Button x:Name="DebugSwapButton"
+                                        HorizontalAlignment="Right"
+                                        Visibility = "Collapsed"
                                         Width="30"
                                         Height="30"
                                         Margin="3,6,3,3"

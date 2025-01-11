@@ -32,7 +32,7 @@
                     </Grid>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
-            <ci:SettingsCard IconGlyph="Api" Header="一言 - 接口参数"
+            <ci:SettingsCard IconGlyph="Api" Header="一言 · 接口参数"
                              Description="自定义接口参数,留空即不应用">
                 <ci:SettingsCard.Switcher>
                     <StackPanel Orientation="Horizontal">
@@ -46,7 +46,7 @@
                     </StackPanel>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
-            <ci:SettingsCard IconGlyph="Api" Header="诏预 - 接口参数"
+            <ci:SettingsCard IconGlyph="Api" Header="诏预 · 接口参数"
                              Description="自定义接口参数,留空即不应用">
                 <ci:SettingsCard.Switcher>
                     <StackPanel Orientation="Horizontal">

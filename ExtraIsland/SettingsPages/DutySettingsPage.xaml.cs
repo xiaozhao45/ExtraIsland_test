@@ -20,6 +20,9 @@ public partial class DutySettingsPage {
         InitializeComponent();
         UpdateOnDuty();
         Settings.OnDutyUpdated += UpdateOnDuty;
+        #if DEBUG
+            DebugSwapButton.Visibility = Visibility.Visible;
+        #endif
     }
 
     public OnDutyPersistedConfigHandler Settings { get; set; }

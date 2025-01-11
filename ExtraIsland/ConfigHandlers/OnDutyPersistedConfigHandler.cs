@@ -99,8 +99,8 @@ public class OnDutyPersistedConfigHandler {
 
     public void SwapOnDuty() {
         Data.LastUpdate = Data.IsAutoShearEnabled switch {
-            true => DateTime.Now,
-            false => DateTime.Today
+            false => DateTime.Now,
+            true => DateTime.Today
         };
         if (Data.DutyState == OnDutyPersistedConfigData.DutyStateData.Double) {
             Data.CurrentPeopleIndex += 2;
@@ -130,7 +130,7 @@ public class OnDutyPersistedConfigData {
         }
     }
 
-    DateTime _lastUpdate = DateTime.Now.Date;
+    DateTime _lastUpdate = DateTime.Today;
     public DateTime LastUpdate {
         get => _lastUpdate;
         set {
@@ -168,7 +168,7 @@ public class OnDutyPersistedConfigData {
     
     bool _isAutoShearEnabled = true;
     public bool IsAutoShearEnabled {
-        get => _isCycled;
+        get => _isAutoShearEnabled;
         set {
             _isAutoShearEnabled = value;
             if (value) {
