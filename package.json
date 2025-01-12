@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "docs:dev": "vitepress dev ExtraIsland.Docs",
+    "docs:build": "vitepress build ExtraIsland.Docs",
+    "docs:preview": "vitepress preview ExtraIsland.Docs"
+  }
+}
