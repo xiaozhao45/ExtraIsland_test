@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "ExtraIsland"
   text: "⌈课岛进化⌋"
-  tagline: 让ClassIsland更便捷美观!
+  tagline: 让ClassIsland更便捷,美观!
   actions:
     - theme: brand
       text: 立即开始
