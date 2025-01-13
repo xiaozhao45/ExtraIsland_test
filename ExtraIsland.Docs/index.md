@@ -14,6 +14,6 @@ hero:
       text: 了解功能
       link: /api-examples
   image:
-    src: ./images/extraIslandFull.svg
+    src: /images/extraIslandFull.svg
 ---
 
