@@ -4,7 +4,7 @@
 
 ## 自动安装
 ExtraIsland已经上架ClassIsland插件市场!
-![pluginMarket](assets/pluginMarket.png)
+![pluginMarket](pluginMarket.png)
 __推荐通过插件市场进行安装!__
 ## 手动安装
 由于一些特殊原因,或是需要使用尝鲜版功能,可能需要进行手动安装:
@@ -33,6 +33,6 @@ __推荐通过插件市场进行安装!__
 ### 安装
 - 打开 ClassIsland 设置面板
 - 切换到 `插件` 页面
-- 点击中部三点菜单 ![dotdotdot](assets/dotdotdotMenu.png)
+- 点击中部三点菜单 ![dotdotdot](dotdotdotMenu.png)
 - 选择 `从本地安装...`
 - 选择刚才获取到的`*.cipx`文件,确定
