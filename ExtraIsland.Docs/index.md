@@ -9,11 +9,10 @@ hero:
   actions:
     - theme: brand
       text: 立即开始
-      link: /markdown-examples
+      link: /instruction/gettingStarted
     - theme: alt
       text: 了解功能
-      link: /api-examples
+      link: https://gitlab.com/LiPolymer/ExtraIsland/-/blob/master/README.md
   image:
     src: /images/extraIslandFull.svg
 ---
-

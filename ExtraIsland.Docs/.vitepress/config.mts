@@ -9,6 +9,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '文档', link: '/' },
+      { text: 'GitLab', link: 'https://gitlab.com/LiPolymer/ExtraIsland/' }
     ],
     
     footer: {
@@ -18,16 +19,15 @@ export default defineConfig({
     
     sidebar: [
       {
-        text: 'Examples',
+        text: '开始',
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          { text: '快速开始', link: '/instruction/gettingStarted' }
         ]
       }
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/LiPolymer/ExtraIsland' }
     ],
 
     logo: '/images/extraIsland.svg'
