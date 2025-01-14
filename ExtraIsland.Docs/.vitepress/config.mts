@@ -30,6 +30,6 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
     ],
 
-    logo: './images/extraIsland.svg'
+    logo: '/images/extraIsland.svg'
   }
 })
