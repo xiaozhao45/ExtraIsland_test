@@ -196,7 +196,7 @@ public class OnDutyPersistedConfigData {
         InOut
     }
 
-    TimeSpan _dutyChangeDuration;
+    TimeSpan _dutyChangeDuration = TimeSpan.FromDays(1);
     public TimeSpan DutyChangeDuration {
         get => _dutyChangeDuration;
         set {
