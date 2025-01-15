@@ -15,4 +15,18 @@ hero:
       link: https://gitlab.com/LiPolymer/ExtraIsland/-/blob/master/README.md
   image:
     src: /images/extraIslandFull.svg
+features:
+  - title: 更好的倒计日
+    details:
+      - 支持精确到秒
+      - 带有切换动画
+      - 前后文案可配置!
+  - title: 流畅时钟
+    details:
+      - 带有切换和闪动动画
+      - 支持关闭秒数
+      - 支持秒数小字体显示
+      - 整点强调动画
+  - title: 值日表 (实验性)
+    details: 自动轮换,多种轮换模式,配置方便!
 ---
