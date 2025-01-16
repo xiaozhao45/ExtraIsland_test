@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using ClassIsland.Core.Abstractions.Controls;
 using ExtraIsland.Shared;
 
@@ -11,6 +13,13 @@ public partial class RhesisSettings {
         InitializeComponent();
     }
 
+    [GeneratedRegex("[^0-9]+")]
+    private static partial Regex NumberRegex();
+    void TextBoxNumberCheck(object sender,TextCompositionEventArgs e) {
+        Regex re = NumberRegex();
+        e.Handled = re.IsMatch(e.Text);
+    }
+    
     public List<RhesisDataSource> DataSources { get; } = [
         RhesisDataSource.All,
         RhesisDataSource.Hitokoto,

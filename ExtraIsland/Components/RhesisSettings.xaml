@@ -7,8 +7,12 @@
                   xmlns:local="clr-namespace:ExtraIsland.Components"
                   xmlns:ci="http://classisland.tech/schemas/xaml/core"
                   xmlns:converters="clr-namespace:ExtraIsland.Shared.Converters"
+                  xmlns:components="clr-namespace:ExtraIsland.Components"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="300">
+    <ci:ComponentBase.Resources>
+        <converters:DoubleToStringConverter x:Key="DoubleToStringConverter"/>
+    </ci:ComponentBase.Resources>
     <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:RhesisSettings}}">
         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
         <StackPanel Style="{StaticResource SettingsPageStackPanelStyle}">
@@ -30,6 +34,18 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                     </Grid>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
+            <ci:SettingsCard IconGlyph="StopwatchMinus" Header="刷新间隔"
+                             Description="设定自动刷新的时间间隔,单位为秒">
+                <ci:SettingsCard.Switcher>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding Settings.UpdateTimeGapSeconds, Converter={StaticResource DoubleToStringConverter}, Mode=TwoWay}"
+                                 VerticalAlignment="Center"
+                                 InputMethod.IsInputMethodEnabled="False"
+                                 PreviewTextInput="TextBoxNumberCheck"
+                                 MinWidth="30"/>
+                    </StackPanel>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
             <ci:SettingsCard IconGlyph="Api" Header="一言 · 接口参数"
