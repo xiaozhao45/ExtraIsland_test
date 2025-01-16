@@ -8,12 +8,14 @@
                   xmlns:ci="http://classisland.tech/schemas/xaml/core"
                   xmlns:converters="clr-namespace:ExtraIsland.Shared.Converters"
                   xmlns:components="clr-namespace:ExtraIsland.Components"
+                  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="300">
     <ci:ComponentBase.Resources>
-        <converters:DoubleToStringConverter x:Key="DoubleToStringConverter"/>
+        <converters:DoubleToStringConverter x:Key="DoubleToStringConverter" />
     </ci:ComponentBase.Resources>
-    <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:RhesisSettings}}">
+    <ScrollViewer
+        DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:RhesisSettings}}">
         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
         <StackPanel Style="{StaticResource SettingsPageStackPanelStyle}">
             <ci:SettingsCard IconGlyph="GitRepository" Header="数据来源"
@@ -40,47 +42,64 @@
                              Description="设定自动刷新的时间间隔,单位为秒">
                 <ci:SettingsCard.Switcher>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding Settings.UpdateTimeGapSeconds, Converter={StaticResource DoubleToStringConverter}, Mode=TwoWay}"
-                                 VerticalAlignment="Center"
-                                 InputMethod.IsInputMethodEnabled="False"
-                                 PreviewTextInput="TextBoxNumberCheck"
-                                 MinWidth="30"/>
+                        <TextBox
+                            Text="{Binding Settings.UpdateTimeGapSeconds, Converter={StaticResource DoubleToStringConverter}, Mode=TwoWay}"
+                            VerticalAlignment="Center"
+                            InputMethod.IsInputMethodEnabled="False"
+                            PreviewTextInput="TextBoxNumberCheck"
+                            MinWidth="30" />
                     </StackPanel>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
-            <ci:SettingsCard IconGlyph="Api" Header="一言 · 接口参数"
-                             Description="自定义接口参数,留空即不应用">
-                <ci:SettingsCard.Switcher>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Foreground="{DynamicResource MaterialDesignBodyLight}"
-                               VerticalContentAlignment="Center" VerticalAlignment="Center">
-                            v1.hitokoto.cn/?
-                        </Label>
-                        <TextBox Text="{Binding Settings.HitokotoProp, Mode=TwoWay}"
-                                 VerticalAlignment="Center"
-                                 MinWidth="30"/>
+            <materialDesign:Card Margin="0 0 0 6">
+                <Expander Background="Transparent"
+                          IsExpanded="False"
+                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                    <Expander.Header>
+                        <ci:SettingsControl IconGlyph="Api"
+                                            Foreground="{DynamicResource MaterialDesignBody}"
+                                            Header="接口参数"
+                                            IsOn="True"
+                                            Description="自定义接口参数,留空即不应用"
+                                            HasSwitcher="False"
+                                            Margin="-12 0" />
+                    </Expander.Header>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch"  Margin="36 0 48 12">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <Label HorizontalAlignment="Left"
+                                   VerticalContentAlignment="Center" VerticalAlignment="Center">
+                                一言
+                            </Label>
+                            <Label HorizontalAlignment="Right" 
+                                   Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                   VerticalContentAlignment="Center" VerticalAlignment="Center">
+                                v1.hitokoto.cn/?
+                            </Label>
+                            <TextBox Text="{Binding Settings.HitokotoProp, Mode=TwoWay}"
+                                     VerticalAlignment="Center"
+                                     MinWidth="30" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <Label HorizontalAlignment="Left"
+                                   VerticalContentAlignment="Center" VerticalAlignment="Center">
+                                诏预
+                            </Label>
+                            <Label Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                   VerticalContentAlignment="Center" VerticalAlignment="Center">
+                                open.saintic.com/api/sentence/
+                            </Label>
+                            <TextBox Text="{Binding Settings.SainticProp, Mode=TwoWay}"
+                                     VerticalAlignment="Center"
+                                     MinWidth="30" />
+                            <Label Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                   VerticalContentAlignment="Center" VerticalAlignment="Center">
+                                .json
+                            </Label>
+                        </StackPanel>
                     </StackPanel>
-                </ci:SettingsCard.Switcher>
-            </ci:SettingsCard>
-            <ci:SettingsCard IconGlyph="Api" Header="诏预 · 接口参数"
-                             Description="自定义接口参数,留空即不应用">
-                <ci:SettingsCard.Switcher>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Foreground="{DynamicResource MaterialDesignBodyLight}"
-                               VerticalContentAlignment="Center" VerticalAlignment="Center">
-                            open.saintic.com/api/sentence/
-                        </Label>
-                        <TextBox Text="{Binding Settings.SainticProp, Mode=TwoWay}"
-                                 VerticalAlignment="Center"
-                                 MinWidth="30"/>
-                        <Label Foreground="{DynamicResource MaterialDesignBodyLight}"
-                               VerticalContentAlignment="Center" VerticalAlignment="Center">
-                            .json
-                        </Label>
-                    </StackPanel>
-                </ci:SettingsCard.Switcher>
-            </ci:SettingsCard>
-            <Label HorizontalAlignment="Center" 
+                </Expander>
+            </materialDesign:Card>
+            <Label HorizontalAlignment="Center"
                    Foreground="{DynamicResource MaterialDesignBodyLight}">
                 Added by ExtraIsland
             </Label>
