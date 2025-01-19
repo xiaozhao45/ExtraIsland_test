@@ -28,7 +28,7 @@ public class IntToStringConverter : IValueConverter {
 
     public object ConvertBack(object? value,Type targetType,object? parameter,
         System.Globalization.CultureInfo culture) {
-        return System.Convert.ToInt32((string)value!);
+        return (string)value! == "" ? 0 : System.Convert.ToInt32((string)value!);
     }
 }
 
@@ -40,21 +40,23 @@ public class DoubleToStringConverter : IValueConverter {
 
     public object ConvertBack(object? value,Type targetType,object? parameter,
         System.Globalization.CultureInfo culture) {
-        return System.Convert.ToDouble((string)value!);
+        try {
+            return System.Convert.ToDouble((string)value!);
+        }
+        catch {
+            return 0;
+        }
     }
 }
 
-public class EnumDescriptionConverter : IValueConverter
-{
-    object IValueConverter.Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
+public class EnumDescriptionConverter : IValueConverter {
+    object IValueConverter.Convert(object? value,Type targetType,object? parameter,CultureInfo culture) {
         Enum myEnum = (Enum)value!;
         string description = GetEnumDescription(myEnum);
         return description;
     }
 
-    object IValueConverter.ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-    {
+    object IValueConverter.ConvertBack(object? value,Type targetType,object? parameter,CultureInfo culture) {
         return string.Empty;
     }
 

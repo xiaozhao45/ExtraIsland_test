@@ -10,8 +10,8 @@ public static class RhesisHandler {
 
     public class Instance {
         readonly Random _random = new Random();
-        public RhesisData Get(RhesisDataSource rhesisDataSource = RhesisDataSource.All
-            ,string? hitokotoRequestUrl = null,string? sainticRequestUrl = null) {
+        public RhesisData LegacyGet(RhesisDataSource rhesisDataSource = RhesisDataSource.All
+            ,string? hitokotoRequestUrl = null,string? sainticRequestUrl = null, int lengthLimitation = 0) {
             return rhesisDataSource switch {
                 RhesisDataSource.All => _random.Next(4) switch {
                     0 => RhesisDataSource.Jinrishici,
@@ -32,7 +32,7 @@ public static class RhesisHandler {
                 _ => rhesisDataSource
             } switch {
                 RhesisDataSource.Jinrishici => JinrishiciData.Fetch().ToRhesisData(),
-                RhesisDataSource.Saint => SainticData.Fetch().ToRhesisData(),
+                RhesisDataSource.Saint => SainticData.Fetch(sainticRequestUrl).ToRhesisData(),
                 RhesisDataSource.Hitokoto => HitokotoData.Fetch(hitokotoRequestUrl).ToRhesisData(),
                 RhesisDataSource.SaintJinrishici => new RhesisData { Content = "处理时出现错误" },
                 RhesisDataSource.All => new RhesisData { Content = "处理时出现错误" },

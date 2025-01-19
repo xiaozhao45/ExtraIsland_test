@@ -13,6 +13,7 @@
                   d:DesignHeight="300" d:DesignWidth="300">
     <ci:ComponentBase.Resources>
         <converters:DoubleToStringConverter x:Key="DoubleToStringConverter" />
+        <converters:IntToStringConverter x:Key="IntToStringConverter" />
     </ci:ComponentBase.Resources>
     <ScrollViewer
         DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:RhesisSettings}}">
@@ -38,8 +39,23 @@
                     </Grid>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
+            <ci:SettingsCard IconGlyph="CarSpeedLimiter" Header="字数限制"
+                             Description="当字数大于该设置时,不显示并重新获取(一言为API级限制),设为0即禁用">
+                <ci:SettingsCard.Switcher>
+                    <Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox
+                                Text="{Binding Settings.LengthLimitation, Converter={StaticResource IntToStringConverter}, Mode=TwoWay}"
+                                VerticalAlignment="Center"
+                                InputMethod.IsInputMethodEnabled="False"
+                                PreviewTextInput="TextBoxNumberCheck"
+                                MinWidth="30"/>
+                        </StackPanel>
+                    </Grid>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
             <ci:SettingsCard IconGlyph="StopwatchMinus" Header="刷新间隔"
-                             Description="设定自动刷新的时间间隔,单位为秒">
+                             Description="设定自动刷新的时间间隔,单位为秒,设为0即禁用">
                 <ci:SettingsCard.Switcher>
                     <StackPanel Orientation="Horizontal">
                         <TextBox
@@ -58,7 +74,7 @@
                     <Expander.Header>
                         <ci:SettingsControl IconGlyph="Api"
                                             Foreground="{DynamicResource MaterialDesignBody}"
-                                            Header="接口参数"
+                                            Header="高级 · 接口参数"
                                             IsOn="True"
                                             Description="自定义接口参数,留空即不应用"
                                             HasSwitcher="False"
@@ -71,10 +87,17 @@
                                 一言
                             </Label>
                             <Label HorizontalAlignment="Right" 
+                                   Padding="0"
                                    Foreground="{DynamicResource MaterialDesignBodyLight}"
                                    VerticalContentAlignment="Center" VerticalAlignment="Center">
                                 v1.hitokoto.cn/?
                             </Label>
+                            <Label x:Name="HitokotoLArgsLabel"
+                                   HorizontalAlignment="Right" 
+                                   Padding="0"
+                                   Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                   VerticalContentAlignment="Center" VerticalAlignment="Center"
+                                   Content="{Binding Settings.HitokotoLengthArgs}"/>
                             <TextBox Text="{Binding Settings.HitokotoProp, Mode=TwoWay}"
                                      VerticalAlignment="Center"
                                      MinWidth="30" />
@@ -85,6 +108,7 @@
                                 诏预
                             </Label>
                             <Label Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                   Padding="0"
                                    VerticalContentAlignment="Center" VerticalAlignment="Center">
                                 open.saintic.com/api/sentence/
                             </Label>
@@ -92,6 +116,7 @@
                                      VerticalAlignment="Center"
                                      MinWidth="30" />
                             <Label Foreground="{DynamicResource MaterialDesignBodyLight}"
+                                   Padding="0"
                                    VerticalContentAlignment="Center" VerticalAlignment="Center">
                                 .json
                             </Label>

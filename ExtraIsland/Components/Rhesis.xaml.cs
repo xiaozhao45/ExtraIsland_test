@@ -1,10 +1,14 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Configuration;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using ClassIsland.Core.Abstractions.Controls;
 using ClassIsland.Core.Abstractions.Services;
+using ClassIsland.Core.Abstractions.Services.Management;
 using ClassIsland.Core.Attributes;
 using ClassIsland.Core.Models.Plugin;
+using ClassIsland.Shared.Abstraction.Models;
+using ClassIsland.Shared.Interfaces;
 using ExtraIsland.Shared;
 using Google.Protobuf;
 using MahApps.Metro.Controls;
@@ -46,14 +50,15 @@ public partial class Rhesis {
     
     void Update() {
         this.BeginInvoke(() => {
-            Showing = _rhesisHandler.Get(Settings.DataSource,Settings.HitokotoProp switch {
+            Showing = _rhesisHandler.LegacyGet(Settings.DataSource,Settings.HitokotoProp switch {
                     "" => "https://v1.hitokoto.cn/",
-                    _ => $"https://v1.hitokoto.cn/?{Settings.HitokotoProp}"
+                    _ => $"https://v1.hitokoto.cn/?{Settings.HitokotoLengthArgs}{Settings.HitokotoProp}"
                 },
                 Settings.SainticProp switch {
                     "" => "https://open.saintic.com/api/sentence/",
                     _ => $"https://open.saintic.com/api/sentence/{Settings.HitokotoProp}.json"
-                }).Content; 
+                },
+                Settings.LengthLimitation).Content; 
             Label.Content = Showing;
         });
     }

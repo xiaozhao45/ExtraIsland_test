@@ -17,7 +17,7 @@ public partial class RhesisSettings {
     private static partial Regex NumberRegex();
     void TextBoxNumberCheck(object sender,TextCompositionEventArgs e) {
         Regex re = NumberRegex();
-        e.Handled = re.IsMatch(e.Text);
+        e.Handled = re.IsMatch(e.Text) & e.Text.Length != 0;
     }
     
     public List<RhesisDataSource> DataSources { get; } = [
@@ -26,5 +26,5 @@ public partial class RhesisSettings {
         RhesisDataSource.Jinrishici,
         RhesisDataSource.Saint,
         RhesisDataSource.SaintJinrishici
-    ]; 
+    ];
 }

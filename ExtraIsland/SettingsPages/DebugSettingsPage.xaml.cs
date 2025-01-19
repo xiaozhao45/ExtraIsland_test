@@ -62,7 +62,7 @@ public partial class DebugSettingsPage {
     }
     
     void RandRequestButton_OnClick(object sender,RoutedEventArgs e) {
-        RhesisData rhesis = new RhesisHandler.Instance().Get();
+        RhesisData rhesis = new RhesisHandler.Instance().LegacyGet();
         CommonDialog.ShowInfo(message:
             $"{rhesis.Source} | {rhesis.Title} - {rhesis.Author}"
             + "\r\n         |" + rhesis.Catalog
