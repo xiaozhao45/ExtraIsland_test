@@ -11,7 +11,7 @@ namespace ExtraIsland.Components;
 
 [ComponentInfo(
     "B977ECCC-1A59-4C71-A4EB-67780E16E926",
-    "(未完成)值日生",
+    "值日生",
     PackIconKind.Users,
     "显示值日生姓名,每日轮换"
 )]

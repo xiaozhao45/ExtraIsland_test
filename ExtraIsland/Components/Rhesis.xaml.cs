@@ -18,7 +18,7 @@ namespace ExtraIsland.Components;
 
 [ComponentInfo(
     "FBB380C2-5480-4FED-8349-BA5F4EAD2688",
-    "(未完成)名句一言",
+    "名句一言",
     PackIconKind.MessageOutline,
     "显示一句古今名言,可使用三个API"
 )]

@@ -30,7 +30,7 @@
                     Kind="Users"
                     Foreground="{DynamicResource MaterialDesignBodyLight}"
                     VerticalAlignment="Center" />
-                <Label VerticalAlignment="Center" FontSize="30">全局 · 值日设置</Label>
+                <Label VerticalAlignment="Center" FontSize="30">全局 · 值日表</Label>
             </StackPanel>
             <materialDesign:ColorZone Background="#1500F0F0" Panel.ZIndex="1" Margin="0 0 0 0" MaxWidth="670" HorizontalAlignment="Left">
                 <Grid>
