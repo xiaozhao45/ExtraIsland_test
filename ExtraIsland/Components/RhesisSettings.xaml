@@ -14,6 +14,7 @@
     <ci:ComponentBase.Resources>
         <converters:DoubleToStringConverter x:Key="DoubleToStringConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
+        <local:LimitIntToArgConverter x:Key="LimitIntToArgConverter"/>
     </ci:ComponentBase.Resources>
     <ScrollViewer
         DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:RhesisSettings}}">
@@ -92,12 +93,11 @@
                                    VerticalContentAlignment="Center" VerticalAlignment="Center">
                                 v1.hitokoto.cn/?
                             </Label>
-                            <Label x:Name="HitokotoLArgsLabel"
-                                   HorizontalAlignment="Right" 
+                            <Label HorizontalAlignment="Right" 
                                    Padding="0"
                                    Foreground="{DynamicResource MaterialDesignBodyLight}"
                                    VerticalContentAlignment="Center" VerticalAlignment="Center"
-                                   Content="{Binding Settings.HitokotoLengthArgs}"/>
+                                   Content="{Binding Settings.LengthLimitation, Converter={StaticResource LimitIntToArgConverter}}"/>
                             <TextBox Text="{Binding Settings.HitokotoProp, Mode=TwoWay}"
                                      VerticalAlignment="Center"
                                      MinWidth="30" />

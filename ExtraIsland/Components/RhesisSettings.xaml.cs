@@ -28,3 +28,19 @@ public partial class RhesisSettings {
         RhesisDataSource.SaintJinrishici
     ];
 }
+
+public class LimitIntToArgConverter : IValueConverter {
+    public object Convert(object? value,Type targetType,object? parameter,
+        System.Globalization.CultureInfo culture) {
+        return (int)value! switch {
+            0 => "",
+            _ => $"max_length={((int)value).ToString()}&"
+        };
+    }
+
+    public object ConvertBack(object? value,Type targetType,object? parameter,
+        System.Globalization.CultureInfo culture) {
+            throw new NotImplementedException();
+    }
+}
+
