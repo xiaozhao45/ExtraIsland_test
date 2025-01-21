@@ -40,7 +40,7 @@
                     </Grid>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
-            <ci:SettingsCard IconGlyph="CarSpeedLimiter" Header="字数限制"
+            <ci:SettingsCard IconGlyph="FormTextboxLock" Header="字数限制"
                              Description="当字数大于该设置时,不显示并重新获取(一言为API级限制),设为0即禁用">
                 <ci:SettingsCard.Switcher>
                     <Grid>
@@ -55,7 +55,7 @@
                     </Grid>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
-            <ci:SettingsCard IconGlyph="StopwatchMinus" Header="刷新间隔"
+            <ci:SettingsCard IconGlyph="TimerRefresh" Header="刷新间隔"
                              Description="设定自动刷新的时间间隔,单位为秒,设为0即禁用">
                 <ci:SettingsCard.Switcher>
                     <StackPanel Orientation="Horizontal">
