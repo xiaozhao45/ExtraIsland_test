@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms.VisualStyles;
 using ClassIsland.Core.Controls.CommonDialog;
 using ClassIsland.Core.Helpers;
 using ExtraIsland.ConfigHandlers;
@@ -13,6 +14,7 @@ using MaterialDesignThemes.Wpf;
 using MdXaml;
 using Badged = MahApps.Metro.Controls.Badged;
 using Brushes = System.Windows.Media.Brushes;
+using VerticalAlignment = System.Windows.VerticalAlignment;
 
 namespace ExtraIsland.TinyFeatures;
 
@@ -115,6 +117,13 @@ public static class JuniorGuide {
             }
             popup.Close();
         };
-        popup.Show();
+        new Thread(() => {
+            if (!isPreview) {
+                Thread.Sleep(9000);
+            }
+            popup.Dispatcher.BeginInvoke(() => {
+                popup.Show();
+            });
+        }).Start();
     }
 }

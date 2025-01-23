@@ -73,7 +73,7 @@
                         </ci:SettingsControl>
                         <!-- ReSharper disable once Xaml.DynamicResourceError -->
                         <Border Background="{DynamicResource MaterialDesignDivider}"
-                                Margin="26,0,0,0"
+                                Margin="30,0,0,0"
                                 CornerRadius="5">
                             <TextBox Text="{Binding Settings.JuniorGuide.Content}"
                                  Background="Transparent"
