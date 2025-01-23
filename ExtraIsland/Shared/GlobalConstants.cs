@@ -7,5 +7,7 @@ public static class GlobalConstants {
 
     public static class Handlers {
         public static OnDutyPersistedConfigHandler? OnDuty { get; set; }
+        
+        public static MainConfigHandler? MainConfig { get; set; }
     }
 }

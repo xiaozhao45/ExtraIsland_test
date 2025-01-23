@@ -18,6 +18,7 @@
         <materialDesign:Card
             x:Name="BodyCard"
             Background = "{DynamicResource MaterialDesignCardBackground}"
+            Foreground="{DynamicResource MaterialDesignBody}"
             Margin="20,30,20,20"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
@@ -29,6 +30,7 @@
             <materialDesign:Chip
                 x:Name="TitleChip"
                 Margin="35,18,0,0"
+                Background="{DynamicResource MaterialDesignSelection}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top">
                 <Label Content="{Binding Header}"
@@ -70,6 +72,7 @@
         </Grid>
         <Button
             x:Name="CloseButton"
+            BorderBrush="Transparent"
             Margin="10"
             Width="20" Height="20"
             HorizontalAlignment="Right"

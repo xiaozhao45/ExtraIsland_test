@@ -17,6 +17,7 @@ namespace ExtraIsland
         {
             GlobalConstants.PluginConfigFolder = PluginConfigFolder;
             GlobalConstants.Handlers.OnDuty = new ConfigHandlers.OnDutyPersistedConfigHandler();
+            GlobalConstants.Handlers.MainConfig = new ConfigHandlers.MainConfigHandler();
             //Registering Services
             services.AddComponent<Components.BetterCountdown,Components.BetterCountdownSettings>();
             services.AddComponent<Components.FluentClock,Components.FluentClockSettings>();
@@ -24,8 +25,11 @@ namespace ExtraIsland
             services.AddComponent<Components.OnDuty>();
             services.AddSettingsPage<SettingsPages.DutySettingsPage>();
             #if DEBUG
+                services.AddSettingsPage<SettingsPages.TinyFeaturesSettingsPage>();
                 services.AddSettingsPage<SettingsPages.DebugSettingsPage>();
             #endif
+            //OnInitialization triggers
+            TinyFeatures.JuniorGuide.Trigger();
         }
     }
 }

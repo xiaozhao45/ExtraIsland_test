@@ -9,6 +9,7 @@ namespace ExtraIsland.StandaloneViews;
 
 public partial class PopupNotification : Window {
     public PopupNotification(int width,int height,int stayTime) {
+        const int expandTime = 700;
         InitializeComponent();
         BodyCard.Margin = new Thickness(height / 2.0,width / 2.0,height / 2.0,width / 2.0);
         HeaderGridTranslate.Y = width / 2.0 - (IconCard.Width + IconCard.Margin.Left) / 2.0;
@@ -67,7 +68,7 @@ public partial class PopupNotification : Window {
                     EasingFunction = new SineEase()
                 }
             ],
-            Duration = new Duration(TimeSpan.FromMilliseconds(1000))
+            Duration = new Duration(TimeSpan.FromMilliseconds(expandTime))
         };
         Storyboard.SetTarget(bodyCardAnimation, BodyCard);
         Storyboard.SetTargetProperty(bodyCardAnimation, new PropertyPath(MarginProperty));
@@ -80,7 +81,7 @@ public partial class PopupNotification : Window {
                     EasingFunction = new SineEase()
                 }
             ],
-            Duration = new Duration(TimeSpan.FromMilliseconds(1000))
+            Duration = new Duration(TimeSpan.FromMilliseconds(expandTime))
         };
         Storyboard.SetTarget(headerGridXAnimation, HeaderGrid);
         Storyboard.SetTargetProperty(headerGridXAnimation, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.X)"));
@@ -92,7 +93,7 @@ public partial class PopupNotification : Window {
                     EasingFunction = new SineEase()
                 }
             ],
-            Duration = new Duration(TimeSpan.FromMilliseconds(1000))
+            Duration = new Duration(TimeSpan.FromMilliseconds(expandTime))
         };
         Storyboard.SetTarget(headerGridYAnimation, HeaderGrid);
         Storyboard.SetTargetProperty(headerGridYAnimation, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.Y)"));
@@ -105,7 +106,7 @@ public partial class PopupNotification : Window {
                     EasingFunction = new QuadraticEase()
                 }
             ],
-            Duration = new Duration(TimeSpan.FromMilliseconds(1500))
+            Duration = new Duration(TimeSpan.FromMilliseconds(Convert.ToInt32(expandTime/2*3)))
         };
         Storyboard.SetTarget(titleChipExpandAnimation, TitleChip);
         Storyboard.SetTargetProperty(titleChipExpandAnimation, new PropertyPath(MaxWidthProperty));
@@ -118,8 +119,8 @@ public partial class PopupNotification : Window {
                     EasingFunction = new SineEase()
                 }
             ],
-            BeginTime = TimeSpan.FromMilliseconds(500),
-            Duration = new Duration(TimeSpan.FromMilliseconds(1000))
+            BeginTime = TimeSpan.FromMilliseconds(Convert.ToInt32(expandTime/2)),
+            Duration = new Duration(TimeSpan.FromMilliseconds(expandTime))
         };
         Storyboard.SetTarget(closeButtonOpacityAnimation, CloseButton);
         Storyboard.SetTargetProperty(closeButtonOpacityAnimation, new PropertyPath(OpacityProperty));
