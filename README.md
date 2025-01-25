@@ -10,6 +10,10 @@
 
 ![Repobeatsa](https://repobeats.axiom.co/api/embed/1f18128f350eea1c2612fe115498942e5c4fefff.svg "Repobeats analytics image")
 
+<a href="https://github.com/LiPolymer/ExtraIsland/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=LiPolymer/ExtraIsland&max=1000" alt="贡献者名单"/>
+  </a>
+
 [`GitHub`](https://github.com/LiPolymer/ExtraIsland) [`GitLab`](https://gitlab.com/LiPolymer/ExtraIsland)  [`维护暂缓`](https://lipoly.ink/2024/announcement/) 
 
 > [!IMPORTANT]
