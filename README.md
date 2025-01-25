@@ -10,10 +10,6 @@
 
 ![Repobeatsa](https://repobeats.axiom.co/api/embed/1f18128f350eea1c2612fe115498942e5c4fefff.svg "Repobeats analytics image")
 
-<a href="https://github.com/LiPolymer/ExtraIsland/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=LiPolymer/ExtraIsland&max=1000" alt="贡献者名单"/>
-  </a>
-
 [`GitHub`](https://github.com/LiPolymer/ExtraIsland) [`GitLab`](https://gitlab.com/LiPolymer/ExtraIsland)  [`维护暂缓`](https://lipoly.ink/2024/announcement/) 
 
 > [!IMPORTANT]
@@ -41,6 +37,12 @@ _也算是以前写的班级小工具的精神续作(?_
 > 目前包括: `流畅时钟` `更高级的倒计日`
 >
 > 还请老旧设备酌情使用这些组件!
+
+感谢同学们对本项目的支持与贡献!
+
+<a href="https://github.com/LiPolymer/ExtraIsland/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=LiPolymer/ExtraIsland&max=1000" alt="贡献者名单"/>
+    </a>
 
 ## 完成的功能:
 流畅时钟:
