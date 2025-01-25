@@ -116,7 +116,7 @@ public partial class FluentClock {
                         s = "0" + s;
                     }
                     this.Invoke(() => {
-                        _secoAnimator.Update(s,!Settings.IsFocusedMode.Value);  
+                        _secoAnimator.Update(s, true, !Settings.IsFocusedMode.Value);  
                     });
                 } else {
                     bool seq = sparkSeq;

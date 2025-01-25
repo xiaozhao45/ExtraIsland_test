@@ -103,13 +103,13 @@ public partial class BetterCountdown {
             int dayI = span.Days;
             int dayCi = (int)Settings.Accuracy == 0 & Settings.IsCorrectorEnabled ? dayI + 1 : dayI;
             _days = dayCi.ToString();
-            _dyAnimator.TargetContent = _days;
+            _dyAnimator.Update(_days, Settings.IsAnimationEnabled);
         }
         if ((_hours != span.Hours.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 1) {
             int hourI = span.Hours;
             int hourCi = (int)Settings.Accuracy == 1 & Settings.IsCorrectorEnabled ? hourI + 1 : hourI;
             _hours = hourCi.ToString();
-            _hrAnimator.TargetContent = _hours;
+            _hrAnimator.Update(_hours, Settings.IsAnimationEnabled);
         }
         if ((_minutes != span.Minutes.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 2) {
             int minuteI = span.Minutes;
@@ -119,7 +119,7 @@ public partial class BetterCountdown {
             if (m.Length == 1) {
                 m = "0" + m;
             }
-            _mnAnimator.TargetContent = m;
+            _mnAnimator.Update(m, Settings.IsAnimationEnabled);
         }
         // ReSharper disable once InvertIf
         if ((_seconds != span.Seconds.ToString() | _isAccurateChanged) & (int)Settings.Accuracy >= 3) {
@@ -128,7 +128,7 @@ public partial class BetterCountdown {
             if (s.Length == 1) {
                 s = "0" + s;
             }
-            _scAnimator.Update(s,!Settings.IsFocusedModeEnabled);
+            _scAnimator.Update(s, Settings.IsAnimationEnabled, !Settings.IsFocusedModeEnabled);
             _isAccurateChanged = false;
         }
         _updateLock = false;

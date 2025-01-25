@@ -101,15 +101,17 @@ public static class Animators {
         string _targetContent = string.Empty;
         public string TargetContent {
             get => _targetContent;
-            set {
-                if (_targetContent == value) return;
-                Update(value);
-            }
+            set => Update(value);
         }
         
-        public void Update(string targetContent, bool isSwapAnimEnabled = true) {
-            _targetContent = targetContent;
+        public void Update(string targetContent, bool isAnimated = true, bool isSwapAnimEnabled = true) {
+            if (targetContent == _targetContent) return;
             if (_renderLock) return;
+            _targetContent = targetContent;
+            if (!isAnimated) {
+                _targetLabel.Content = _targetContent;
+                return;
+            }
             _renderLock = true;
             if (isSwapAnimEnabled) {
                 _swapStoryboard.Begin();

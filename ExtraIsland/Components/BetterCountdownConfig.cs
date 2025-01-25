@@ -22,6 +22,8 @@ public class BetterCountdownConfig {
     }
     public event Action? OnNoGapDisplayChanged;
     
+    public bool IsAnimationEnabled { get; set; } = true;
+    
     CountdownAccuracy _accuracy = CountdownAccuracy.Minute;
     public CountdownAccuracy Accuracy {
         get => _accuracy;
