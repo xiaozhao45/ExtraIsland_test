@@ -1,6 +1,6 @@
 id: ink.lipoly.ext.extraisland
 name: ExtraIsland
-description: 简单的扩展
+description: 为ClassIsland提供多种扩展功能!
 entranceAssembly: "ExtraIsland.dll"
 url: https://github.com/LiPolymer/ExtraIsland
 version: 0.3.0.0
