@@ -1,9 +1,6 @@
 ﻿using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using ClassIsland.Core.Abstractions.Controls;
 using ExtraIsland.Shared;
 
 namespace ExtraIsland.Components;

@@ -1,6 +1,4 @@
-﻿using Octokit;
-
-namespace ExtraIsland.LifeMode.Components;
+﻿namespace ExtraIsland.LifeMode.Components;
 
 public class SleepyConfig {
     public string ApiUrl { get; set; } = "";

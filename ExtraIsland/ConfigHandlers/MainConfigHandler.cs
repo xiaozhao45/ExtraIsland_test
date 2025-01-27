@@ -1,6 +1,4 @@
-﻿using System.Data.Common;
-using System.IO;
-using System.Windows.Forms;
+﻿using System.IO;
 using ClassIsland.Shared.Helpers;
 using ExtraIsland.Shared;
 
@@ -76,7 +74,11 @@ public class MainConfigData {
                     PropertyChanged?.Invoke();
                 }
             }
-            string _content = "# 一体机交接指南\n这是一个示列\n\n*支持Markdown*\n\n> 请按需修改\n> awa!";
+            string _content =   "# 一体机交接指南\r\n"
+                              + "这是一个示列\r\n"
+                              + "*支持Markdown*\r\n"
+                              + "> 请按需修改\r\n"
+                              + "> awa!";
             public string Content {
                 get => _content;
                 set {

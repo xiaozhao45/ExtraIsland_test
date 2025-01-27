@@ -1,16 +1,9 @@
-﻿using System.Collections.ObjectModel;
-using System.IO;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Windows;
 using ClassIsland.Core.Attributes;
 using ExtraIsland.ConfigHandlers;
 using ExtraIsland.Shared;
 using ExtraIsland.TinyFeatures;
 using MaterialDesignThemes.Wpf;
-using Microsoft.Win32;
 
 namespace ExtraIsland.SettingsPages;
 

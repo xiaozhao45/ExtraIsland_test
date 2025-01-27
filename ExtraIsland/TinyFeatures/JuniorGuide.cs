@@ -1,18 +1,12 @@
-﻿using System.Collections;
-using System.Drawing;
-using System.Runtime.CompilerServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms.VisualStyles;
 using ClassIsland.Core.Controls.CommonDialog;
 using ClassIsland.Core.Helpers;
 using ExtraIsland.ConfigHandlers;
 using ExtraIsland.Shared;
 using ExtraIsland.StandaloneViews;
-using H.NotifyIcon;
 using MaterialDesignThemes.Wpf;
 using MdXaml;
-using Badged = MahApps.Metro.Controls.Badged;
 using Brushes = System.Windows.Media.Brushes;
 using VerticalAlignment = System.Windows.VerticalAlignment;
 

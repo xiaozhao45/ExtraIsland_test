@@ -1,16 +1,7 @@
-﻿using System.Configuration;
-using System.Text.Json.Serialization;
-using System.Windows;
-using System.Windows.Controls;
-using ClassIsland.Core.Abstractions.Controls;
+﻿using System.Windows;
 using ClassIsland.Core.Abstractions.Services;
-using ClassIsland.Core.Abstractions.Services.Management;
 using ClassIsland.Core.Attributes;
-using ClassIsland.Core.Models.Plugin;
-using ClassIsland.Shared.Abstraction.Models;
-using ClassIsland.Shared.Interfaces;
 using ExtraIsland.Shared;
-using Google.Protobuf;
 using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
 
