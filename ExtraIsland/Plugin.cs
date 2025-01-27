@@ -23,6 +23,7 @@ namespace ExtraIsland
             services.AddComponent<Components.FluentClock,Components.FluentClockSettings>();
             services.AddComponent<Components.Rhesis,Components.RhesisSettings>();
             services.AddComponent<Components.OnDuty>();
+            services.AddSettingsPage<SettingsPages.MainSettingsPage>();
             services.AddSettingsPage<SettingsPages.DutySettingsPage>();
             #if DEBUG
                 services.AddSettingsPage<SettingsPages.TinyFeaturesSettingsPage>();

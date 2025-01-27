@@ -27,6 +27,7 @@ public class MainConfigHandler {
                 Data);
         }
         Data.TinyFeatures.JuniorGuide.PropertyChanged += Save;
+        Data.PropertyChanged += Save;
     }
 
     void Save() {
@@ -36,7 +37,16 @@ public class MainConfigHandler {
     }
 }
 
-public class MainConfigData {
+public class MainConfigData { 
+    public event Action? PropertyChanged;
+    bool _isLifeModeActivated;
+    public bool IsLifeModeActivated {
+        get => _isLifeModeActivated;
+        set {
+            _isLifeModeActivated = value;
+            PropertyChanged?.Invoke();
+        }
+    }
     public TinyFeaturesConfig TinyFeatures { get; set; } = new TinyFeaturesConfig();
     public class TinyFeaturesConfig {
         public JuniorGuideConfig JuniorGuide { get; set; } = new JuniorGuideConfig();

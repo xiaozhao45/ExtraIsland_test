@@ -1,0 +1,42 @@
+﻿<ci:SettingsPageBase x:Class="ExtraIsland.SettingsPages.MainSettingsPage"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:local="clr-namespace:ExtraIsland.SettingsPages"
+                     xmlns:ci="http://classisland.tech/schemas/xaml/core"
+                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                     xmlns:sc="clr-namespace:ExtraIsland.Shared.Converters"
+                     mc:Ignorable="d"
+                     Title="MainSettingsPage">
+    <ci:SettingsPageBase.Resources>
+        <sc:IntToStringConverter x:Key="IntToStringConverter"/>
+        <sc:DoubleToStringConverter x:Key="DoubleToStringConverter"/>
+        <sc:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+    </ci:SettingsPageBase.Resources>
+    <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:MainSettingsPage}}">
+        <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
+        <StackPanel Style="{StaticResource SettingsPageStackPanelStyle}">
+            <Label FontSize="20"
+                   VerticalAlignment="Center"
+                   Foreground="{DynamicResource MaterialDesignBodyLight}">
+                ExtraIsland
+            </Label>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                <Image Source="pack://application:,,,/ExtraIsland;;;component/Assets/fullLogo.png"
+                       Height="60"
+                       Width="60"
+                       VerticalAlignment="Center"/>
+                <Label VerticalAlignment="Center" FontSize="30">全局 · 主设置</Label>
+            </StackPanel>
+            <materialDesign:Card>
+                
+            </materialDesign:Card>
+            <ci:SettingsCard
+                IconGlyph="ChessHorse"
+                IsOn="{Binding Settings.IsLifeModeActivated, Mode=TwoWay}"
+                Description="(需要重启) 启用不适用于课堂环境的功能·········太有生活了哥们!"
+                Header="生活模式"/>
+        </StackPanel>
+    </ScrollViewer>
+</ci:SettingsPageBase>
