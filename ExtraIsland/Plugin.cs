@@ -25,6 +25,9 @@ namespace ExtraIsland
             services.AddComponent<Components.OnDuty>();
             services.AddSettingsPage<SettingsPages.MainSettingsPage>();
             services.AddSettingsPage<SettingsPages.DutySettingsPage>();
+            if (GlobalConstants.Handlers.MainConfig.Data.IsLifeModeActivated) {
+                services.AddComponent<LifeMode.Components.Sleepy,LifeMode.Components.SleepySettings>();
+            }
             #if DEBUG
                 services.AddSettingsPage<SettingsPages.TinyFeaturesSettingsPage>();
                 services.AddSettingsPage<SettingsPages.DebugSettingsPage>();
