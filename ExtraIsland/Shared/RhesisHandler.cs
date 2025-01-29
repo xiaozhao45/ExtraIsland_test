@@ -12,32 +12,38 @@ public static class RhesisHandler {
         readonly Random _random = new Random();
         public RhesisData LegacyGet(RhesisDataSource rhesisDataSource = RhesisDataSource.All
             ,string? hitokotoRequestUrl = null,string? sainticRequestUrl = null, int lengthLimitation = 0) {
-            return rhesisDataSource switch {
-                RhesisDataSource.All => _random.Next(4) switch {
-                    0 => RhesisDataSource.Jinrishici,
-                    //今日诗词接口内容较少,故概率较低
-                    1 => RhesisDataSource.Saint,
-                    2 => RhesisDataSource.Saint,
-                    3 => RhesisDataSource.Hitokoto,
-                    4 => RhesisDataSource.Hitokoto,
+            for (int i = 0; i <= 5; i++) {
+                RhesisData dataFetched =  rhesisDataSource switch {
+                    RhesisDataSource.All => _random.Next(4) switch {
+                        0 => RhesisDataSource.Jinrishici,
+                        //今日诗词接口内容较少,故概率较低
+                        1 => RhesisDataSource.Saint,
+                        2 => RhesisDataSource.Saint,
+                        3 => RhesisDataSource.Hitokoto,
+                        4 => RhesisDataSource.Hitokoto,
+                        _ => rhesisDataSource
+                    },
+                    RhesisDataSource.SaintJinrishici => _random.Next(2) switch {
+                        0 => RhesisDataSource.Jinrishici,
+                        //今日诗词接口内容较少,故概率较低
+                        1 => RhesisDataSource.Saint,
+                        2 => RhesisDataSource.Saint,
+                        _ => rhesisDataSource
+                    },
                     _ => rhesisDataSource
-                },
-                RhesisDataSource.SaintJinrishici => _random.Next(2) switch {
-                    0 => RhesisDataSource.Jinrishici,
-                    //今日诗词接口内容较少,故概率较低
-                    1 => RhesisDataSource.Saint,
-                    2 => RhesisDataSource.Saint,
-                    _ => rhesisDataSource
-                },
-                _ => rhesisDataSource
-            } switch {
-                RhesisDataSource.Jinrishici => JinrishiciData.Fetch().ToRhesisData(),
-                RhesisDataSource.Saint => SainticData.Fetch(sainticRequestUrl).ToRhesisData(),
-                RhesisDataSource.Hitokoto => HitokotoData.Fetch(hitokotoRequestUrl).ToRhesisData(),
-                RhesisDataSource.SaintJinrishici => new RhesisData { Content = "处理时出现错误" },
-                RhesisDataSource.All => new RhesisData { Content = "处理时出现错误" },
-                _ => new RhesisData { Content = "处理时出现错误" }
-            };
+                } switch {
+                    RhesisDataSource.Jinrishici => JinrishiciData.Fetch().ToRhesisData(),
+                    RhesisDataSource.Saint => SainticData.Fetch(sainticRequestUrl).ToRhesisData(),
+                    RhesisDataSource.Hitokoto => HitokotoData.Fetch(hitokotoRequestUrl).ToRhesisData(),
+                    RhesisDataSource.SaintJinrishici => new RhesisData { Content = "处理时出现错误" },
+                    RhesisDataSource.All => new RhesisData { Content = "处理时出现错误" },
+                    _ => new RhesisData { Content = "处理时出现错误" }
+                };
+                if (lengthLimitation == 0 | dataFetched.Content.Length <= lengthLimitation) {
+                    return dataFetched;
+                }
+            }
+            return new RhesisData { Content = "满足限制时遇到困难" };
         }
     }
 }
@@ -167,7 +173,7 @@ public class JinrishiciData {
         };
     }
 
-    public static JinrishiciData Fetch() {
+    public static JinrishiciData Fetch(int lengthLimitation = 0) {
         try {
             return new HttpClient()
                 .GetFromJsonAsync<JinrishiciData>("https://v1.jinrishici.com/all.json")
@@ -175,7 +181,7 @@ public class JinrishiciData {
         }
         catch (Exception ex) {
             return new JinrishiciData {
-                Content = $"获取时发生错误"
+                Content = "获取时发生错误"
             };
         }
     }
