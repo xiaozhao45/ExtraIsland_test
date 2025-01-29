@@ -19,6 +19,7 @@
                     VerticalAlignment="Center"
                     CornerRadius="14">
                 <Label x:Name="LimiterLabel1"
+                       Margin="-5"
                        Content="▯"
                        Visibility="Hidden"
                        FontSize="{DynamicResource MainWindowLargeFontSize}"/>
@@ -30,6 +31,7 @@
                     VerticalAlignment="Center"
                     CornerRadius="14">
                 <Label x:Name="LimiterLabel2" 
+                       Margin="-5"
                        Content="▯"
                        Visibility="Hidden"
                        FontSize="{DynamicResource MainWindowLargeFontSize}"/>
