@@ -11,7 +11,7 @@ namespace ExtraIsland.LifeMode.Components;
     "529C3038-F1B8-49F8-AA15-165B770770DC",
     "Sleepy",
     PackIconKind.Bed,
-    "不要视奸我啊啊啊啊啊"
+    "(生活模式)不要视奸我啊啊啊啊啊啊啊"
 )]
 public partial class Sleepy {
     public Sleepy(ILessonsService lessonsService) {

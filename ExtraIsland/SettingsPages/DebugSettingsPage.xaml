@@ -64,6 +64,14 @@
                     </StackPanel>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
+            <ci:SettingsCard IconGlyph="Animation" Header="实验·主界面变换"
+                             Description="获取主界面窗体对象,并对其进行强兼(bushi">
+                <ci:SettingsCard.Switcher>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Click="MainWindowTransform_OnClick">切换</Button>
+                    </StackPanel>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
         </StackPanel>
     </ScrollViewer>
 </ci:SettingsPageBase>

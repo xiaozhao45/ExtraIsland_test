@@ -1,11 +1,18 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using ClassIsland.Core;
 using ClassIsland.Core.Attributes;
-using ClassIsland.Core.Controls.CommonDialog;
 using ExtraIsland.Shared;
+using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
+using CommonDialog = ClassIsland.Core.Controls.CommonDialog.CommonDialog;
+using HorizontalAlignment = System.Windows.HorizontalAlignment;
+using Label = System.Windows.Controls.Label;
 
 namespace ExtraIsland.SettingsPages;
 
@@ -67,6 +74,37 @@ public partial class DebugSettingsPage {
             $"{rhesis.Source} | {rhesis.Title} - {rhesis.Author}"
             + "\r\n         |" + rhesis.Catalog
             + "\r\n         |" + rhesis.Content);
+    }
+    void MainWindowTransform_OnClick(object sender,RoutedEventArgs e) {
+        this.BeginInvoke(() => {
+            dynamic app = AppBase.Current;
+            Window mainWindow = app.MainWindow!;
+            DoubleAnimationUsingKeyFrames testAnim = new DoubleAnimationUsingKeyFrames{
+                KeyFrames = [
+                    new EasingDoubleKeyFrame {
+                        KeyTime = KeyTime.FromPercent(0.5),
+                        Value = 0,
+                        EasingFunction = new CircleEase {
+                            EasingMode = EasingMode.EaseIn
+                        }
+                    },
+                    new EasingDoubleKeyFrame {
+                        KeyTime = KeyTime.FromPercent(1),
+                        Value = 1,
+                        EasingFunction = new CircleEase {
+                            EasingMode = EasingMode.EaseOut
+                        }
+                    }
+                ],
+                Duration = new Duration(TimeSpan.FromMilliseconds(700))
+            };
+            Storyboard.SetTarget(testAnim,mainWindow);
+            Storyboard.SetTargetProperty(testAnim,new PropertyPath("(Window.Content).(Grid.RenderTransform).(MatrixTransform.Matrix).(Matrix.OffsetY)"));            
+            Storyboard storyboard = new Storyboard {
+                Children = [testAnim]
+            };
+            storyboard.Begin();
+        });
     }
 }
 
