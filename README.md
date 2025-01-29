@@ -73,9 +73,7 @@ _也算是以前写的班级小工具的精神续作(?_
 
 **感谢同学们对本项目的支持与贡献！**
 
-<a href="https://github.com/LiPolymer/ExtraIsland/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=LiPolymer/ExtraIsland&max=1000" alt="贡献者名单"/>
-</a>
+[![Contributors](https://contrib.nn.ci/api?repo=LiPolymer/ExtraIsland&repo=LiPolymer/SentenceSplicer)](https://github.com/LiPolymer/ExtraIsland/graphs/contributors)
 
 </div>
 
