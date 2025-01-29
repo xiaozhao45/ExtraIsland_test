@@ -9,6 +9,9 @@
                   mc:Ignorable="d"
                   Loaded="FluentClock_OnLoaded"
                   Unloaded="FluentClock_OnUnloaded">
+    <ci:ComponentBase.Resources>
+        <ci:SizeDoubleToCornerRadiusConverter x:Key="SizeDoubleToCornerRadiusConverter"/>
+    </ci:ComponentBase.Resources>
     <Grid Margin="0">
         <Grid x:Name="EmpBack" Opacity="0">
             <Border Background="{DynamicResource PrimaryHueMidBrush}"
@@ -17,24 +20,22 @@
                     Padding="0"
                     Opacity="0.3"
                     VerticalAlignment="Center"
-                    CornerRadius="14">
-                <Label x:Name="LimiterLabel1"
-                       Margin="-5"
+                    CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource SizeDoubleToCornerRadiusConverter}}">
+                <Label Margin="-4"
                        Content="▯"
                        Visibility="Hidden"
-                       FontSize="{DynamicResource MainWindowLargeFontSize}"/>
+                       FontSize="{DynamicResource MainWindowEmphasizedFontSize}"/>
             </Border>
             <Border ClipToBounds="True"
                     BorderBrush="{DynamicResource PrimaryHueMidBrush}"
                     BorderThickness="1"
                     Padding="0 0"
                     VerticalAlignment="Center"
-                    CornerRadius="14">
-                <Label x:Name="LimiterLabel2" 
-                       Margin="-5"
+                    CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource SizeDoubleToCornerRadiusConverter}}">
+                <Label Margin="-4"
                        Content="▯"
                        Visibility="Hidden"
-                       FontSize="{DynamicResource MainWindowLargeFontSize}"/>
+                       FontSize="{DynamicResource MainWindowEmphasizedFontSize}"/>
             </Border>
         </Grid>
         <StackPanel
