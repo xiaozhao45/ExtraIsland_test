@@ -37,7 +37,7 @@ public partial class Sleepy {
 
     void Update() {
         Data = SleepyHandler.SleepyApiData.Fetch(Settings.ApiUrl);
-        StatLabel.Content = Data.Info.Name;
+        StatLabel.Content = $"{Data.Info.Name}·{Data.Devices.Count}设备在线";
     }
 
     public SleepyHandler.SleepyApiData Data { get; private set; } = new SleepyHandler.SleepyApiData();
