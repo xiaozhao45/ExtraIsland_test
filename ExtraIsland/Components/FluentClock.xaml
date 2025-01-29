@@ -10,23 +10,30 @@
                   Loaded="FluentClock_OnLoaded"
                   Unloaded="FluentClock_OnUnloaded">
     <Grid Margin="0">
-        <Grid x:Name="EmpBack"
-              Opacity="0">
+        <Grid x:Name="EmpBack" Opacity="0">
             <Border Background="{DynamicResource PrimaryHueMidBrush}"
-                    Height="28"
                     ClipToBounds="True"
                     BorderThickness="1"
                     Padding="0"
                     Opacity="0.3"
                     VerticalAlignment="Center"
-                    CornerRadius="14"/>
-            <Border Height="28"
-                    ClipToBounds="True"
+                    CornerRadius="14">
+                <Label x:Name="LimiterLabel1"
+                       Content="▯"
+                       Visibility="Hidden"
+                       FontSize="{DynamicResource MainWindowLargeFontSize}"/>
+            </Border>
+            <Border ClipToBounds="True"
                     BorderBrush="{DynamicResource PrimaryHueMidBrush}"
                     BorderThickness="1"
                     Padding="0 0"
                     VerticalAlignment="Center"
-                    CornerRadius="14"/>
+                    CornerRadius="14">
+                <Label x:Name="LimiterLabel2" 
+                       Content="▯"
+                       Visibility="Hidden"
+                       FontSize="{DynamicResource MainWindowLargeFontSize}"/>
+            </Border>
         </Grid>
         <StackPanel
             DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:FluentClock}}"
