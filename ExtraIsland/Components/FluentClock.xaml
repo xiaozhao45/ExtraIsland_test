@@ -21,7 +21,8 @@
                     Opacity="0.3"
                     VerticalAlignment="Center"
                     CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource SizeDoubleToCornerRadiusConverter}}">
-                <Label Margin="-4"
+                <Label x:Name="Placeholder1"
+                       Margin="6,-4"
                        Content="▯"
                        Visibility="Hidden"
                        FontSize="{DynamicResource MainWindowEmphasizedFontSize}"/>
@@ -32,7 +33,8 @@
                     Padding="0 0"
                     VerticalAlignment="Center"
                     CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}, Converter={StaticResource SizeDoubleToCornerRadiusConverter}}">
-                <Label Margin="-4"
+                <Label x:Name="Placeholder2"
+                       Margin="6,-4"
                        Content="▯"
                        Visibility="Hidden"
                        FontSize="{DynamicResource MainWindowEmphasizedFontSize}"/>
