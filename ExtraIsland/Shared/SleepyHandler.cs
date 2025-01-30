@@ -30,8 +30,7 @@ public static class SleepyHandler {
                     .GetFromJsonAsync<SleepyApiData>(url)
                     .Result!;
             }
-            catch (Exception ex) {
-                CommonDialog.ShowError(ex.ToString());
+            catch {
                 return new SleepyApiData {
                     Info = new SleepyInfo {
                         Name = "获取时发生错误"
