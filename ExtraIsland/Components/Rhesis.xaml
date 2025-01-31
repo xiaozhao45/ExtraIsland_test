@@ -13,6 +13,10 @@
         <Label x:Name="Label"
                VerticalAlignment="Center"
                FontSize="{DynamicResource MainWindowLargeFontSize}"
-               Content="{Binding Showing, Mode=OneWay}" />
+               Content="{Binding Showing, Mode=OneWay}">
+            <Label.RenderTransform>
+                <TranslateTransform/>
+            </Label.RenderTransform>
+        </Label>
     </Grid>
 </ci:ComponentBase>

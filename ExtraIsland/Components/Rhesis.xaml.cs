@@ -17,12 +17,14 @@ public partial class Rhesis {
     public Rhesis(ILessonsService lessonsService) {
         LessonsService = lessonsService;
         InitializeComponent();
+        _labelAnimator = new Animators.ClockTransformControlAnimator(Label);
     }
     
     ILessonsService LessonsService { get; }
     
     public string Showing { get; private set; } = "-----------------";
     readonly RhesisHandler.Instance _rhesisHandler = new RhesisHandler.Instance();
+    readonly Animators.ClockTransformControlAnimator _labelAnimator;
     void Rhesis_OnLoaded(object sender,RoutedEventArgs e) {
         Settings.LastUpdate = DateTime.Now;
         Update();
@@ -50,7 +52,7 @@ public partial class Rhesis {
                     _ => $"https://open.saintic.com/api/sentence/{Settings.HitokotoProp}.json"
                 },
                 Settings.LengthLimitation).Content; 
-            Label.Content = Showing;
+            _labelAnimator.Update(Showing, Settings.IsAnimationEnabled, Settings.IsSwapAnimationEnabled);
         });
     }
 }

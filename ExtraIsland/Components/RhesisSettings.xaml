@@ -68,6 +68,15 @@
                     </StackPanel>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
+            <ci:SettingsCard IconGlyph="AnimationPlay"
+                             Header="启用动画"
+                             Description="禁用后,将不再播放动画,对低性能设备友好!"
+                             IsOn="{Binding Settings.IsAnimationEnabled, Mode=TwoWay}"/>
+            <ci:SettingsCard IconGlyph="AnimationPlus"
+                             Header="启用翻页动画"
+                             Description="启用后,切换动画样式将被替换为翻页"
+                             IsEnabled="{Binding Settings.IsAnimationEnabled, Mode=OneWay}"
+                             IsOn="{Binding Settings.IsSwapAnimationEnabled, Mode=TwoWay}"/>
             <materialDesign:Card Margin="0 0 0 6">
                 <Expander Background="Transparent"
                           IsExpanded="False"

@@ -32,4 +32,8 @@ public class RhesisConfig {
     }
     
     public string SainticProp  { get; set; } = string.Empty;
+    
+    public bool IsAnimationEnabled { get; set; } = true;
+    
+    public bool IsSwapAnimationEnabled { get; set; }
 }
