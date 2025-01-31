@@ -32,7 +32,7 @@
                     VerticalAlignment="Center"/>
                 <Label VerticalAlignment="Center" FontSize="30">全局 · 微功能</Label>
             </StackPanel>
-                        <materialDesign:Card Margin="0 0 0 6">
+            <materialDesign:Card Margin="0 0 0 6">
                 <Expander Background="Transparent"
                           IsExpanded="{Binding Settings.JuniorGuide.Enabled, Mode=OneWay}"
                           TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
@@ -127,6 +127,11 @@
                     </StackPanel>
                 </Expander>
             </materialDesign:Card>
+            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
+            <ci:SettingsCard IconGlyph="MouseMoveUp"
+                             Header="(隐藏设置) 主界面启用鼠标点击"
+                             Description="允许鼠标与主界面上的控件交互"
+                             IsOn="{Binding AppSettings.IsMouseClickingEnabled, Mode=TwoWay}"/>
         </StackPanel>
     </ScrollViewer>
 </ci:SettingsPageBase>

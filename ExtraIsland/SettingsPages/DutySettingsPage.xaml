@@ -41,7 +41,7 @@
                         <TextBlock TextWrapping="Wrap"
                                    VerticalAlignment="Center"
                                    Margin="4 0 0 0" >
-                            <Run>你正在使用值日功能的早期版本，此版本仅供尝鲜使用，不建议用于生产环境。此功能在未来可能会产生较大的变动，并且</Run>
+                            <Run>该功能尚需改进，此功能在未来可能会产生较大的变动，并且</Run>
                             <Bold>可能无法保证配置文件完全向下兼容。</Bold>
                             <Run>欢迎前往</Run>
                             <ci:NavHyperlink CommandParameter="https://github.com/LiPolymer/ExtraIsland/discussions/8">
