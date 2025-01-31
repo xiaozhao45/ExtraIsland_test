@@ -67,9 +67,8 @@ public class EnumDescriptionConverter : IValueConverter {
 
         if (attribArray.Length == 0) {
             return enumObj.ToString();
-        } else {
-            DescriptionAttribute? attrib = attribArray[0] as DescriptionAttribute;
-            return attrib!.Description;
         }
+        DescriptionAttribute? attrib = attribArray[0] as DescriptionAttribute;
+        return attrib!.Description;
     }
 }

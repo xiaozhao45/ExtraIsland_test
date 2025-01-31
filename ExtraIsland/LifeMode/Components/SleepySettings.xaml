@@ -40,6 +40,19 @@
                         MinWidth="30"/>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
+            <ci:SettingsCard
+                IconGlyph="AnimationPlay"
+                Header = "轮播间隔"
+                Description="多久切换一次展示的信息,设为0即关闭">
+                <ci:SettingsCard.Switcher>
+                    <TextBox
+                        Text="{Binding Settings.DeviceInfoShowingIntervalSeconds, Converter={StaticResource IntToStringConverter}, Mode=TwoWay}"
+                        VerticalAlignment="Center"
+                        InputMethod.IsInputMethodEnabled="False"
+                        PreviewTextInput="TextBoxNumberCheck"
+                        MinWidth="30"/>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
             <Label HorizontalAlignment="Center"
                    Foreground="{DynamicResource MaterialDesignBodyLight}">
                 Added by ExtraIsland

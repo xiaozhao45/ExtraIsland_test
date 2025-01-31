@@ -17,14 +17,19 @@ public partial class Sleepy {
     public Sleepy(ILessonsService lessonsService) {
         LessonsService = lessonsService;
         InitializeComponent();
+        labelAnimator = new Animators.ClockTransformControlAnimator(StatLabel);
     }
 
+    Animators.ClockTransformControlAnimator labelAnimator;
+    
     ILessonsService LessonsService { get; }
     void Sleepy_OnLoaded(object sender,RoutedEventArgs e) {
         LessonsService.PostMainTimerTicked += Check;
+        LessonsService.PostMainTimerTicked += SlideShow;
     }
     void Sleepy_OnUnloaded(object sender,RoutedEventArgs e) {
         LessonsService.PostMainTimerTicked -= Check;
+        LessonsService.PostMainTimerTicked -= SlideShow;
     }
     void Check(object? sender,EventArgs eventArgs) {
         this.BeginInvoke(() => {
@@ -37,7 +42,31 @@ public partial class Sleepy {
 
     void Update() {
         Data = SleepyHandler.SleepyApiData.Fetch(Settings.ApiUrl);
-        StatLabel.Content = $"{Data.Info.Name}·{Data.Devices.Count}设备在线";
+        if (Settings.DeviceInfoShowingIntervalSeconds == 0) {
+            labelAnimator.Update($"{Data.Info.Name}·{Data.Devices.Count}设备在线");
+        }
+    }
+
+    bool _renderLock;
+    void SlideShow(object? sender,EventArgs eventArgs) {
+        if (Settings.DeviceInfoShowingIntervalSeconds == 0 | _renderLock) return;
+        _renderLock = true;
+        new Thread(() => {
+            this.BeginInvoke(() => {
+                labelAnimator.Update($"{Data.Info.Name}·{Data.Devices.Count}设备在线");
+            });
+            Thread.Sleep(Settings.DeviceInfoShowingInterval);
+            if (Data.Devices.Count != 0) {
+                foreach (SleepyHandler.SleepyApiData.SleepyDevice device in Data.Devices.Values.Where(device => device.Using)) {
+                    this.BeginInvoke(() => {
+                        labelAnimator.Update($"{device.ShowName}·{device.AppName}");
+                    });
+                    Thread.Sleep(Settings.DeviceInfoShowingInterval);
+                }
+            }
+            _renderLock = false;
+        }).Start();
+
     }
 
     public SleepyHandler.SleepyApiData Data { get; private set; } = new SleepyHandler.SleepyApiData();
