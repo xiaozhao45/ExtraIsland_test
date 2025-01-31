@@ -13,18 +13,36 @@ namespace ExtraIsland.Components;
     PackIconKind.Users,
     "显示值日生姓名,每日轮换"
 )]
-public partial class OnDuty : ComponentBase {
+public partial class OnDuty {
     public OnDuty() {
-        Settings = GlobalConstants.Handlers.OnDuty!;
+        PersistedSettings = GlobalConstants.Handlers.OnDuty!;
         InitializeComponent();
-        OnOnDutyUpdated();
-        Settings.OnDutyUpdated += OnOnDutyUpdated;
     }
     void OnOnDutyUpdated() {
-        NameLabel.Content = Settings.PeoplesOnDutyString;
+        if (!Settings.IsCompactModeEnabled) {
+            NameLabel.Content = PersistedSettings.PeoplesOnDutyString;
+        } else {
+            // ReSharper disable once ConvertIfStatementToSwitchStatement
+            if (PersistedSettings.Data.DutyState == OnDutyPersistedConfigData.DutyStateData.Single) {
+                DualLabelUp.Content = "值日";
+                DualLabelDown.Content = PersistedSettings.PeoplesOnDutyString;
+            } else if (PersistedSettings.Data.DutyState == OnDutyPersistedConfigData.DutyStateData.Double) {
+                DualLabelUp.Content = PersistedSettings.PeoplesOnDuty[0].Name;
+                DualLabelDown.Content = PersistedSettings.PeoplesOnDuty[1].Name;
+            } else {
+                DualLabelUp.Content = "内 " + PersistedSettings.PeoplesOnDuty[0].Name;
+                DualLabelDown.Content = "外 " + PersistedSettings.PeoplesOnDuty[1].Name;
+            }
+        }
     }
-    OnDutyPersistedConfigHandler Settings { get; }
+    OnDutyPersistedConfigHandler PersistedSettings { get; }
     void OnDuty_OnUnloaded(object sender,RoutedEventArgs e) {
-        Settings.OnDutyUpdated -= OnOnDutyUpdated;
+        PersistedSettings.OnDutyUpdated -= OnOnDutyUpdated;
+        Settings.PropertyChanged -= OnOnDutyUpdated;
+    }
+    void OnDuty_OnLoaded(object sender,RoutedEventArgs e) {
+        OnOnDutyUpdated();
+        Settings.PropertyChanged += OnOnDutyUpdated;
+        PersistedSettings.OnDutyUpdated += OnOnDutyUpdated;
     }
 }
