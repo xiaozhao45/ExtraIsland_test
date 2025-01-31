@@ -14,6 +14,10 @@
         <Label x:Name="StatLabel"
                VerticalAlignment="Center"
                FontSize="{DynamicResource MainWindowLargeFontSize}"
-               Content="{Binding Data.Info.Name, Mode=OneWay}"/>
+               Content="{Binding Data.Info.Name, Mode=OneWay}">
+            <Label.RenderTransform>
+                <TranslateTransform/>
+            </Label.RenderTransform>
+        </Label>
     </Grid>
 </ci:ComponentBase>

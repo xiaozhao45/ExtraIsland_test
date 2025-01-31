@@ -43,7 +43,9 @@ public partial class Sleepy {
     void Update() {
         Data = SleepyHandler.SleepyApiData.Fetch(Settings.ApiUrl);
         if (Settings.DeviceInfoShowingIntervalSeconds == 0) {
-            labelAnimator.Update($"{Data.Info.Name}·{Data.Devices.Count}设备在线");
+            labelAnimator.Update($"{Data.Info.Name}·{Data.Devices.Count}设备在线",
+                Settings.IsAnimationEnabled,
+                Settings.IsSwapAnimationEnabled);
         }
     }
 
@@ -53,20 +55,23 @@ public partial class Sleepy {
         _renderLock = true;
         new Thread(() => {
             this.BeginInvoke(() => {
-                labelAnimator.Update($"{Data.Info.Name}·{Data.Devices.Count}设备在线");
+                labelAnimator.Update($"{Data.Info.Name}·{Data.Devices.Count}设备在线",
+                    Settings.IsAnimationEnabled,
+                    Settings.IsSwapAnimationEnabled);
             });
             Thread.Sleep(Settings.DeviceInfoShowingInterval);
             if (Data.Devices.Count != 0) {
                 foreach (SleepyHandler.SleepyApiData.SleepyDevice device in Data.Devices.Values.Where(device => device.Using)) {
                     this.BeginInvoke(() => {
-                        labelAnimator.Update($"{device.ShowName}·{device.AppName}");
+                        labelAnimator.Update($"{device.ShowName}·{device.AppName}",
+                            Settings.IsAnimationEnabled,
+                            Settings.IsSwapAnimationEnabled);
                     });
                     Thread.Sleep(Settings.DeviceInfoShowingInterval);
                 }
             }
             _renderLock = false;
         }).Start();
-
     }
 
     public SleepyHandler.SleepyApiData Data { get; private set; } = new SleepyHandler.SleepyApiData();
