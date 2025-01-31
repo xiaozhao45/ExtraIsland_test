@@ -2,6 +2,7 @@
 
 namespace ExtraIsland.LifeMode.Components;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public class SleepyConfig {
     public string ApiUrl { get; set; } = "https://sleepy.developers.classisland.tech/query";
     public TimeSpan UpdateInterval { get; set; } = TimeSpan.FromSeconds(5);

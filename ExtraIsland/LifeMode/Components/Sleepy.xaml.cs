@@ -32,20 +32,22 @@ public partial class Sleepy {
         LessonsService.PostMainTimerTicked -= SlideShow;
     }
     void Check(object? sender,EventArgs eventArgs) {
-        this.BeginInvoke(() => {
+        new Thread(() => {
             if (EiUtils.GetDateTimeSpan(Settings.LastUpdate,DateTime.Now) < Settings.UpdateInterval
                 | Settings.UpdateIntervalSeconds == 0) return;
             Settings.LastUpdate = DateTime.Now;
             Update();
-        });
+        }).Start();
     }
 
     void Update() {
         Data = SleepyHandler.SleepyApiData.Fetch(Settings.ApiUrl);
         if (Settings.DeviceInfoShowingIntervalSeconds == 0) {
-            labelAnimator.Update($"{Data.Info.Name}·{Data.Devices.Count}设备在线",
-                Settings.IsAnimationEnabled,
-                Settings.IsSwapAnimationEnabled);
+            this.BeginInvoke(() => {
+                labelAnimator.Update($"{Data.Info.Name}·{Data.Devices.Count}设备在线",
+                    Settings.IsAnimationEnabled,
+                    Settings.IsSwapAnimationEnabled);
+            });
         }
     }
 

@@ -42,7 +42,7 @@ public partial class Rhesis {
     }
     
     void Update() {
-        this.BeginInvoke(() => {
+        new Thread(() => {
             Showing = _rhesisHandler.LegacyGet(Settings.DataSource,Settings.HitokotoProp switch {
                     "" => "https://v1.hitokoto.cn/",
                     _ => $"https://v1.hitokoto.cn/?{Settings.HitokotoLengthArgs}{Settings.HitokotoProp}"
@@ -52,7 +52,9 @@ public partial class Rhesis {
                     _ => $"https://open.saintic.com/api/sentence/{Settings.HitokotoProp}.json"
                 },
                 Settings.LengthLimitation).Content; 
-            _labelAnimator.Update(Showing, Settings.IsAnimationEnabled, Settings.IsSwapAnimationEnabled);
-        });
+            this.BeginInvoke(() => {
+                _labelAnimator.Update(Showing, Settings.IsAnimationEnabled, Settings.IsSwapAnimationEnabled);
+            });
+        }).Start();
     }
 }

@@ -12,6 +12,7 @@ namespace ExtraIsland
     public class Plugin : PluginBase
     {
         public override void Initialize(HostBuilderContext context, IServiceCollection services) {
+            //Initialize GlobalConstants/ConfigHandlers
             GlobalConstants.PluginConfigFolder = PluginConfigFolder;
             GlobalConstants.Handlers.OnDuty = new ConfigHandlers.OnDutyPersistedConfigHandler();
             GlobalConstants.Handlers.MainConfig = new ConfigHandlers.MainConfigHandler();
