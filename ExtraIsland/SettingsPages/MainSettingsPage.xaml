@@ -23,14 +23,70 @@
                 ExtraIsland
             </Label>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
-                <Image Source="pack://application:,,,/ExtraIsland;;;component/Assets/fullLogo.png"
-                       Height="60"
-                       Width="60"
-                       VerticalAlignment="Center"/>
+                <materialDesign:PackIcon
+                    Height="60"
+                    Width="60"
+                    Kind="BoxAdd"
+                    Foreground="{DynamicResource MaterialDesignBodyLight}"
+                    VerticalAlignment="Center" />
                 <Label VerticalAlignment="Center" FontSize="30">全局 · 主设置</Label>
             </StackPanel>
-            <materialDesign:Card>
-                
+            <materialDesign:Card TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                                 Margin="0,6,0,6">
+                <Grid HorizontalAlignment="Stretch" Margin="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <Image Source="pack://application:,,,/ExtraIsland;;;component/Assets/fullLogo.png"
+                                          Height="50"
+                                          Width="50"
+                                          Margin="0,-2,4,0"
+                                          VerticalAlignment="Center"/>
+                        <TextBlock Margin="4 0 0 0">
+                                    <Run Text="ExtraIsland" FontSize="24" />
+                                    <Run Text="R0.30" />
+                                    <LineBreak />
+                                    <Run Text="Copyright © 2024-2025 LiPolymer" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" 
+                                Margin="-5"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Right" 
+                                VerticalAlignment="Top">
+                        <Button Padding="8,5,8,5"
+                                BorderBrush="Transparent"
+                                Background="Transparent"
+                                Command="{x:Static ci:UriNavigationCommands.UriNavigationCommand}"
+                                CommandParameter="https://github.com/LiPolymer/ExtraIsland">
+                            <materialDesign:PackIcon Kind="Github"
+                                                     Foreground="{DynamicResource MaterialDesignBody}"
+                                                     Height="20"
+                                                     Width="20"/>
+                        </Button>
+                        <Button Padding="8,5,8,5"
+                                BorderBrush="Transparent"
+                                Background="Transparent"
+                                Command="{x:Static ci:UriNavigationCommands.UriNavigationCommand}"
+                                CommandParameter="https://gitlab.com/LiPolymer/ExtraIsland">
+                            <materialDesign:PackIcon Kind="Gitlab"
+                                                     Foreground="{DynamicResource MaterialDesignBody}"
+                                                     Height="20"
+                                                     Width="20"/>
+                        </Button>
+                        <Button Padding="8,5,8,5"
+                                BorderBrush="Transparent"
+                                Background="Transparent"
+                                Command="{x:Static ci:UriNavigationCommands.UriNavigationCommand}"
+                                CommandParameter="https://docs.lipoly.ink/ExtraIsland">
+                            <materialDesign:PackIcon Kind="Web"                                                     Foreground="{DynamicResource MaterialDesignBody}"
+                                                     Height="20"
+                                                     Width="20"/>
+                        </Button>
+                    </StackPanel>
+                </Grid>
             </materialDesign:Card>
             <ci:SettingsCard
                 IconGlyph="ChessHorse"

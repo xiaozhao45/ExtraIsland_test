@@ -5,7 +5,7 @@ using MaterialDesignThemes.Wpf;
 
 namespace ExtraIsland.SettingsPages;
 
-[SettingsPageInfo("extraisland.master","ExtraIsland·主设置",PackIconKind.Cogs,PackIconKind.Cogs)]
+[SettingsPageInfo("extraisland.master","ExtraIsland·主设置",PackIconKind.BoxAddOutline, PackIconKind.BoxAdd)]
 public partial class MainSettingsPage {
     public MainSettingsPage() {
         Settings = GlobalConstants.Handlers.MainConfig!.Data;
