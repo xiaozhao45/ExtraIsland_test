@@ -36,7 +36,7 @@
                 <Grid HorizontalAlignment="Stretch" Margin="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition Width="0"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Orientation="Horizontal">
                         <Image Source="pack://application:,,,/ExtraIsland;;;component/Assets/fullLogo.png"
@@ -51,7 +51,7 @@
                                     <Run Text="Copyright © 2024-2025 LiPolymer" />
                         </TextBlock>
                     </StackPanel>
-                    <StackPanel Grid.Row="1" 
+                    <StackPanel Grid.Column="1" 
                                 Margin="-5"
                                 Orientation="Horizontal" 
                                 HorizontalAlignment="Right" 
