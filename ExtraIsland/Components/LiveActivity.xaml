@@ -23,7 +23,11 @@
             <Label x:Name="CurrentLabel" 
                    Content="---" 
                    Margin="0,0,-4,0"
-                   VerticalAlignment="Center"/>
+                   VerticalAlignment="Center">
+                <Label.RenderTransform>
+                    <TranslateTransform/>
+                </Label.RenderTransform>
+            </Label>
         </StackPanel>
     </materialDesign:Chip>
 </ci:ComponentBase>

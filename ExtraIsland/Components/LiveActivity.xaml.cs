@@ -11,7 +11,7 @@ namespace ExtraIsland.Components;
 [ComponentInfo(
     "D61B565D-5BC9-4330-B848-2EDB22F9756E",
     "当前活动",
-    PackIconKind.WindowOpen,
+    PackIconKind.ApplicationSettingsOutline,
     "展示前台窗口标题"
 )]
 public partial class LiveActivity {
@@ -38,7 +38,7 @@ public partial class LiveActivity {
                 CardChip.Visibility = Visibility.Collapsed;
             } else {
                 CardChip.Visibility = Visibility.Visible;
-                CurrentLabel.Content = title;
+                _labelAnimator.Update(title, true, false);
             }
         });
     }
