@@ -17,10 +17,10 @@ public partial class Sleepy {
     public Sleepy(ILessonsService lessonsService) {
         LessonsService = lessonsService;
         InitializeComponent();
-        labelAnimator = new Animators.ClockTransformControlAnimator(StatLabel);
+        _labelAnimator = new Animators.ClockTransformControlAnimator(StatLabel);
     }
 
-    Animators.ClockTransformControlAnimator labelAnimator;
+    readonly Animators.ClockTransformControlAnimator _labelAnimator;
     
     ILessonsService LessonsService { get; }
     void Sleepy_OnLoaded(object sender,RoutedEventArgs e) {
@@ -44,7 +44,7 @@ public partial class Sleepy {
         Data = SleepyHandler.SleepyApiData.Fetch(Settings.ApiUrl);
         if (Settings.DeviceInfoShowingIntervalSeconds == 0) {
             this.BeginInvoke(() => {
-                labelAnimator.Update($"{Data.Info.Name}·{Data.Devices.Count}设备在线",
+                _labelAnimator.Update($"{Data.Info.Name}·{Data.Devices.Count}设备在线",
                     Settings.IsAnimationEnabled,
                     Settings.IsSwapAnimationEnabled);
             });
@@ -57,7 +57,7 @@ public partial class Sleepy {
         _renderLock = true;
         new Thread(() => {
             this.BeginInvoke(() => {
-                labelAnimator.Update($"{Data.Info.Name}·{Data.Devices.Count}设备在线",
+                _labelAnimator.Update($"{Data.Info.Name}·{Data.Devices.Count}设备在线",
                     Settings.IsAnimationEnabled,
                     Settings.IsSwapAnimationEnabled);
             });
@@ -65,7 +65,7 @@ public partial class Sleepy {
             if (Data.Devices.Count != 0) {
                 foreach (SleepyHandler.SleepyApiData.SleepyDevice device in Data.Devices.Values.Where(device => device.Using)) {
                     this.BeginInvoke(() => {
-                        labelAnimator.Update($"{device.ShowName}·{device.AppName}",
+                        _labelAnimator.Update($"{device.ShowName}·{device.AppName}",
                             Settings.IsAnimationEnabled,
                             Settings.IsSwapAnimationEnabled);
                     });
