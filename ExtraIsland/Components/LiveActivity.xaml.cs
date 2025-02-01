@@ -38,15 +38,29 @@ public partial class LiveActivity {
                 CardChip.Visibility = Visibility.Collapsed;
             } else {
                 CardChip.Visibility = Visibility.Visible;
-                _labelAnimator.Update(title, true, false);
+                _labelAnimator.Update(title, Settings.IsAnimationEnabled, false);
             }
+        });
+    }
+
+    void UpdateMargin() {
+        this.BeginInvoke(() => {
+            CardChip.Margin = new Thickness {
+                Top = 0,
+                Bottom = 0,
+                Left = Settings.IsLeftNegativeMargin ? -12 : 0,
+                Right = Settings.IsRightNegativeMargin ? -12 : 0
+            };
         });
     }
     
     void LiveActivity_OnLoaded(object sender,RoutedEventArgs e) {
+        UpdateMargin();
         LessonsService.PostMainTimerTicked += Check;
+        Settings.OnMarginChanged += UpdateMargin;
     }
     void LiveActivity_OnUnloaded(object sender,RoutedEventArgs e) {
         LessonsService.PostMainTimerTicked -= Check;
+        Settings.OnMarginChanged -= UpdateMargin;
     }
 }
