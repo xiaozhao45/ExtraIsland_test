@@ -95,7 +95,7 @@
             <ci:SettingsCard
                 IconGlyph="ChessHorse"
                 IsOn="{Binding Settings.IsLifeModeActivated, Mode=TwoWay}"
-                Description="(需要重启) 启用不适用于课堂环境的功能·········太有生活了哥们!"
+                Description="启用不适用于课堂环境的功能·········太有生活了哥们!"
                 Header="生活模式"/>
         </StackPanel>
     </ScrollViewer>
