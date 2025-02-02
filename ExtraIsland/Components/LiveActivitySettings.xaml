@@ -1,0 +1,44 @@
+﻿<ci:ComponentBase x:Class="ExtraIsland.Components.LiveActivitySettings"
+                  x:TypeArguments="local:LiveActivityConfig"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                  xmlns:local="clr-namespace:ExtraIsland.Components"
+                  xmlns:ci="http://classisland.tech/schemas/xaml/core"
+                  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                  mc:Ignorable="d"
+                  d:DesignHeight="300" d:DesignWidth="300">
+    <ScrollViewer DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:LiveActivitySettings}}">
+        <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
+        <StackPanel Style="{StaticResource SettingsPageStackPanelStyle}">
+            <ci:SettingsCard IconGlyph="BorderHorizontal"
+                             Header="左右间距"
+                             Description="启用后,对应侧的元素边界将收缩至适合圆角">
+                <ci:SettingsCard.Switcher>
+                    <StackPanel Orientation="Horizontal">
+                        <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
+                        <ToggleButton
+                            Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                            ToolTip="左"
+                            IsChecked="{Binding Settings.IsLeftNegativeMargin, Mode=TwoWay}">
+                        </ToggleButton> 
+                        <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
+                        <ToggleButton
+                            Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                            ToolTip="右"
+                            IsChecked="{Binding Settings.IsRightNegativeMargin, Mode=TwoWay}"/>
+                    </StackPanel>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
+            <ci:SettingsCard IconGlyph="AnimationPlay"
+                             Header="启用动画"
+                             Description="禁用后,将不再播放动画,对低性能设备友好!"
+                             IsOn="{Binding Settings.IsAnimationEnabled, Mode=TwoWay}"/>
+            <Label HorizontalAlignment="Center" 
+                   Foreground="{DynamicResource MaterialDesignBodyLight}">
+                Added by ExtraIsland
+            </Label>
+        </StackPanel>
+    </ScrollViewer>
+</ci:ComponentBase>

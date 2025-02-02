@@ -43,7 +43,7 @@
                                    Margin="4 0 0 0" >
                             <Run>该功能尚需改进，此功能在未来可能会产生较大的变动，并且</Run>
                             <Bold>可能无法保证配置文件完全向下兼容。</Bold>
-                            <Run>欢迎前往</Run>
+                            <Run>要进行反馈交流,欢迎前往</Run>
                             <ci:NavHyperlink CommandParameter="https://github.com/LiPolymer/ExtraIsland/discussions/8">
                             <materialDesign:PackIcon
                                 VerticalAlignment="Center"
@@ -57,7 +57,7 @@
                                 Kind="Message"/>
                                 LiPolymer/ExtraIsland #8
                             </ci:NavHyperlink>
-                            <Run>进行反馈交流!</Run>
+                            <Run>!</Run>
                         </TextBlock>
                     </DockPanel>
                 </Grid>

@@ -43,7 +43,8 @@ public static class RhesisHandler {
                     return dataFetched;
                 }
             }
-            return new RhesisData { Content = "满足限制时遇到困难" };
+            return rhesisDataSource == RhesisDataSource.All ? HitokotoData.Fetch(hitokotoRequestUrl).ToRhesisData() 
+                : new RhesisData { Content = "满足限制时遇到困难" };
         }
     }
 }

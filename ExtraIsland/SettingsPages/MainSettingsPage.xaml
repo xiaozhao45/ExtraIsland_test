@@ -36,19 +36,23 @@
                 <Grid HorizontalAlignment="Stretch" Margin="12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Orientation="Horizontal">
                         <Image Source="pack://application:,,,/ExtraIsland;;;component/Assets/fullLogo.png"
-                                          Height="50"
-                                          Width="50"
+                                          Height="55"
+                                          Width="55"
                                           Margin="0,-2,4,0"
                                           VerticalAlignment="Center"/>
                         <TextBlock Margin="4 0 0 0">
                                     <Run Text="ExtraIsland" FontSize="24" />
                                     <Run Text="R0.35" />
                                     <LineBreak />
-                                    <Run Text="Copyright © 2024-2025 LiPolymer" />
+                                    <Run Text="Copyright © 2024-2025 LiPolymer"/>
+                                    <LineBreak />
+                                    <Run Foreground="Gray"
+                                         FontSize="10"
+                                         Text="Licensed under GNU AGPLv3."/>
                         </TextBlock>
                     </StackPanel>
                     <StackPanel Grid.Column="1" 
