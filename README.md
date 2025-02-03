@@ -1,5 +1,13 @@
 <!--markdownlint-disable MD033 MD036-->
 
+> [!IMPORTANT]
+>
+> 由于备考压力，[维护暂缓](https://lipoly.ink/2024/announcement/)，届时开发进度将陷入停滞，还请见谅 😭🙏
+>
+> 当然,如果你觉得这个项目不错，欢迎Star，也可以为本项目创建 PullRequest 来帮助我们变得更好！
+> 
+> 再次感谢大家的喜爱和使用！😋🙏 祝大家学业有成！
+
 <div align="center">
 
 <img src="https://docs.lipoly.ink/ExtraIsland/images/extraIslandFull.svg" alt="ExtraIsland Logo" style="height: 100px;">
@@ -42,11 +50,6 @@
 ![WakaTime](https://wakatime.com/badge/user/0c9f5a71-56d1-4ba3-b95c-da9e563fa119/project/c6f9dda0-5282-4b6b-b0e1-4461c06a5b41.svg?style=flat)
 
 </div>
-
-> [!IMPORTANT]
->
-> 由于备考压力，[维护暂缓](https://lipoly.ink/2024/announcement/)，部分问题可能无法及时处理，还请见谅 😭🙏
->
 
 为 [ClassIsland](https://classisland.tech/) 扩充一些小小的功能
 
