@@ -11,11 +11,11 @@
                   d:DesignHeight="35"
                   Loaded="BetterCountdown_OnLoaded"
                   Unloaded="BetterCountdown_OnUnloaded">
-    <Grid
-        DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=components:BetterCountdown}}"
-        VerticalAlignment="Center"
-        TextElement.FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
-        Row="2">
+    <Grid ClipToBounds="True"
+          DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=components:BetterCountdown}}"
+          VerticalAlignment="Center"
+          TextElement.FontSize="{DynamicResource MainWindowEmphasizedFontSize}"
+          Row="2">
         <StackPanel Orientation="Horizontal">
             <Label
                 Padding="0"

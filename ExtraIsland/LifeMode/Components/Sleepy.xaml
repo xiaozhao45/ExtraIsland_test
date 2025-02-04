@@ -10,7 +10,8 @@
                   Loaded="Sleepy_OnLoaded"
                   Unloaded="Sleepy_OnUnloaded"
                   d:DesignHeight="300" d:DesignWidth="300">
-    <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:Sleepy}}">
+    <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:Sleepy}}" 
+          ClipToBounds="True">
         <Label x:Name="StatLabel"
                VerticalAlignment="Center"
                FontSize="{DynamicResource MainWindowLargeFontSize}"

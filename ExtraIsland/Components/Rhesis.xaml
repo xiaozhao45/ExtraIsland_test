@@ -9,7 +9,8 @@
                   mc:Ignorable="d"
                   Loaded="Rhesis_OnLoaded"
                   Unloaded="Rhesis_OnUnloaded">
-    <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:Rhesis}}">
+    <Grid DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=local:Rhesis}}" 
+          ClipToBounds="True">
         <Label x:Name="Label"
                VerticalAlignment="Center"
                FontSize="{DynamicResource MainWindowLargeFontSize}"

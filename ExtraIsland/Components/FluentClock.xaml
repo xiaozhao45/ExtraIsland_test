@@ -12,7 +12,7 @@
     <ci:ComponentBase.Resources>
         <ci:SizeDoubleToCornerRadiusConverter x:Key="SizeDoubleToCornerRadiusConverter"/>
     </ci:ComponentBase.Resources>
-    <Grid Margin="0">
+    <Grid Margin="0" ClipToBounds="True">
         <Grid x:Name="EmpBack" Opacity="0">
             <Border Background="{DynamicResource PrimaryHueMidBrush}"
                     ClipToBounds="True"
