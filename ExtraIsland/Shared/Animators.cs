@@ -6,7 +6,7 @@ namespace ExtraIsland.Shared;
 
 public static class Animators {
     public class ClockTransformControlAnimator {
-        public ClockTransformControlAnimator(Label targetLabel) {
+        public ClockTransformControlAnimator(Label targetLabel, double motionMultiple = 1) {
             _targetLabel = targetLabel;
             DoubleAnimationUsingKeyFrames swapFadeAnimation = new DoubleAnimationUsingKeyFrames {
                 KeyFrames = [
@@ -50,14 +50,14 @@ public static class Animators {
                 KeyFrames = [
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(0.5),
-                        Value = 40,
+                        Value = 40.0 * motionMultiple,
                         EasingFunction = new CubicEase {
                             EasingMode = EasingMode.EaseIn
                         }
                     },
                     new DiscreteDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(0.501),
-                        Value = -40
+                        Value = -40.0 * motionMultiple
                     },
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(1),
@@ -104,8 +104,8 @@ public static class Animators {
             set => Update(value);
         }
         
-        public void Update(string targetContent, bool isAnimated = true, bool isSwapAnimEnabled = true) {
-            if (targetContent == _targetContent) return;
+        public void Update(string targetContent, bool isAnimated = true, bool isSwapAnimEnabled = true, bool isForced = false) {
+            if (!(targetContent != _targetContent | isForced)) return;
             if (_renderLock) return;
             _targetContent = targetContent;
             if (!isAnimated) {
