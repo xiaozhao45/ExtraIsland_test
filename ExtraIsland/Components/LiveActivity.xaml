@@ -12,6 +12,8 @@
                   Unloaded="LiveActivity_OnUnloaded"
                   d:DesignHeight="300" d:DesignWidth="300">
     <materialDesign:Chip x:Name="CardChip"
+                         HorizontalAlignment="Center"
+                         HorizontalContentAlignment="Center"
                          VerticalAlignment="Center"
                          Margin="-12,0,-12,0"
                          Background="{DynamicResource MaterialDesignDivider}">
