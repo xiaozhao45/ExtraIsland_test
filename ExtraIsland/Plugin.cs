@@ -22,7 +22,6 @@ namespace ExtraIsland
             services.AddComponent<Components.Rhesis,Components.RhesisSettings>();
             services.AddComponent<Components.OnDuty,Components.OnDutySettings>();
             services.AddComponent<Components.LiveActivity,Components.LiveActivitySettings>();
-            services.AddComponent<Components.DebugLyricsHandler>();
             services.AddSettingsPage<SettingsPages.MainSettingsPage>();
             services.AddSettingsPage<SettingsPages.DutySettingsPage>();
             services.AddSettingsPage<SettingsPages.TinyFeaturesSettingsPage>();
@@ -31,6 +30,7 @@ namespace ExtraIsland
             }
             #if DEBUG
                 services.AddSettingsPage<SettingsPages.DebugSettingsPage>();
+                services.AddComponent<Components.DebugLyricsHandler>();
             #endif
             //OnInitialization triggers
             TinyFeatures.JuniorGuide.Trigger();

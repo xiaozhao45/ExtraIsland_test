@@ -6,7 +6,7 @@ using System.Text;
 namespace ExtraIsland.Shared;
 
 [SuppressMessage("Interoperability","SYSLIB1054:使用 “LibraryImportAttribute” 而不是 “DllImportAttribute” 在编译时生成 P/Invoke 封送代码")]
-public class WindowsUtils {
+public static class WindowsUtils {
     [DllImport("user32.dll")]
     static extern IntPtr GetForegroundWindow();
     

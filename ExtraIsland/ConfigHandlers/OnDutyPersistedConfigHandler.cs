@@ -113,6 +113,7 @@ public class OnDutyPersistedConfigHandler {
     }
 }
 
+//TODO: 从ObservableObject继承并重构此类
 public class OnDutyPersistedConfigData {
 
     public event Action? PropertyChanged;
