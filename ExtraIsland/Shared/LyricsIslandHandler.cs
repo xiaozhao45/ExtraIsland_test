@@ -30,7 +30,7 @@ public class LyricsIslandHandler : IDisposable {
             ListenAsync();
         }
         catch (HttpListenerException ex) {
-            CommonDialog.ShowError($"启动 HTTP 监听器失败: {ex.Message}");
+            //CommonDialog.ShowError($"启动 HTTP 监听器失败: {ex.Message}");
         }
     }
 
@@ -45,7 +45,7 @@ public class LyricsIslandHandler : IDisposable {
                 // 监听器已停止，无需处理。
             }
             catch (Exception ex) {
-                CommonDialog.ShowError($"监听过程中发生错误: {ex.Message}");
+                //CommonDialog.ShowError($"监听过程中发生错误: {ex.Message}");
             }
         }
     }

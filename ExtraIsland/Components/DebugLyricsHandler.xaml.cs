@@ -15,8 +15,9 @@ namespace ExtraIsland.Components;
 )]
 public partial class DebugLyricsHandler {
     public DebugLyricsHandler() {
+        GlobalConstants.Handlers.LyricsIsland ??= new LyricsIslandHandler();
         InitializeComponent();
-        _handler = new LyricsIslandHandler();
+        _handler = GlobalConstants.Handlers.LyricsIsland;
         _handler.OnLyricsChanged += UpdateLyrics;
         _animator = new Animators.ClockTransformControlAnimator(LyricsLabel,-0.3);
         new Thread(CounterDaemon).Start();
