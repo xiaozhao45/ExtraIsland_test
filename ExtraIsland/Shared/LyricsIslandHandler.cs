@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
+using System.Windows;
 using ClassIsland.Core.Controls.CommonDialog;
 
 namespace ExtraIsland.Shared;
@@ -30,7 +31,7 @@ public class LyricsIslandHandler : IDisposable {
             ListenAsync();
         }
         catch (HttpListenerException ex) {
-            //CommonDialog.ShowError($"启动 HTTP 监听器失败: {ex.Message}");
+            Console.WriteLine($"LyricsIsland转接器 \r\n 启动 HTTP 监听器失败: {ex.Message}");
         }
     }
 

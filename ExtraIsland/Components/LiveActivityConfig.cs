@@ -23,4 +23,15 @@ public class LiveActivityConfig {
     }
     
     public bool IsAnimationEnabled { get; set; } = true;
+    
+    public event Action? OnLyricsChanged;
+    bool _isLyricsEnabled;
+    public bool IsLyricsEnabled {
+        get => _isLyricsEnabled;
+        set {
+            if (_isLyricsEnabled == value) return;
+            _isLyricsEnabled = value;
+            OnLyricsChanged?.Invoke();
+        }
+    }
 }

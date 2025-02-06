@@ -6,7 +6,7 @@ namespace ExtraIsland.Shared;
 
 public static class Animators {
     public class ClockTransformControlAnimator {
-        public ClockTransformControlAnimator(Label targetLabel, double motionMultiple = 1) {
+        public ClockTransformControlAnimator(Label targetLabel, double motionMultiple = 0.8) {
             _targetLabel = targetLabel;
             DoubleAnimationUsingKeyFrames swapFadeAnimation = new DoubleAnimationUsingKeyFrames {
                 KeyFrames = [
@@ -189,7 +189,7 @@ public static class Animators {
             Storyboard.SetTarget(fadeOutAnimation, targetControl);
             Storyboard.SetTargetProperty(fadeOutAnimation, new PropertyPath(UIElement.OpacityProperty));
 
-            DoubleAnimation fadeInAnimation = new DoubleAnimation
+            DoubleAnimation fadeOutInAnimation = new DoubleAnimation
             {
                 From = 1,
                 To = 0,
@@ -197,18 +197,49 @@ public static class Animators {
                 BeginTime = TimeSpan.FromSeconds(3),
                 EasingFunction = easeFunc
             };
+            Storyboard.SetTarget(fadeOutInAnimation, targetControl);
+            Storyboard.SetTargetProperty(fadeOutInAnimation, new PropertyPath(UIElement.OpacityProperty));
+            
+            DoubleAnimation fadeInAnimation = new DoubleAnimation
+            {
+                From = 1,
+                To = 0,
+                Duration = new Duration(TimeSpan.FromMilliseconds(60)),
+                EasingFunction = easeFunc
+            };
             Storyboard.SetTarget(fadeInAnimation, targetControl);
             Storyboard.SetTargetProperty(fadeInAnimation, new PropertyPath(UIElement.OpacityProperty));
 
+            _fadeOutInStoryboard = new Storyboard {
+                Children = [fadeOutAnimation,fadeOutInAnimation]
+            };
+            
             _fadeOutStoryboard = new Storyboard {
-                Children = [fadeOutAnimation,fadeInAnimation]
+                Children = [fadeOutAnimation]
+            };
+            
+            _fadeInStoryboard = new Storyboard {
+                Children = [fadeInAnimation]
             };
         }
 
+        readonly Storyboard _fadeOutInStoryboard;
+        readonly Storyboard _fadeInStoryboard;
         readonly Storyboard _fadeOutStoryboard;
 
-        public void Update() {
-            _fadeOutStoryboard.Begin();
+        public void Update(bool? stat = null) {
+            switch (stat) {
+                case null:
+                    _fadeOutInStoryboard.Begin();
+                    break;
+                case true:
+                    _fadeInStoryboard.Begin();
+                    break;
+                case false:
+                    _fadeOutStoryboard.Begin();
+                    break;
+            }
         }
     }
+    
 }

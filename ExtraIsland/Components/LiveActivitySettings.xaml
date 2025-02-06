@@ -35,6 +35,10 @@
                              Header="启用动画"
                              Description="禁用后,将不再播放动画,对低性能设备友好!"
                              IsOn="{Binding Settings.IsAnimationEnabled, Mode=TwoWay}"/>
+            <ci:SettingsCard IconGlyph="MusicNoteAdd"
+                             Header="启用歌词"
+                             Description="启用后,将在组件显示歌词,使用LyricsIsland协议"
+                             IsOn="{Binding Settings.IsLyricsEnabled, Mode=TwoWay}"/>
             <Label HorizontalAlignment="Center" 
                    Foreground="{DynamicResource MaterialDesignBodyLight}">
                 Added by ExtraIsland

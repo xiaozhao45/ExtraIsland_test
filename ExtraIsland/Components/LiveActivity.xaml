@@ -12,27 +12,50 @@
                   Unloaded="LiveActivity_OnUnloaded"
                   d:DesignHeight="300" d:DesignWidth="300">
     <materialDesign:Chip x:Name="CardChip"
+                         ClipToBounds="True"
                          HorizontalAlignment="Center"
                          HorizontalContentAlignment="Center"
                          VerticalAlignment="Center"
                          Margin="-12,0,-12,0"
                          Background="{DynamicResource MaterialDesignDivider}">
-        <StackPanel Orientation="Horizontal">
-            <materialDesign:PackIcon x:Name="Icon"
-                                     Kind="Circle" 
-                                     Foreground="Gray"
-                                     VerticalAlignment="Center"
-                                     Margin="-4,0,0,0"
-                                     Height="20"
-                                     Width="20"/>
-            <Label x:Name="CurrentLabel" 
-                   Content="---" 
-                   Margin="0,0,-4,0"
-                   VerticalAlignment="Center">
-                <Label.RenderTransform>
-                    <TranslateTransform/>
-                </Label.RenderTransform>
-            </Label>
-        </StackPanel>
+        <Grid>
+            <StackPanel x:Name="ActivityStack" 
+                        Orientation="Horizontal">
+                <materialDesign:PackIcon x:Name="Icon"
+                                         Kind="Circle" 
+                                         Foreground="Gray"
+                                         VerticalAlignment="Center"
+                                         Margin="-4,0,0,0"
+                                         Height="20"
+                                         Width="20"/>
+                <Label x:Name="CurrentLabel" 
+                       Content="---" 
+                       Margin="0,0,-4,0"
+                       VerticalAlignment="Center">
+                    <Label.RenderTransform>
+                        <TranslateTransform/>
+                    </Label.RenderTransform>
+                </Label>
+            </StackPanel>
+            <StackPanel x:Name="LyricsStack" 
+                        Orientation="Horizontal"
+                        Opacity="0"
+                        ClipToBounds="True">
+                <materialDesign:PackIcon Kind="MusicNote" 
+                                         Foreground="DarkTurquoise"
+                                         VerticalAlignment="Center"
+                                         Margin="-4,0,0,0"
+                                         Height="20"
+                                         Width="20"/>
+                <Label x:Name="LyricsLabel" 
+                       Content="---" 
+                       Margin="0,0,-4,0"
+                       VerticalAlignment="Center">
+                    <Label.RenderTransform>
+                        <TranslateTransform/>
+                    </Label.RenderTransform>
+                </Label>
+            </StackPanel>
+        </Grid>
     </materialDesign:Chip>
 </ci:ComponentBase>
