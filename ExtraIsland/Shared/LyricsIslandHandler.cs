@@ -22,6 +22,7 @@ public class LyricsIslandHandler : IDisposable {
     bool _isListening;
 
     public string Lyrics { get; private set; } = string.Empty;
+    public string SubLyrics { get; private set; } = string.Empty;
     public event Action? OnLyricsChanged;
 
     void StartHttpListener() {
@@ -31,7 +32,7 @@ public class LyricsIslandHandler : IDisposable {
             ListenAsync();
         }
         catch (HttpListenerException ex) {
-            Console.WriteLine($"LyricsIsland转接器 \r\n 启动 HTTP 监听器失败: {ex.Message}");
+            Console.WriteLine($"[ExIsLand][LyricsIslandHandler] 启动 HTTP 监听器失败: {ex.Message}");
         }
     }
 
@@ -46,7 +47,7 @@ public class LyricsIslandHandler : IDisposable {
                 // 监听器已停止，无需处理。
             }
             catch (Exception ex) {
-                //CommonDialog.ShowError($"监听过程中发生错误: {ex.Message}");
+                Console.WriteLine($"[ExIsLand][LyricsIslandHandler] 监听过程中发生错误: {ex.Message}");
             }
         }
     }
@@ -61,8 +62,7 @@ public class LyricsIslandHandler : IDisposable {
             try {
                 using (StreamReader reader = new StreamReader(request.InputStream,request.ContentEncoding)) {
                     string json = await reader.ReadToEndAsync();
-                    string lyric = ParseLyricFromJson(json);
-                    Lyrics = lyric;
+                    ParseLyricFromJson(json);
                     OnLyricsChanged?.Invoke();
                 }
 
@@ -87,18 +87,18 @@ public class LyricsIslandHandler : IDisposable {
         response.Close();
     }
 
-    static string ParseLyricFromJson(string json) {
+    void ParseLyricFromJson(string json) {
         // 示例 JSON: { "lyric": "你的歌词"}
         try {
             JsonDocument jsonDoc = JsonDocument.Parse(json);
             if (jsonDoc.RootElement.TryGetProperty("lyric",out JsonElement lyricElement)) {
-                return lyricElement.GetString() ?? "未解析到歌词";
+                Lyrics = lyricElement.GetString() ?? "未解析到歌词";
             }
-            return "未解析到歌词";
+            if (jsonDoc.RootElement.TryGetProperty("extra",out JsonElement subLyricElement)) {
+                SubLyrics = subLyricElement.GetString() ?? "未解析到次级歌词";
+            }
         }
-        catch (JsonException) {
-            return "输入解析错误";
-        }
+        catch (JsonException) { }
     }
 
     public void Dispose() {

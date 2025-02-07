@@ -176,14 +176,14 @@ public static class Animators {
     }
     
     public class EmphasizeUiElementAnimator {
-        public EmphasizeUiElementAnimator(UIElement targetControl) {
+        public EmphasizeUiElementAnimator(UIElement targetControl, double timeMultiple = 1) {
             // ReSharper disable once SuggestVarOrType_SimpleTypes
             var easeFunc = new SineEase();
             DoubleAnimation fadeOutAnimation = new DoubleAnimation
             {
                 From = 0,
                 To = 1,
-                Duration = new Duration(TimeSpan.FromMilliseconds(60)),
+                Duration = new Duration(TimeSpan.FromMilliseconds(60 * timeMultiple)),
                 EasingFunction = easeFunc
             };
             Storyboard.SetTarget(fadeOutAnimation, targetControl);
@@ -193,7 +193,7 @@ public static class Animators {
             {
                 From = 1,
                 To = 0,
-                Duration = new Duration(TimeSpan.FromMilliseconds(60)),
+                Duration = new Duration(TimeSpan.FromMilliseconds(60 * timeMultiple)),
                 BeginTime = TimeSpan.FromSeconds(3),
                 EasingFunction = easeFunc
             };
@@ -204,7 +204,7 @@ public static class Animators {
             {
                 From = 1,
                 To = 0,
-                Duration = new Duration(TimeSpan.FromMilliseconds(60)),
+                Duration = new Duration(TimeSpan.FromMilliseconds(60 * timeMultiple)),
                 EasingFunction = easeFunc
             };
             Storyboard.SetTarget(fadeInAnimation, targetControl);

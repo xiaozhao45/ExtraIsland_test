@@ -21,8 +21,8 @@ public partial class LiveActivity {
         LessonsService = lessonsService;
         InitializeComponent();
         _labelAnimator = new Animators.ClockTransformControlAnimator(CurrentLabel);
-        _activityAnimator = new Animators.EmphasizeUiElementAnimator(ActivityStack);
-        _lyricsAnimator = new Animators.EmphasizeUiElementAnimator(LyricsStack);
+        _activityAnimator = new Animators.EmphasizeUiElementAnimator(ActivityStack, 5);
+        _lyricsAnimator = new Animators.EmphasizeUiElementAnimator(LyricsStack, 5);
         _lyricsLabelAnimator = new Animators.ClockTransformControlAnimator(LyricsLabel, -0.3);
     }
     
@@ -43,11 +43,13 @@ public partial class LiveActivity {
                 ? Brushes.DeepSkyBlue 
                 : Brushes.LightGreen;
             string? title = WindowsUtils.GetActiveWindowTitle();
-            if (title == null) {
+            if (title == null & (!Settings.IsLyricsEnabled | _timeCounter == 0)) {
                 CardChip.Visibility = Visibility.Collapsed;
             } else {
                 CardChip.Visibility = Visibility.Visible;
-                _labelAnimator.Update(title, Settings.IsAnimationEnabled, false);
+                if (title != null) {
+                    _labelAnimator.Update(title, Settings.IsAnimationEnabled, false);
+                }
             }
         });
     }
@@ -70,6 +72,10 @@ public partial class LiveActivity {
             _lyricsHandler.OnLyricsChanged += UpdateLyrics;
             new Thread(() => {
                 while (true) {
+                    this.BeginInvoke(()=> {
+                        ActivityStack.Visibility = ActivityStack.Opacity == 0 ? Visibility.Collapsed : Visibility.Visible;
+                        LyricsStack.Visibility = LyricsStack.Opacity == 0 ? Visibility.Collapsed : Visibility.Visible;
+                    });
                     if (!Settings.IsLyricsEnabled) {
                         break;
                     }
