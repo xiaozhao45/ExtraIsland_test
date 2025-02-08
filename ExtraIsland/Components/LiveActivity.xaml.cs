@@ -1,10 +1,8 @@
 ﻿using System.Windows;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Core.Attributes;
 using ExtraIsland.Shared;
-using Google.Protobuf;
 using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
 
@@ -19,6 +17,7 @@ namespace ExtraIsland.Components;
 public partial class LiveActivity {
     public LiveActivity(ILessonsService lessonsService) {
         LessonsService = lessonsService;
+        IsLyricsIslandLoaded = EiUtils.IsLyricsIslandInstalled();
         InitializeComponent();
         _labelAnimator = new Animators.ClockTransformControlAnimator(CurrentLabel);
         _activityAnimator = new Animators.EmphasizeUiElementAnimator(ActivityStack, 5);
@@ -33,6 +32,8 @@ public partial class LiveActivity {
     readonly Animators.ClockTransformControlAnimator _lyricsLabelAnimator;
     LyricsIslandHandler? _lyricsHandler;
 
+    bool IsLyricsIslandLoaded { get; }
+    
     void Check(object? sender,EventArgs eventArgs) {
         Check();
     }
@@ -66,6 +67,10 @@ public partial class LiveActivity {
     }
     
     void InitializeLyrics() {
+        if (IsLyricsIslandLoaded) {
+            Settings.IsLyricsEnabled = false;
+            return;
+        }
         if (Settings.IsLyricsEnabled) {
             GlobalConstants.Handlers.LyricsIsland ??= new LyricsIslandHandler();
             _lyricsHandler = GlobalConstants.Handlers.LyricsIsland;

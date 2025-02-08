@@ -35,7 +35,27 @@
                              Header="启用动画"
                              Description="禁用后,将不再播放动画,对低性能设备友好!"
                              IsOn="{Binding Settings.IsAnimationEnabled, Mode=TwoWay}"/>
+            <Border x:Name="ConflictHintContainer"
+                    Background="#1500F0F0" 
+                    Margin="0,6,0,-7" 
+                    Padding="6" 
+                    CornerRadius="4">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="InfoCircle"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,3,0"/>
+                        <TextBlock VerticalAlignment="Center">
+                        <Run>检测到LyricsIsland已安装,</Run>
+                        <Bold>歌词获取端口无法多开</Bold>
+                        <Run>,为确保兼容性,故禁用本功能</Run>
+                        </TextBlock>
+                    </StackPanel>
+                    <Label/>
+                </StackPanel>
+            </Border>
             <ci:SettingsCard IconGlyph="MusicNoteAdd"
+                             IsEnabled="{Binding IsLyricsIslandNotLoaded}"
                              Header="启用歌词"
                              Description="启用后,将在组件显示歌词,使用LyricsIsland协议"
                              IsOn="{Binding Settings.IsLyricsEnabled, Mode=TwoWay}"/>

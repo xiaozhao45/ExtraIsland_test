@@ -21,7 +21,9 @@ public class LiveActivityConfig {
             OnMarginChanged?.Invoke();
         }
     }
-    
+
+    public string IgnoreList { get; set; } = "";
+
     public bool IsAnimationEnabled { get; set; } = true;
     
     public event Action? OnLyricsChanged;

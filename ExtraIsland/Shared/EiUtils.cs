@@ -1,4 +1,7 @@
-﻿namespace ExtraIsland.Shared;
+﻿using System.IO;
+using Google.Protobuf.Compiler;
+
+namespace ExtraIsland.Shared;
 
 public static class EiUtils {
     public static bool IsOdd(int n) {
@@ -8,5 +11,9 @@ public static class EiUtils {
     public static TimeSpan GetDateTimeSpan(DateTime startTime, DateTime endTime) {
         TimeSpan daysSpan = new TimeSpan(endTime.Ticks - startTime.Ticks);
         return daysSpan;
+    }
+
+    public static bool IsLyricsIslandInstalled() {
+        return File.Exists("./Plugins/jiangyin14.lyrics/manifest.yml");
     }
 }
