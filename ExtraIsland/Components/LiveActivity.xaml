@@ -20,6 +20,7 @@
                          Background="{DynamicResource MaterialDesignDivider}">
         <Grid>
             <StackPanel x:Name="ActivityStack" 
+                        HorizontalAlignment="Center"
                         Orientation="Horizontal">
                 <materialDesign:PackIcon x:Name="Icon"
                                          Kind="Circle" 
@@ -29,6 +30,7 @@
                                          Height="20"
                                          Width="20"/>
                 <Label x:Name="CurrentLabel" 
+                       ClipToBounds="True"
                        Content="---" 
                        Margin="0,0,-4,0"
                        VerticalAlignment="Center">
@@ -38,6 +40,7 @@
                 </Label>
             </StackPanel>
             <StackPanel x:Name="LyricsStack" 
+                        HorizontalAlignment="Center"
                         Orientation="Horizontal"
                         Opacity="0"
                         ClipToBounds="True">
