@@ -23,7 +23,7 @@ public partial class LiveActivity {
         _labelAnimator = new Animators.ClockTransformControlAnimator(CurrentLabel);
         _activityAnimator = new Animators.EmphasizeUiElementAnimator(ActivityStack, 5);
         _lyricsAnimator = new Animators.EmphasizeUiElementAnimator(LyricsStack, 5);
-        _lyricsLabelAnimator = new Animators.ClockTransformControlAnimator(LyricsLabel, -0.3);
+        _lyricsLabelAnimator = new Animators.ClockTransformControlAnimator(LyricsLabel, -0.2);
     }
     
     ILessonsService LessonsService { get; }
@@ -43,7 +43,7 @@ public partial class LiveActivity {
                 ? Brushes.DeepSkyBlue 
                 : Brushes.LightGreen;
             string? title = WindowsUtils.GetActiveWindowTitle();
-            if (title == null & (!Settings.IsLyricsEnabled | _timeCounter == 0)) {
+            if (title == null & (!Settings.IsLyricsEnabled | _timeCounter <= 0)) {
                 CardChip.Visibility = Visibility.Collapsed;
             } else {
                 CardChip.Visibility = Visibility.Visible;
@@ -72,13 +72,13 @@ public partial class LiveActivity {
             _lyricsHandler.OnLyricsChanged += UpdateLyrics;
             new Thread(() => {
                 while (true) {
+                    if (!Settings.IsLyricsEnabled) {
+                        break;
+                    }
                     this.BeginInvoke(()=> {
                         ActivityStack.Visibility = ActivityStack.Opacity == 0 ? Visibility.Collapsed : Visibility.Visible;
                         LyricsStack.Visibility = LyricsStack.Opacity == 0 ? Visibility.Collapsed : Visibility.Visible;
                     });
-                    if (!Settings.IsLyricsEnabled) {
-                        break;
-                    }
                     if (_timeCounter > 0) {
                         _timeCounter -= 0.01;
                     } else {
@@ -91,6 +91,11 @@ public partial class LiveActivity {
             if (_lyricsHandler == null) return;
             _lyricsHandler.OnLyricsChanged -= UpdateLyrics;
             _lyricsHandler = null;
+            ShowLyrics(false);
+            this.BeginInvoke(()=> {
+                ActivityStack.Visibility = Visibility.Visible;
+                LyricsStack.Visibility = Visibility.Collapsed;
+            });
         }
     }
     
