@@ -31,7 +31,7 @@ public class MainConfigHandler {
             Data = ConfigureFileHelper.LoadConfig<MainConfigData>(_configPath);
         }
         catch (Exception ex) {
-            Console.WriteLine($"加载配置文件失败: {ex.Message}");
+            Console.WriteLine($"[ExIsLand][Tracer][MainCfgHandler] 加载配置文件失败: {ex.Message}");
             File.Delete(_configPath);
             Save();
         }
@@ -51,7 +51,7 @@ public class MainConfigHandler {
             ConfigureFileHelper.SaveConfig(_configPath,Data);
         }
         catch (Exception ex) {
-            Console.WriteLine($"保存配置文件失败: {ex.Message}");
+            Console.WriteLine($"[ExIsLand][Tracer][MainCfgHandler] 写入配置文件失败: {ex.Message}");
             throw;
         }
     }
@@ -59,12 +59,14 @@ public class MainConfigHandler {
 
 public partial class MainConfigData : ObservableObject {
     bool _isLifeModeActivated;
+    public event Action? RestartPropertyChanged;
     public bool IsLifeModeActivated {
         get => _isLifeModeActivated;
         set {
             if (value == _isLifeModeActivated) return;
             _isLifeModeActivated = value;
             OnPropertyChanged();
+            RestartPropertyChanged?.Invoke();
         }
     }
 

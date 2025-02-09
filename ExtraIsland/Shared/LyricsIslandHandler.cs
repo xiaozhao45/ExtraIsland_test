@@ -21,6 +21,7 @@ public class LyricsIslandHandler : IDisposable {
     string Url { get; }
     bool _isListening;
 
+    public bool Status { get; private set; } = true;
     public string Lyrics { get; private set; } = string.Empty;
     public string SubLyrics { get; private set; } = string.Empty;
     public event Action? OnLyricsChanged;
@@ -32,7 +33,8 @@ public class LyricsIslandHandler : IDisposable {
             ListenAsync();
         }
         catch (HttpListenerException ex) {
-            Console.WriteLine($"[ExIsLand][LyricsIslandHandler] 启动 HTTP 监听器失败: {ex.Message}");
+            Status = false;
+            Console.WriteLine($"[ExIsLand][Tracer][LyricsIslandHandler] 启动 HTTP 监听器失败: {ex.Message}");
         }
     }
 
@@ -47,7 +49,7 @@ public class LyricsIslandHandler : IDisposable {
                 // 监听器已停止，无需处理。
             }
             catch (Exception ex) {
-                Console.WriteLine($"[ExIsLand][LyricsIslandHandler] 监听过程中发生错误: {ex.Message}");
+                Console.WriteLine($"[ExIsLand][Tracer][LyricsIslandHandler] 监听过程中发生错误: {ex.Message}");
             }
         }
     }

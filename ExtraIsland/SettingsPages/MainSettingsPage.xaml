@@ -85,13 +85,25 @@
                                 Background="Transparent"
                                 Command="{x:Static ci:UriNavigationCommands.UriNavigationCommand}"
                                 CommandParameter="https://docs.lipoly.ink/ExtraIsland">
-                            <materialDesign:PackIcon Kind="Web"                                                     Foreground="{DynamicResource MaterialDesignBody}"
+                            <materialDesign:PackIcon Kind="Web"
+                                                     Foreground="{DynamicResource MaterialDesignBody}"
                                                      Height="20"
                                                      Width="20"/>
                         </Button>
                     </StackPanel>
                 </Grid>
             </materialDesign:Card>
+            <ci:SettingsCard x:Name="LyricsStatCard"
+                             IconGlyph="LibraryMusic"
+                             Description="显示内置 LyricsIsland 协议接口的状态"
+                             Header="LyricsIsland">
+                <ci:SettingsCard.Switcher>
+                    <materialDesign:Chip Background="Gray" 
+                                         Foreground="LightGray"
+                                         Content="IDLE"
+                                         Margin="0,0,-3,0"/>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
             <ci:SettingsCard
                 IconGlyph="ChessHorse"
                 IsOn="{Binding Settings.IsLifeModeActivated, Mode=TwoWay}"
