@@ -22,7 +22,6 @@
                         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
                         <ToggleButton Margin="0,0,5,0"
                                       Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                                      ToolTip="左"
                                       IsChecked="{Binding Settings.IsLeftNegativeMargin, Mode=TwoWay}">
                         </ToggleButton>
                         <Label Content="(O --)" 
@@ -30,7 +29,6 @@
                         <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
                         <ToggleButton Margin="5,0,0,0"
                                       Style="{StaticResource MaterialDesignSwitchToggleButton}"
-                                      ToolTip="右"
                                       IsChecked="{Binding Settings.IsRightNegativeMargin, Mode=TwoWay}"/>
                         <Label Content="右)" 
                                Foreground="Gray"/>
