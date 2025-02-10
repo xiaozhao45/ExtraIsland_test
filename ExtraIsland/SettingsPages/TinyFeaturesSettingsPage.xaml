@@ -127,11 +127,19 @@
                     </StackPanel>
                 </Expander>
             </materialDesign:Card>
-            <!-- ReSharper disable once Xaml.BindingWithContextNotResolved -->
             <ci:SettingsCard IconGlyph="MouseMoveUp"
                              Header="(隐藏设置) 主界面启用鼠标点击"
-                             Description="允许鼠标与主界面上的控件交互"
-                             IsOn="{Binding AppSettings.IsMouseClickingEnabled, Mode=TwoWay}"/>
+                             Description="允许鼠标与主界面上的控件交互">
+                <ci:SettingsCard.Switcher>
+                    <!-- ReSharper disable once Xaml.StaticResourceNotResolved 
+                         ReSharper disable once Xaml.BindingWithContextNotResolved -->
+                    <ToggleButton Margin="0,0,5,0"
+                                  Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                  IsChecked="{Binding AppSettings.IsMouseClickingEnabled, Mode=TwoWay}"
+                                  Click="ToggleButton_OnChecked">
+                    </ToggleButton>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
         </StackPanel>
     </ScrollViewer>
 </ci:SettingsPageBase>

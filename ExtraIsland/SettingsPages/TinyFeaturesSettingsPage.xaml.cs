@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using ClassIsland.Core;
 using ClassIsland.Core.Attributes;
+using ClassIsland.Core.Controls.CommonDialog;
 using ExtraIsland.ConfigHandlers;
 using ExtraIsland.Shared;
 using ExtraIsland.TinyFeatures;
@@ -26,5 +27,14 @@ public partial class TinyFeaturesSettingsPage {
     }
     void DebugShowButton_OnClick(object sender,RoutedEventArgs e) {
         JuniorGuide.Show(true);
+    }
+    void ToggleButton_OnChecked(object sender,RoutedEventArgs e) {
+        if (AppSettings.IsMouseClickingEnabled != true) return;
+        int result = CommonDialog.ShowHint("警告:\r\n"
+                                           + " 启用这个功能,会导致主界面鼠标穿透失效\r\n"
+                                           + " 请谨慎开启!");
+        if (result != 0) {
+            AppSettings.IsMouseClickingEnabled = false;
+        }
     }
 }
