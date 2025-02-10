@@ -31,6 +31,7 @@ public partial class TinyFeaturesSettingsPage {
     void ToggleButton_OnChecked(object sender,RoutedEventArgs e) {
         if (AppSettings.IsMouseClickingEnabled != true) return;
         int result = CommonDialog.ShowHint("警告:\r\n"
+                                           + " 这个功能是 ClassIsland 没有正式使用的功能,不保证能正常工作\r\n"
                                            + " 启用这个功能,会导致主界面鼠标穿透失效\r\n"
                                            + " 请谨慎开启!");
         if (result != 0) {
