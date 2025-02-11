@@ -65,7 +65,8 @@ public partial class DutySettingsPage {
     public List<OnDutyPersistedConfigData.DutyStateData> DutyStates { get; } = [
         OnDutyPersistedConfigData.DutyStateData.Single,
         OnDutyPersistedConfigData.DutyStateData.Double,
-        OnDutyPersistedConfigData.DutyStateData.InOut
+        OnDutyPersistedConfigData.DutyStateData.InOut,
+        OnDutyPersistedConfigData.DutyStateData.Quadrant
     ];
 
     void ClearTimeButton_OnClick(object sender,RoutedEventArgs e) {

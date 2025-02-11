@@ -58,6 +58,7 @@ public class OnDutyPersistedConfigHandler {
                 OnDutyPersistedConfigData.DutyStateData.Single => PeoplesOnDuty[0].Name,
                 OnDutyPersistedConfigData.DutyStateData.Double => $"{PeoplesOnDuty[0].Name} {PeoplesOnDuty[1].Name}",
                 OnDutyPersistedConfigData.DutyStateData.InOut => $"内:{PeoplesOnDuty[0].Name} 外:{PeoplesOnDuty[1].Name}",
+                OnDutyPersistedConfigData.DutyStateData.Quadrant => $"{PeoplesOnDuty[0].Name} {PeoplesOnDuty[1].Name} {PeoplesOnDuty[2].Name} {PeoplesOnDuty[3].Name}",
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -102,10 +103,17 @@ public class OnDutyPersistedConfigHandler {
             false => DateTime.Now,
             true => DateTime.Today
         };
-        if (Data.DutyState == OnDutyPersistedConfigData.DutyStateData.Double) {
-            Data.CurrentPeopleIndex += 2;
-        } else {
-            Data.CurrentPeopleIndex++;   
+        // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
+        switch (Data.DutyState) {
+            case OnDutyPersistedConfigData.DutyStateData.Double:
+                Data.CurrentPeopleIndex += 2;
+                break;
+            case OnDutyPersistedConfigData.DutyStateData.Quadrant:
+                Data.CurrentPeopleIndex += 4;
+                break;
+            default:
+                Data.CurrentPeopleIndex++;
+                break;
         }
         if (Data.CurrentPeopleIndex >= Data.Peoples.Count & Data.IsCycled) {
             Data.CurrentPeopleIndex = 0;
@@ -194,7 +202,9 @@ public class OnDutyPersistedConfigData {
         [Description("双人值日")] 
         Double,
         [Description("内/外 双人轮换值日")] 
-        InOut
+        InOut,
+        [Description("(实验性)四人值日")] 
+        Quadrant
     }
 
     TimeSpan _dutyChangeDuration = TimeSpan.FromDays(1);
@@ -235,6 +245,20 @@ public class OnDutyPersistedConfigData {
                 false => [
                     GetPeopleOnDuty(CurrentPeopleIndex),
                     GetPeopleOnDuty(CurrentPeopleIndex + 1)
+                ]
+            },
+            DutyStateData.Quadrant => EiUtils.IsOdd(CurrentPeopleIndex) switch {
+                true => [
+                    GetPeopleOnDuty(CurrentPeopleIndex - 1),
+                    GetPeopleOnDuty(CurrentPeopleIndex),
+                    GetPeopleOnDuty(CurrentPeopleIndex + 1),
+                    GetPeopleOnDuty(CurrentPeopleIndex + 2)
+                ],
+                false => [
+                    GetPeopleOnDuty(CurrentPeopleIndex),
+                    GetPeopleOnDuty(CurrentPeopleIndex + 1),
+                    GetPeopleOnDuty(CurrentPeopleIndex + 2),
+                    GetPeopleOnDuty(CurrentPeopleIndex + 3)
                 ]
             },
             _ => throw new ArgumentOutOfRangeException()

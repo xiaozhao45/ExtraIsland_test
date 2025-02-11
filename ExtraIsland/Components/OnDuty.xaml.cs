@@ -29,9 +29,12 @@ public partial class OnDuty {
             } else if (PersistedSettings.Data.DutyState == OnDutyPersistedConfigData.DutyStateData.Double) {
                 DualLabelUp.Content = PersistedSettings.PeoplesOnDuty[0].Name;
                 DualLabelDown.Content = PersistedSettings.PeoplesOnDuty[1].Name;
-            } else {
+            } else if (PersistedSettings.Data.DutyState == OnDutyPersistedConfigData.DutyStateData.InOut) {
                 DualLabelUp.Content = "内 " + PersistedSettings.PeoplesOnDuty[0].Name;
                 DualLabelDown.Content = "外 " + PersistedSettings.PeoplesOnDuty[1].Name;
+            } else {
+                DualLabelUp.Content = PersistedSettings.PeoplesOnDuty[0].Name + " " + PersistedSettings.PeoplesOnDuty[1].Name;
+                DualLabelDown.Content = PersistedSettings.PeoplesOnDuty[2].Name + " " + PersistedSettings.PeoplesOnDuty[3].Name;
             }
         }
     }
