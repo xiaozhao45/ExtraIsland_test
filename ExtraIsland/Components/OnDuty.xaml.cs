@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using ClassIsland.Core.Abstractions.Controls;
 using ClassIsland.Core.Attributes;
 using ExtraIsland.ConfigHandlers;
 using ExtraIsland.Shared;

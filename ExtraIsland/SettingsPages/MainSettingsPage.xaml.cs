@@ -2,7 +2,6 @@
 using ExtraIsland.ConfigHandlers;
 using ExtraIsland.Shared;
 using MaterialDesignThemes.Wpf;
-using System.ComponentModel;
 using System.Windows.Media;
 
 namespace ExtraIsland.SettingsPages;
@@ -13,9 +12,11 @@ public partial class MainSettingsPage {
         Settings = GlobalConstants.Handlers.MainConfig!.Data;
         InitializeComponent();
         if (EiUtils.IsLyricsIslandInstalled()) {
-            ((Chip)LyricsStatCard.Switcher!).Background = Brushes.LightSkyBlue;
-            ((Chip)LyricsStatCard.Switcher!).Content = "禁用"; 
-            ((Chip)LyricsStatCard.Switcher!).Foreground = Brushes.DarkSlateGray;
+            //((Chip)LyricsStatCard.Switcher!).Background = Brushes.LightSkyBlue;
+            //((Chip)LyricsStatCard.Switcher!).Content = "禁用"; 
+            //((Chip)LyricsStatCard.Switcher!).Foreground = Brushes.DarkSlateGray;
+            ((Chip)LyricsStatCard.Switcher!).Background = Brushes.Gray;
+            ((Chip)LyricsStatCard.Switcher!).Content = "未使用";
         } else if (GlobalConstants.Handlers.LyricsIsland == null) {
             ((Chip)LyricsStatCard.Switcher!).Background = Brushes.Gray;
             ((Chip)LyricsStatCard.Switcher!).Content = "未使用";

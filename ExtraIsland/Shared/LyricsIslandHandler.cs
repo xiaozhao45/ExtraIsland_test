@@ -2,8 +2,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
-using System.Windows;
-using ClassIsland.Core.Controls.CommonDialog;
 
 namespace ExtraIsland.Shared;
 

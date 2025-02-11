@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using ClassIsland.Core.Attributes;
+﻿using ClassIsland.Core.Attributes;
 using ExtraIsland.Shared;
 using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
