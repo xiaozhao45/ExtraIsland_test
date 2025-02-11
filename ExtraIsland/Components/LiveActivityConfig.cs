@@ -1,4 +1,6 @@
-﻿namespace ExtraIsland.Components;
+﻿using System.Text.Json.Serialization;
+
+namespace ExtraIsland.Components;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 public class LiveActivityConfig {
@@ -22,7 +24,20 @@ public class LiveActivityConfig {
         }
     }
 
-    public string IgnoreList { get; set; } = "";
+    public string IgnoreListString { get; set; } = "Program Manager";
+
+    [JsonIgnore]
+    public string[] IgnoreList {
+        get {
+            try {
+                return IgnoreListString.Split("\r\n");
+            }
+            catch (Exception e) {
+                Console.WriteLine(e);
+                return [];
+            }
+        }
+    }
 
     public bool IsAnimationEnabled { get; set; } = true;
     

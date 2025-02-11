@@ -44,6 +44,7 @@ public partial class LiveActivity {
                 ? Brushes.DeepSkyBlue 
                 : Brushes.LightGreen;
             string? title = WindowsUtils.GetActiveWindowTitle();
+            if (Settings.IgnoreList.Contains(title)) title = null;
             if (title == null & (!Settings.IsLyricsEnabled | _timeCounter <= 0)) {
                 CardChip.Visibility = Visibility.Collapsed;
             } else {
