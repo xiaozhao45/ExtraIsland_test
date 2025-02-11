@@ -1,5 +1,5 @@
 # ExtraIsland
-⌈R0.35⌋ ⌈[维护暂缓](https://lipoly.ink/2024/announcement/)⌋
+⌈R0.37⌋ ⌈[维护暂缓](https://lipoly.ink/2024/announcement/)⌋
 
 为[ClassIsland](https://classisland.tech/)扩充一些小小的功能
 
@@ -44,6 +44,11 @@
 - 支持自定义请求
 - (早期)支持字数限制
 - 带有切换或闪动动画
+
+当前活动:
+- 显示当前焦点所在的窗口名
+- 显示歌词(使用 LyricsIsland 协议)
+- 支持排除列表
 
 微功能:
 - 导引界面 *设计用于引导下一届班级接手你的智能白板,可高度自定义!*
