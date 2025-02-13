@@ -13,6 +13,7 @@ public static class EiUtils {
     }
 
     public static bool IsLyricsIslandInstalled() {
+        //TODO: 使用ClassIsland接口判断是否加载
         return File.Exists("./Plugins/jiangyin14.lyrics/manifest.yml");
     }
 }

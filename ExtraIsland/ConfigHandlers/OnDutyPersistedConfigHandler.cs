@@ -196,6 +196,7 @@ public class OnDutyPersistedConfigData {
         }
     }
 
+    //TODO:整合为n人值日
     public enum DutyStateData {
         [Description("单人值日")] 
         Single,

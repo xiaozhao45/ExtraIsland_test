@@ -14,6 +14,7 @@ public static class RhesisHandler {
             ,string? hitokotoRequestUrl = null,string? sainticRequestUrl = null, int lengthLimitation = 0) {
             for (int i = 0; i <= 5; i++) {
                 RhesisData dataFetched =  rhesisDataSource switch {
+                    //TODO: 使用基于权重的随机方法(在EiUtil内实现)
                     RhesisDataSource.All => _random.Next(4) switch {
                         0 => RhesisDataSource.Jinrishici,
                         //今日诗词接口内容较少,故概率较低
