@@ -9,17 +9,13 @@
 		<EnableDynamicLoading>True</EnableDynamicLoading>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<ClassIslandPluginSdkVersion>1.5.0.2</ClassIslandPluginSdkVersion>
-	</PropertyGroup>
-
 	<ItemGroup>
 	  <None Remove="Assets\fullLogo.png" />
 	  <None Remove="Assets\fullLogo.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ClassIsland.PluginSdk" Version="$(ClassIslandPluginSdkVersion)">
+		<PackageReference Include="ClassIsland.PluginSdk" Version="1.6.0.1">
 			<ExcludeAssets>runtime; native</ExcludeAssets>
 		</PackageReference>
 	</ItemGroup>
