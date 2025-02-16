@@ -1,6 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using ClassIsland.Core;
 using ClassIsland.Core.Attributes;
@@ -102,6 +104,15 @@ public partial class DebugSettingsPage {
             };
             storyboard.Begin();
         });
+    }
+    void ClassIsDock(object sender,RoutedEventArgs eventArgs) {
+        Window mainWindow = AppBase.Current.MainWindow!;
+        mainWindow.Background = Brushes.DarkSlateGray;
+        ((Grid)mainWindow.Content).Margin = new Thickness(0,4,0,0);
+        WindowsUtils.AppBarHelper.AppBar bar = new WindowsUtils.AppBarHelper.AppBar {
+            Location = WindowsUtils.AppBarHelper.AppBarLocation.Top
+        };
+        WindowsUtils.AppBarHelper.AppBarCreator.SetAppBar(mainWindow, bar);
     }
 }
 

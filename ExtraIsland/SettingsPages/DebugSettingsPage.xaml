@@ -72,6 +72,14 @@
                     </StackPanel>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
+            <ci:SettingsCard IconGlyph="DockTop" Header="实验·ClassIsDock"
+                             Description="上岸!   使用 TwilightLemon/AppBarTest 的方法">
+                <ci:SettingsCard.Switcher>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Click="ClassIsDock">启动</Button>
+                    </StackPanel>
+                </ci:SettingsCard.Switcher>
+            </ci:SettingsCard>
         </StackPanel>
     </ScrollViewer>
 </ci:SettingsPageBase>

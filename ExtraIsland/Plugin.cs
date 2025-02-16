@@ -31,6 +31,7 @@ namespace ExtraIsland
             #if DEBUG
                 services.AddSettingsPage<SettingsPages.DebugSettingsPage>();
                 services.AddComponent<Components.DebugLyricsHandler>();
+                services.AddComponent<Components.DebugSubLyricsHandler>();
             #endif
             //OnInitialization triggers
             TinyFeatures.JuniorGuide.Trigger();
