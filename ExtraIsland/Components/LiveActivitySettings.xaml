@@ -73,7 +73,7 @@
             </materialDesign:Card>
             <Border x:Name="ConflictHintContainer"
                     Background="#1500F0F0" 
-                    Margin="0,6,0,-7" 
+                    Margin="0,0,0,-7" 
                     Padding="6" 
                     CornerRadius="4">
                 <StackPanel Orientation="Vertical">

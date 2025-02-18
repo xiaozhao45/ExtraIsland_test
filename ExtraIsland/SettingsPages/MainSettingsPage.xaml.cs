@@ -1,4 +1,5 @@
-﻿using ClassIsland.Core.Attributes;
+﻿using System.Windows;
+using ClassIsland.Core.Attributes;
 using ExtraIsland.ConfigHandlers;
 using ExtraIsland.Shared;
 using MaterialDesignThemes.Wpf;
@@ -11,6 +12,11 @@ public partial class MainSettingsPage {
     public MainSettingsPage() {
         Settings = GlobalConstants.Handlers.MainConfig!.Data;
         InitializeComponent();
+
+        if (Settings.IsLifeModeActivated) {
+            LifeModeCard.Description = "太有生活了哥们!";
+        }
+        
         if (EiUtils.IsLyricsIslandInstalled()) {
             //((Chip)LyricsStatCard.Switcher!).Background = Brushes.LightSkyBlue;
             //((Chip)LyricsStatCard.Switcher!).Content = "禁用"; 
@@ -30,6 +36,10 @@ public partial class MainSettingsPage {
             ((Chip)LyricsStatCard.Switcher!).Foreground = GlobalConstants.Handlers.LyricsIsland.Status
                 ? Brushes.DarkOliveGreen 
                 : Brushes.White;
+            if (!GlobalConstants.Handlers.LyricsIsland.Status) {
+                MessageZone.Visibility = Visibility.Visible;
+                ErrorMessage.Content = GlobalConstants.Handlers.LyricsIsland.LogMessage;
+            }
         }
         Settings.RestartPropertyChanged += SettingsOnPropertyChanged;
     }

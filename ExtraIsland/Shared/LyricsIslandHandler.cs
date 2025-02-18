@@ -19,6 +19,7 @@ public class LyricsIslandHandler : IDisposable {
     string Url { get; }
     bool _isListening;
 
+    public string LogMessage { get; set; } = string.Empty;
     public bool Status { get; private set; } = true;
     public string Lyrics { get; private set; } = string.Empty;
     public string SubLyrics { get; private set; } = string.Empty;
@@ -29,10 +30,12 @@ public class LyricsIslandHandler : IDisposable {
             _listener.Start();
             _isListening = true;
             ListenAsync();
+            LogMessage = "启动成功";
         }
         catch (HttpListenerException ex) {
             Status = false;
             Console.WriteLine($"[ExIsLand][Tracer][LyricsIslandHandler] 启动 HTTP 监听器失败: {ex.Message}");
+            LogMessage = $"启动失败 {ex.Message}";
         }
     }
 
@@ -48,6 +51,7 @@ public class LyricsIslandHandler : IDisposable {
             }
             catch (Exception ex) {
                 Console.WriteLine($"[ExIsLand][Tracer][LyricsIslandHandler] 监听过程中发生错误: {ex.Message}");
+                LogMessage = $"解析错误 {ex.Message}";
             }
         }
     }

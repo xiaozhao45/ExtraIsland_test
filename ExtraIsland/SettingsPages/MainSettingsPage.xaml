@@ -93,6 +93,23 @@
                     </StackPanel>
                 </Grid>
             </materialDesign:Card>
+            <Border x:Name="MessageZone"
+                    Visibility="Collapsed"
+                    Background="#15ff0000" 
+                    Margin="0,0,0,-7" 
+                    Padding="6" 
+                    CornerRadius="4">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Scroll"
+                                                 Foreground="{DynamicResource MaterialDesignBody}"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,3,0"/>
+                        <Label x:Name="ErrorMessage"/>
+                    </StackPanel>
+                    <Label/>
+                </StackPanel>
+            </Border>
             <ci:SettingsCard x:Name="LyricsStatCard"
                              IconGlyph="LibraryMusic"
                              Description="显示内置 LyricsIsland 协议接口的状态"
@@ -104,11 +121,11 @@
                                          Margin="0,0,-3,0"/>
                 </ci:SettingsCard.Switcher>
             </ci:SettingsCard>
-            <ci:SettingsCard
-                IconGlyph="ChessHorse"
-                IsOn="{Binding Settings.IsLifeModeActivated, Mode=TwoWay}"
-                Description="启用不适用于课堂环境的功能·········太有生活了哥们!"
-                Header="生活模式"/>
+            <ci:SettingsCard x:Name="LifeModeCard"
+                             IconGlyph="ChessHorse"
+                             IsOn="{Binding Settings.IsLifeModeActivated, Mode=TwoWay}"
+                             Description="启用不适用于课堂环境的功能"
+                             Header="生活模式"/>
         </StackPanel>
     </ScrollViewer>
 </ci:SettingsPageBase>
