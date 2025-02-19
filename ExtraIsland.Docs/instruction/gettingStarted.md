@@ -1,9 +1,12 @@
-﻿> [!TIP] 写在之前 · ≧ ﹏ ≦
-> 由于备考压力，[维护暂缓](https://lipoly.ink/2024/announcement/)，届时开发进度将陷入停滞，还请见谅 😭🙏
+﻿> [!IMPORTANT] 写在之前 · ≧ ﹏ ≦
+>
+> 由于备考压力，[维护暂停](https://lipoly.ink/2024/announcement/)，届时开发将几乎停止，还请见谅 😭🙏
+>
+> 本项目将于 [`#21`](https://github.com/LiPolymer/ExtraIsland/issues/21) 实现后暂停开发,并在高考结束后恢复
 >
 > 当然,如果你觉得这个项目不错，欢迎Star，也可以为本项目创建 PullRequest 来帮助我们变得更好！
 >
-> 再次感谢大家的喜爱和使用！😋🙏 祝大家学业有成！
+> 再次感谢大家的喜爱和使用！😋🙏 祝大家学业有成
 
 # 快速开始
 
