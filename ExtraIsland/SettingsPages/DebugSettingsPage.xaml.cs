@@ -82,14 +82,14 @@ public partial class DebugSettingsPage {
                 KeyFrames = [
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(0.5),
-                        Value = 0,
+                        Value = -40,
                         EasingFunction = new CircleEase {
                             EasingMode = EasingMode.EaseIn
                         }
                     },
                     new EasingDoubleKeyFrame {
                         KeyTime = KeyTime.FromPercent(1),
-                        Value = 1,
+                        Value = 0,
                         EasingFunction = new CircleEase {
                             EasingMode = EasingMode.EaseOut
                         }
@@ -98,7 +98,7 @@ public partial class DebugSettingsPage {
                 Duration = new Duration(TimeSpan.FromMilliseconds(700))
             };
             Storyboard.SetTarget(testAnim,mainWindow);
-            Storyboard.SetTargetProperty(testAnim,new PropertyPath("(Window.Content).(Grid.RenderTransform).(MatrixTransform.Matrix).(Matrix.OffsetY)"));            
+            Storyboard.SetTargetProperty(testAnim,new PropertyPath("Content.RenderTransform.Children[0].Y"));            
             Storyboard storyboard = new Storyboard {
                 Children = [testAnim]
             };
@@ -107,12 +107,14 @@ public partial class DebugSettingsPage {
     }
     void ClassIsDock(object sender,RoutedEventArgs eventArgs) {
         Window mainWindow = AppBase.Current.MainWindow!;
-        mainWindow.Background = Brushes.DarkSlateGray;
-        ((Grid)mainWindow.Content).Margin = new Thickness(0,4,0,0);
-        WindowsUtils.AppBarHelper.AppBar bar = new WindowsUtils.AppBarHelper.AppBar {
-            Location = WindowsUtils.AppBarHelper.AppBarLocation.Top
+        mainWindow.Background = new SolidColorBrush {
+            Color = Color.FromArgb(0xee,0x00,0x00,0x00),
         };
-        WindowsUtils.AppBarHelper.AppBarCreator.SetAppBar(mainWindow, bar);
+        ((Grid)mainWindow.Content).Margin = new Thickness(0,4,0,0);
+        AppBarHandler.AppBarHelper.AppBar? bar = new AppBarHandler.AppBarHelper.AppBar {
+            Location = AppBarHandler.AppBarHelper.AppBarLocation.Top
+        };
+        AppBarHandler.AppBarHelper.AppBarCreator.SetAppBar(mainWindow, bar);
     }
 }
 
