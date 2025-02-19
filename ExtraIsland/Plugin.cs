@@ -1,3 +1,4 @@
+using System.Reflection;
 using ClassIsland.Core.Abstractions;
 using ClassIsland.Core.Attributes;
 using ClassIsland.Core.Extensions.Registry;
@@ -9,6 +10,7 @@ namespace ExtraIsland
 {
     [PluginEntrance]
     // ReSharper disable once UnusedType.Global
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class Plugin : PluginBase
     {
         public override void Initialize(HostBuilderContext context, IServiceCollection services) {
@@ -17,6 +19,7 @@ namespace ExtraIsland
             GlobalConstants.Handlers.OnDuty = new ConfigHandlers.OnDutyPersistedConfigHandler();
             GlobalConstants.Handlers.MainConfig = new ConfigHandlers.MainConfigHandler();
             //Registering Services
+            services.AddHostedService<ServicesFetcherService>();
             services.AddComponent<Components.BetterCountdown,Components.BetterCountdownSettings>();
             services.AddComponent<Components.FluentClock,Components.FluentClockSettings>();
             services.AddComponent<Components.Rhesis,Components.RhesisSettings>();
