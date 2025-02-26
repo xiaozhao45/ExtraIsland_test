@@ -14,16 +14,18 @@
         <ci:BooleanToVisibilityReConverter x:Key="BooleanToVisibilityReConverter"/>
         <materialDesign:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </ci:ComponentBase.Resources>
-    <Grid DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:OnDuty}}">
+    <StackPanel DataContext="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:OnDuty}}"
+                Orientation="Horizontal" VerticalAlignment="Center">
         <Label VerticalAlignment="Center"
                VerticalContentAlignment="Center"
                Visibility="{Binding Settings.IsCompactModeEnabled, Converter={StaticResource BooleanToVisibilityReConverter}}"
                FontSize="{DynamicResource MainWindowLargeFontSize}"
                x:Name="NameLabel"/>
-        <Grid Visibility="{Binding Settings.IsCompactModeEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <Grid Visibility="{Binding Settings.IsCompactModeEnabled, Converter={StaticResource BooleanToVisibilityConverter}}" 
+              VerticalAlignment="Center">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0"
                    Content="值日"
@@ -31,7 +33,7 @@
                    Padding="0"
                    VerticalContentAlignment="Center"
                    HorizontalAlignment="Left"
-                   FontSize="{DynamicResource MainWindowSmallFontSize}"
+                   FontSize="{DynamicResource MainWindowSecondaryFontSize}"
                    x:Name="DualLabelUp"/>
             <Label Grid.Row="1"
                    Content="▯▯▯"
@@ -39,8 +41,8 @@
                    Padding="0"
                    VerticalContentAlignment="Center"
                    HorizontalAlignment="Left"
-                   FontSize="{DynamicResource MainWindowSmallFontSize}"
+                   FontSize="{DynamicResource MainWindowSecondaryFontSize}"
                    x:Name="DualLabelDown"/>
         </Grid>
-    </Grid>
+    </StackPanel>
 </ci:ComponentBase>
