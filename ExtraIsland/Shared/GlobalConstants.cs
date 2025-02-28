@@ -11,8 +11,28 @@ public static class GlobalConstants {
         public static OnDutyPersistedConfigHandler? OnDuty { get; set; }
         public static MainConfigHandler? MainConfig { get; set; }
         public static LyricsIslandHandler? LyricsIsland { get; set; }
+        
+        public static MainWindowHandler? AppBar { get; set; }
     }
 
+    public static class Triggers {
+        /// <summary>
+        /// ExtraIsland完全载入完毕后
+        /// </summary>
+        public static event Action? OnLoaded;
+        public static void Loaded() {
+            OnLoaded?.Invoke();
+        }
+        
+        /// <summary>
+        /// ExtraIsland开始载入
+        /// </summary>
+        public static event Action? OnLoading;
+        public static void Loading() {
+            OnLoading?.Invoke();
+        }
+    }
+    
     public static class HostInterfaces {
         public static ILessonsService? LessonsService;
         public static ILogger<ExtraIsland.Plugin>? PluginLogger;

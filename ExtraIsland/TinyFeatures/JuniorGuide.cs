@@ -112,9 +112,6 @@ public static class JuniorGuide {
             popup.Close();
         };
         new Thread(() => {
-            if (!isPreview) {
-                Thread.Sleep(9000);
-            }
             popup.Dispatcher.BeginInvoke(() => {
                 popup.Show();
             });
