@@ -22,7 +22,7 @@ public static class WindowsUtils {
     // ReSharper disable once IdentifierTypo
     static extern uint GetWindowThreadProcessId(IntPtr hWnd,out int lpdwProcessId);
 
-    // 检测当前系统前台窗口是否属于本进程
+    /// 检测当前系统前台窗口是否属于本进程
     public static bool IsOurWindowInForeground() {
         IntPtr foregroundWindow = GetForegroundWindow();
         if (foregroundWindow == IntPtr.Zero) return false;
@@ -30,7 +30,7 @@ public static class WindowsUtils {
         return processId == Environment.ProcessId;
     }
 
-    // 获取当前前台窗口标题
+    /// 获取当前前台窗口标题
     public static string? GetActiveWindowTitle() {
         const int nChars = 256;
         StringBuilder buffer = new StringBuilder(nChars);

@@ -1,12 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace ExtraIsland.Shared;
 
 public static class Animators {
     public class ClockTransformControlAnimator {
-        public ClockTransformControlAnimator(Label targetLabel, double motionMultiple = 0.8) {
+        public ClockTransformControlAnimator(ContentControl targetLabel, double motionMultiple = 0.8) {
             _targetLabel = targetLabel;
             DoubleAnimationUsingKeyFrames swapFadeAnimation = new DoubleAnimationUsingKeyFrames {
                 KeyFrames = [
@@ -96,7 +97,7 @@ public static class Animators {
 
         bool _renderLock;
 
-        readonly Label _targetLabel;
+        readonly ContentControl _targetLabel;
         
         string _targetContent = string.Empty;
         public string TargetContent {
@@ -241,5 +242,103 @@ public static class Animators {
             }
         }
     }
-    
+
+    public class IslandDriftAnimator {
+        public IslandDriftAnimator(Window targetWindow, Color dockBackground, double moveAmount, double timeAmount = 700) {
+            targetWindow.Background = new SolidColorBrush {
+                Color = Color.FromArgb(0x00,0x00,0x00,0x00)
+            };
+            DoubleAnimationUsingKeyFrames expandAnimation = new DoubleAnimationUsingKeyFrames {
+                KeyFrames = [
+                    new EasingDoubleKeyFrame {
+                        KeyTime = KeyTime.FromPercent(1),
+                        Value = 0,
+                        EasingFunction = new SineEase {
+                            EasingMode = EasingMode.EaseOut
+                        }
+                    }
+                ],
+                Duration = new Duration(TimeSpan.FromMilliseconds(timeAmount))
+            };
+            Storyboard.SetTarget(expandAnimation, targetWindow);
+            Storyboard.SetTargetProperty(expandAnimation, new PropertyPath("Content.RenderTransform.Children[0].Y"));
+            
+            DoubleAnimationUsingKeyFrames collapseAnimation = new DoubleAnimationUsingKeyFrames {
+                KeyFrames = [
+                    new EasingDoubleKeyFrame {
+                        KeyTime = KeyTime.FromPercent(1),
+                        Value = -moveAmount,
+                        EasingFunction = new SineEase {
+                            EasingMode = EasingMode.EaseOut
+                        }
+                    }
+                ],
+                Duration = new Duration(TimeSpan.FromMilliseconds(timeAmount))
+            };
+            Storyboard.SetTarget(collapseAnimation, targetWindow);
+            Storyboard.SetTargetProperty(collapseAnimation, new PropertyPath("Content.RenderTransform.Children[0].Y"));
+
+            ColorAnimation colorOutAnimation = new ColorAnimation {
+                From = dockBackground,
+                To = Colors.Transparent,
+                Duration = new Duration(TimeSpan.FromMilliseconds(timeAmount))
+            };
+            Storyboard.SetTarget(colorOutAnimation, targetWindow);
+            Storyboard.SetTargetProperty(colorOutAnimation, new PropertyPath("Background.Color"));
+            
+            ColorAnimation colorInAnimation = new ColorAnimation {
+                From = Colors.Transparent,
+                To = dockBackground,
+                Duration = new Duration(TimeSpan.FromMilliseconds(timeAmount))
+            };
+            Storyboard.SetTarget(colorInAnimation, targetWindow);
+            Storyboard.SetTargetProperty(colorInAnimation, new PropertyPath("Background.Color"));
+
+            _expandStoryboard = new Storyboard {
+                Children = [expandAnimation]
+            };
+            _collapseStoryboard = new Storyboard {
+                Children = [collapseAnimation]
+            };
+            _colorOutStoryboard = new Storyboard {
+                Children = [colorOutAnimation]
+            };
+            _colorInStoryboard = new Storyboard {
+                Children = [colorInAnimation]
+            };
+            _colorOutStoryboard.Completed += (_,_) => {
+                if (_backgroundTarget) {
+                    _colorInStoryboard.Begin();
+                } else _backgroundRenderLock = false;
+            };
+            _colorInStoryboard.Completed += (_,_) => {
+                if (!_backgroundTarget) {
+                    _colorOutStoryboard.Begin();
+                } else _backgroundRenderLock = false;
+            };
+        }
+
+        readonly Storyboard _expandStoryboard;
+        readonly Storyboard _collapseStoryboard;
+        readonly Storyboard _colorOutStoryboard;
+        readonly Storyboard _colorInStoryboard;
+
+        bool _backgroundTarget;
+        bool _backgroundRenderLock;
+        public void Background(bool stat = false) {
+            _backgroundTarget = stat;
+            if (_backgroundRenderLock) return;
+            _backgroundRenderLock = true;
+            if (stat) _colorInStoryboard.Begin();
+            else _colorOutStoryboard.Begin();
+        }
+
+        bool _driftRenderLock;
+        public void Expand(bool stat = false) {
+            if (_driftRenderLock) return;
+            _driftRenderLock = true;
+            if (stat) _expandStoryboard.Begin();
+            else _collapseStoryboard.Begin();
+        }
+    }
 }

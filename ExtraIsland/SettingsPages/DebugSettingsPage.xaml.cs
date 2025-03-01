@@ -9,6 +9,7 @@ using ClassIsland.Core.Attributes;
 using ExtraIsland.Shared;
 using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
+using Octokit;
 using CommonDialog = ClassIsland.Core.Controls.CommonDialog.CommonDialog;
 using HorizontalAlignment = System.Windows.HorizontalAlignment;
 using Label = System.Windows.Controls.Label;
@@ -76,45 +77,16 @@ public partial class DebugSettingsPage {
     }
     void MainWindowTransform_OnClick(object sender,RoutedEventArgs e) {
         this.BeginInvoke(() => {
-            dynamic app = AppBase.Current;
-            Window mainWindow = app.MainWindow!;
-            DoubleAnimationUsingKeyFrames testAnim = new DoubleAnimationUsingKeyFrames{
-                KeyFrames = [
-                    new EasingDoubleKeyFrame {
-                        KeyTime = KeyTime.FromPercent(0.5),
-                        Value = -40,
-                        EasingFunction = new CircleEase {
-                            EasingMode = EasingMode.EaseIn
-                        }
-                    },
-                    new EasingDoubleKeyFrame {
-                        KeyTime = KeyTime.FromPercent(1),
-                        Value = 0,
-                        EasingFunction = new CircleEase {
-                            EasingMode = EasingMode.EaseOut
-                        }
-                    }
-                ],
-                Duration = new Duration(TimeSpan.FromMilliseconds(700))
-            };
-            Storyboard.SetTarget(testAnim,mainWindow);
-            Storyboard.SetTargetProperty(testAnim,new PropertyPath("Content.RenderTransform.Children[0].Y"));            
-            Storyboard storyboard = new Storyboard {
-                Children = [testAnim]
-            };
-            storyboard.Begin();
+            Animators.IslandDriftAnimator islandDriftAnimator = new Animators.IslandDriftAnimator(AppBase.Current.MainWindow!, 
+                Color.FromArgb(0xee,0x00,0x00,0x00), 100);
+            //islandDriftAnimator.Expand(true);
+            islandDriftAnimator.Background(true);
         });
     }
     void ClassIsDock(object sender,RoutedEventArgs eventArgs) {
-        Window mainWindow = AppBase.Current.MainWindow!;
-        mainWindow.Background = new SolidColorBrush {
-            Color = Color.FromArgb(0xee,0x00,0x00,0x00),
-        };
-        ((Grid)mainWindow.Content).Margin = new Thickness(0,4,0,0);
-        AppBarHandler.AppBarHelper.AppBar? bar = new AppBarHandler.AppBarHelper.AppBar {
-            Location = AppBarHandler.AppBarHelper.AppBarLocation.Top
-        };
-        AppBarHandler.AppBarHelper.AppBarCreator.SetAppBar(mainWindow, bar);
+        GlobalConstants.Handlers.MainWindow ??= new MainWindowHandler();
+        MainWindowHandler bar = GlobalConstants.Handlers.MainWindow;
+        bar.SetBar();
     }
 }
 

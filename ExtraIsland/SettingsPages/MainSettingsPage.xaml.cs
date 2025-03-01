@@ -47,4 +47,20 @@ public partial class MainSettingsPage {
     void SettingsOnPropertyChanged() {
         RequestRestart();
     }
+
+    void DockSwitcher_Click(object sender, RoutedEventArgs e) {
+        if (Settings.Dock.Enabled) {
+            Settings.Dock.Enabled = false;
+            MainWindowHandler.ShowGuideNotification();
+        } else {
+            MainWindowHandler.TargetConfigs.IsMouseClickingEnabled = false;
+            RequestRestart();
+        }
+    }
+
+    public List<MainWindowHandler.AccentHelper.AccentState> AccentStates { get; } = [
+        MainWindowHandler.AccentHelper.AccentState.AccentEnableBlurbehind,
+        MainWindowHandler.AccentHelper.AccentState.AccentEnableTransparentgradient,
+        MainWindowHandler.AccentHelper.AccentState.AccentDisabled,
+    ];
 }

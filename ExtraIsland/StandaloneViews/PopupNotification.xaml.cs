@@ -179,7 +179,7 @@ public partial class PopupNotification : Window {
     readonly Storyboard _expandStoryboard;
     readonly Storyboard _fadeStoryBoard;
     public string? Header { get; init; }
-    public Control Body { get; init; } = new Label {
+    public UIElement Body { get; init; } = new Label {
         HorizontalAlignment = HorizontalAlignment.Center,
         VerticalAlignment = VerticalAlignment.Center,
         Content = "Empty ;)"
@@ -192,6 +192,10 @@ public partial class PopupNotification : Window {
         Height = 30, Width = 30
     };
 
+    public void FadeOut() {
+        _fadeStoryBoard.Begin();
+    }
+    
     void ButtonBase_OnClick(object sender,RoutedEventArgs e) {
         _fadeStoryBoard.Begin();
     }

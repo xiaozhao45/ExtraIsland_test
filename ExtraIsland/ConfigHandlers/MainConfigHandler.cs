@@ -1,7 +1,10 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.Drawing;
+using System.IO;
+using System.Windows.Controls;
 using ClassIsland.Shared.Helpers;
-using ExtraIsland.Shared;
 using CommunityToolkit.Mvvm.ComponentModel;
+using ExtraIsland.Shared;
 
 namespace ExtraIsland.ConfigHandlers;
 
@@ -40,9 +43,10 @@ public class MainConfigHandler {
     void SubscribeToChanges() {
         Data.PropertyChanged += OnPropertyChanged;
         Data.TinyFeatures.JuniorGuide.PropertyChanged += OnPropertyChanged;
+        Data.Dock.PropertyChanged += OnPropertyChanged;
     }
 
-    void OnPropertyChanged(object? sender,System.ComponentModel.PropertyChangedEventArgs e) {
+    void OnPropertyChanged(object? sender,PropertyChangedEventArgs e) {
         Save();
     }
 
@@ -57,7 +61,7 @@ public class MainConfigHandler {
     }
 }
 
-public partial class MainConfigData : ObservableObject {
+public class MainConfigData : ObservableObject {
     bool _isLifeModeActivated;
     public event Action? RestartPropertyChanged;
     public bool IsLifeModeActivated {
@@ -70,9 +74,43 @@ public partial class MainConfigData : ObservableObject {
         }
     }
 
+    public DockConfig Dock { get; set; } = new DockConfig(); 
+    public class DockConfig : ObservableObject {
+        bool _enabled;
+        public bool Enabled {
+            get => _enabled;
+            set {
+                if (value == _enabled) return;
+                _enabled = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        Color _color = Color.FromArgb(0x00,0x00,0xff,0xff);
+        public Color Color {
+            get => _color;
+            set {
+                if (value.Equals(_color)) return;
+                _color = value;
+                OnPropertyChanged();
+            }
+        }
+
+        MainWindowHandler.AccentHelper.AccentState _accentState = MainWindowHandler.AccentHelper.AccentState.AccentEnableBlurbehind;
+        public MainWindowHandler.AccentHelper.AccentState AccentState {
+            get => _accentState;
+            set {
+                if (value == _accentState) return;
+                _accentState = value;
+                OnPropertyChanged();
+                GlobalConstants.Handlers.MainWindow?.UpdateAccent(value);
+            }
+        }
+    }
+    
     public TinyFeaturesConfig TinyFeatures { get; set; } = new TinyFeaturesConfig();
 
-    public partial class TinyFeaturesConfig : ObservableObject {
+    public class TinyFeaturesConfig : ObservableObject {
         public JuniorGuideConfig JuniorGuide { get; set; } = new JuniorGuideConfig();
 
         public class JuniorGuideConfig : ObservableObject {

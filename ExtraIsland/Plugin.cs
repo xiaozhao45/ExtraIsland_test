@@ -1,9 +1,13 @@
 using System.Reflection;
+using System.Windows;
+using Windows.Win32;
 using ClassIsland.Core;
 using ClassIsland.Core.Abstractions;
 using ClassIsland.Core.Attributes;
 using ClassIsland.Core.Extensions.Registry;
 using ExtraIsland.Shared;
+using ICSharpCode.AvalonEdit.Document;
+using MahApps.Metro.Controls;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -62,6 +66,11 @@ namespace ExtraIsland
             Console.WriteLine("[ExIsLand][EarlyLoad]完成!");
             Console.WriteLine("[ExIsLand][EarlyLoad]注册事件...");
             GlobalConstants.Triggers.OnLoaded += TinyFeatures.JuniorGuide.Trigger;
+            AppBase.Current.AppStarted += (_,_) => {
+                if (!GlobalConstants.Handlers.MainConfig.Data.Dock.Enabled) return;
+                GlobalConstants.Handlers.MainWindow ??= new MainWindowHandler();
+                GlobalConstants.Handlers.MainWindow.InitBar(accentState: GlobalConstants.Handlers.MainConfig.Data.Dock.AccentState);
+            };
             AppBase.Current.AppStopping += (_,_) => {
                 if (GlobalConstants.Handlers.LyricsIsland == null) return;
                 GlobalConstants.Handlers.LyricsIsland = null;

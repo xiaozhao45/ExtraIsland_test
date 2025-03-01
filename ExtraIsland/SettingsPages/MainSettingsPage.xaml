@@ -126,6 +126,73 @@
                              IsOn="{Binding Settings.IsLifeModeActivated, Mode=TwoWay}"
                              Description="启用不适用于课堂环境的功能"
                              Header="生活模式"/>
+            <materialDesign:Card Margin="0 0 0 6">
+                <Expander Background="Transparent"
+                          TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                    <Expander.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ci:SettingsControl Grid.Column="0"
+                                                IconGlyph="Pin"
+                                                Header="ClassIsDock"
+                                                Description="让主窗口成为AppBar"
+                                                HasSwitcher="True"
+                                                Margin="-12,0,0,0">
+                                <ci:SettingsControl.Switcher>
+                                    <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
+                                    <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                                                  IsChecked="{Binding Settings.Dock.Enabled, Mode=TwoWay}"
+                                                  Click="DockSwitcher_Click">
+                                    </ToggleButton>
+                                </ci:SettingsControl.Switcher>
+                            </ci:SettingsControl>
+                            <Border Grid.Column="1"
+                                    Background="#66ee82ee"
+                                    CornerRadius="12"
+                                    Margin="6,0,-12,0"
+                                    VerticalAlignment="Center">
+                                <Label Margin="4,0,4,0" Foreground="Azure">实验性</Label>
+                            </Border>
+                        </Grid>
+                    </Expander.Header>
+                    <!-- ReSharper disable once Xaml.StaticResourceNotResolved -->
+                    <StackPanel Orientation="Vertical" Style="{StaticResource SettingsPageStackPanelStyle}">
+                        <ci:SettingsControl IconGlyph="Magic"
+                                            Header="窗口背景效果"
+                                            Description="选择要启用的背景特效"
+                                            HasSwitcher="True"
+                                            Margin="12,0,6,6">
+                            <ci:SettingsControl.Switcher>
+                                <ComboBox SelectedItem="{Binding Settings.Dock.AccentState, Mode=TwoWay}"
+                                          ItemsSource="{Binding AccentStates}"
+                                          Foreground="{DynamicResource MaterialDesignBody}"
+                                          MinWidth="20">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </ci:SettingsControl.Switcher>
+                        </ci:SettingsControl>
+                        <ci:SettingsControl IconGlyph="Paint"
+                                            Header="窗口背景覆层颜色"
+                                            Description="选择窗口背景附加颜色"
+                                            HasSwitcher="True"
+                                            Visibility="Collapsed"
+                                            Margin="12,0,6,6">
+                            <ci:SettingsControl.Switcher>
+                                <ci:ColorPicker Width="auto"
+                                                Margin="10 8 0 0"
+                                                Color="{Binding Settings.Dock.Color, Mode=TwoWay}"/>
+                            </ci:SettingsControl.Switcher>
+                        </ci:SettingsControl>
+                    </StackPanel>
+                </Expander>
+            </materialDesign:Card>
         </StackPanel>
     </ScrollViewer>
 </ci:SettingsPageBase>

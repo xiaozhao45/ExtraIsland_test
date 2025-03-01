@@ -2,13 +2,230 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Shell;
 using System.Windows.Threading;
+using ClassIsland.Core;
+using ClassIsland.Core.Controls;
+using ExtraIsland.ConfigHandlers;
+using ExtraIsland.StandaloneViews;
+using Google.Protobuf;
+using MahApps.Metro.Controls;
+using MaterialDesignThemes.Wpf;
+using Octokit;
+using Label = System.Windows.Controls.Label;
 
 namespace ExtraIsland.Shared;
 
-public class AppBarHandler {
+public class MainWindowHandler {
+    public MainWindowHandler() {
+        MainWindow = AppBase.Current.MainWindow!;
+        AppBar = new AppBarHelper.AppBar();
+        Settings = GlobalConstants.Handlers.MainConfig!.Data.Dock;
+        Animator = new Animators.IslandDriftAnimator(MainWindow, Colors.Transparent, MainWindow.Height);
+    }
+
+    public MainConfigData.DockConfig Settings;
+    public readonly Window MainWindow;
+    public AppBarHelper.AppBar AppBar;
+    public Animators.IslandDriftAnimator Animator;
+
+    public static class TargetConfigs {
+        public static bool IsMouseClickingEnabled { get; set; } = true;
+        public static bool IsMouseInFadingEnabled { get; set; } = false;
+        public static double Scale { get; set; }
+    }
+    static void ConfigDaemon(object? sender, EventArgs eventArgs) {
+        dynamic app = AppBase.Current;
+        dynamic settings = app.Settings;
+        if (Convert.ToInt32(settings.WindowDockingLocation) > 2) {
+            settings.WindowDockingLocation -= 3;
+        }
+        settings.IsMouseClickingEnabled = TargetConfigs.IsMouseClickingEnabled;
+        if (!settings.IsIgnoreWorkAreaEnabled) {
+            settings.IsIgnoreWorkAreaEnabled = true;
+        }
+        settings.IsMouseInFadingEnabled = TargetConfigs.IsMouseInFadingEnabled;
+        if (TargetConfigs.Scale != settings.Scale) {
+            GlobalConstants.Handlers.MainWindow?.SetAppBar();
+        }
+    }
+
+    public void InitBar(Color? backColor = null, AppBarHelper.AppBarLocation? location = null, 
+        AccentHelper.AccentState accentState = AccentHelper.AccentState.AccentEnableBlurbehind) {
+        SetBar(backColor,location,accentState);
+        GlobalConstants.HostInterfaces.LessonsService!.PreMainTimerTicked += ConfigDaemon;
+    }
+    
+    public void SetBar(Color? backColor = null, AppBarHelper.AppBarLocation? location = null, 
+                       AccentHelper.AccentState accentState = AccentHelper.AccentState.AccentEnableBlurbehind) {
+        backColor ??= Colors.Transparent;
+        dynamic app = AppBase.Current;
+        dynamic settings = app.Settings;
+        if (Convert.ToInt32(settings.WindowDockingLocation) > 2) {
+            settings.WindowDockingLocation -= 3;
+        }
+        location ??= AppBarHelper.AppBarLocation.Top;
+        Animator = new Animators.IslandDriftAnimator(MainWindow, backColor.Value, MainWindow.Height);
+        TargetConfigs.Scale = settings.Scale;
+        double topOffset = settings.Scale * 4.0;
+        ((Grid)MainWindow.Content).Margin = new Thickness(0,topOffset,0,0);
+        SetAppBar(location.Value);
+        UpdateAccent(accentState);
+        Animator.Background(true);
+    }
+
+    public void UpdateAccent(AccentHelper.AccentState accentState) {
+        AccentHelper.ChangeAccent(MainWindow, accentState);
+    }
+
+    void SetAppBar(AppBarHelper.AppBarLocation location = AppBarHelper.AppBarLocation.Top) {
+        AppBar.OnFullScreenStateChanged -= OnFullScreenStateChanged;
+        if (location == AppBar.Location) {
+            AppBar = new AppBarHelper.AppBar {
+                Location = location
+            };
+        }
+        AppBar.OnFullScreenStateChanged += OnFullScreenStateChanged;
+        AppBar.Location = location;
+        AppBarHelper.AppBarCreator.SetAppBar(MainWindow, AppBar);
+    }
+
+    void OnFullScreenStateChanged(object? sender,bool isFull) {
+        UpdateAccent(isFull ? AccentHelper.AccentState.AccentDisabled : Settings.AccentState);
+        TargetConfigs.IsMouseClickingEnabled = !isFull;
+        TargetConfigs.IsMouseInFadingEnabled = isFull;
+    }
+    
+    public static void ShowGuideNotification() {
+        Label buttonLabel = new Label {
+            Content = "[30]确认",
+        };
+        Button approveButton = new Button {
+            Background = Brushes.OrangeRed,
+            BorderBrush = Brushes.Transparent,
+            Content = buttonLabel,
+            IsEnabled = false
+        };
+        PopupNotification popup = new StandaloneViews.PopupNotification(350,575,60000) {
+            Header = "ClassIsDock · 警告 & 设置向导",
+            PackIconControl = new PackIcon {
+                Kind = PackIconKind.Warning,
+                Margin = new Thickness(0,0,0,2),
+                Height = 25, Width = 25
+            },
+            Body = new StackPanel {
+                Orientation = Orientation.Horizontal,
+                Margin = new Thickness(10,35,10,10),
+                Children = {
+                    new StackPanel {
+                        Orientation = Orientation.Vertical,
+                        Children = {
+                            new Label {
+                                Content = "警告 o(≧口≦)o",
+                                FontSize = 30
+                            },
+                            new Label {
+                                Content = """
+                                          当前该功能还处于早期开发阶段
+                                          不对其稳定性作出任何保证
+                                          
+                                          启用本功能后,
+                                          右边必要的设置将被自动修改并保持
+                                          若您稍后关闭了这个功能,
+                                          部分选项需要您重新调整
+                                          本功能暂不支持多显示器,仅能在主显示器上显示
+                                          
+                                          继续前,请确保您已阅读并理解以上内容
+                                          """
+                            },
+                            approveButton
+                        }
+                    },
+                    new ScrollViewer {
+                        Content = new StackPanel {
+                            Orientation = Orientation.Vertical,
+                            Children = {
+                                new SettingsControl {
+                                    IconGlyph = PackIconKind.Ruler,
+                                    Header = "向下偏移",
+                                    Description = "窗口 (右上角)",
+                                    Switcher = new TextBox {
+                                        Width = 30,
+                                        HorizontalContentAlignment = HorizontalAlignment.Center,
+                                        IsReadOnly = true,
+                                        Text = "0"
+                                    }
+                                },
+                                new SettingsControl {
+                                    IconGlyph = PackIconKind.MouseMoveUp,
+                                    Header = "主界面启用鼠标点击",
+                                    Description = "ExtraIsland·微功能",
+                                    Switcher = new Label {
+                                        Margin = new Thickness(20,0,0,0),
+                                        HorizontalContentAlignment = HorizontalAlignment.Left,
+                                        HorizontalAlignment = HorizontalAlignment.Left,
+                                        Content = "启用",
+                                        Foreground = Brushes.LimeGreen
+                                    }
+                                },
+                                new SettingsControl {
+                                    IconGlyph = PackIconKind.DockWindow,
+                                    Header = "使用原始屏幕尺寸",
+                                    Description = "窗口",
+                                    Switcher = new Label {
+                                        Margin = new Thickness(20,0,0,0),
+                                        HorizontalContentAlignment = HorizontalAlignment.Left,
+                                        HorizontalAlignment = HorizontalAlignment.Left,
+                                        Content = "启用",
+                                        Foreground = Brushes.LimeGreen
+                                    }
+                                },
+                                new SettingsControl {
+                                    IconGlyph = PackIconKind.MouseMoveDown,
+                                    Header = "指针移入淡化",
+                                    Description = "窗口",
+                                    Switcher = new Label {
+                                        Margin = new Thickness(20,0,0,0),
+                                        HorizontalContentAlignment = HorizontalAlignment.Left,
+                                        HorizontalAlignment = HorizontalAlignment.Left,
+                                        Content = "禁用",
+                                        Foreground = Brushes.OrangeRed
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            IconCard = {
+                Background = new SolidColorBrush(Colors.OrangeRed)
+            }
+        };
+        approveButton.Click += (_,_) => {
+            GlobalConstants.Handlers.MainConfig!.Data.Dock.Enabled = true;
+            GlobalConstants.Handlers.MainWindow ??= new MainWindowHandler();
+            GlobalConstants.Handlers.MainWindow.InitBar(accentState: GlobalConstants.Handlers.MainConfig.Data.Dock.AccentState);
+            popup.FadeOut();
+        };
+        popup.Show();
+        new Thread(() => {
+            for (int x  = 30;  x > 0;  x --) {
+                int x1 = x;
+                popup.BeginInvoke(() => {
+                    buttonLabel.Content = $"[{x1.ToString()}]确认";
+                });
+                Thread.Sleep(1000);
+            }
+            popup.BeginInvoke(() => {
+                buttonLabel.Content = $"确认";
+                approveButton.IsEnabled = true;
+            });
+        }).Start();
+    }
+    
     // ReSharper disable IdentifierTypo
     // ReSharper disable StringLiteralTypo
     /// <summary>
@@ -388,6 +605,65 @@ public class AppBarHandler {
             internal static extern uint SHAppBarMessage(int dwMessage,ref Appbardata pData);
             [DllImport("User32.dll", CharSet = CharSet.Unicode)]
             internal static extern int RegisterWindowMessage(string msg);
+        }
+    }
+
+    public static class AccentHelper {
+        [DllImport("user32.dll")]
+        static extern int SetWindowCompositionAttribute(IntPtr hwnd,ref WindowCompositionAttributeData data);
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct WindowCompositionAttributeData {
+            public WindowCompositionAttribute Attribute;
+            public IntPtr Data;
+            public int SizeOfData;
+        }
+
+        enum WindowCompositionAttribute {
+            WcaAccentPolicy = 19
+        }
+
+        public enum AccentState {
+            [Description("禁用")]
+            AccentDisabled = 0,
+            [Description("普通渐变")]
+            AccentEnableGradient = 1,
+            [Description("渐变")]
+            AccentEnableTransparentgradient = 2,
+            [Description("毛玻璃")]
+            AccentEnableBlurbehind = 3,
+            [Description("无效")]
+            AccentInvalidState = 4
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct AccentPolicy {
+            public AccentState AccentState;
+            public int AccentFlags;
+            public int GradientColor;
+            public int AnimationId;
+        }
+
+        public static void ChangeAccent(Window window, AccentState accentState) {
+            WindowInteropHelper windowHelper = new WindowInteropHelper(window);
+            AccentPolicy accent = new AccentPolicy();
+            int accentStructSize = Marshal.SizeOf(accent);
+            accent.AccentState = accentState;
+
+            IntPtr accentPtr = Marshal.AllocHGlobal(accentStructSize);
+            Marshal.StructureToPtr(accent,accentPtr,false);
+
+            WindowCompositionAttributeData data = new WindowCompositionAttributeData {
+                Attribute = WindowCompositionAttribute.WcaAccentPolicy,
+                SizeOfData = accentStructSize,
+                Data = accentPtr
+            };
+
+#pragma warning disable CA1806
+            SetWindowCompositionAttribute(windowHelper.Handle,ref data);
+#pragma warning restore CA1806
+
+            Marshal.FreeHGlobal(accentPtr);
         }
     }
     // ReSharper restore IdentifierTypo
