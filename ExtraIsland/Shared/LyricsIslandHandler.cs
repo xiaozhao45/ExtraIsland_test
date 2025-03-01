@@ -112,5 +112,6 @@ public class LyricsIslandHandler : IDisposable {
             _listener.Close();
         }
         _httpClient.Dispose();
+        GC.SuppressFinalize(this);
     }
 }

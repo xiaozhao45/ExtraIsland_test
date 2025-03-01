@@ -1,4 +1,5 @@
 using System.Reflection;
+using ClassIsland.Core;
 using ClassIsland.Core.Abstractions;
 using ClassIsland.Core.Attributes;
 using ClassIsland.Core.Extensions.Registry;
@@ -59,8 +60,18 @@ namespace ExtraIsland
                 services.AddComponent<Components.DebugSubLyricsHandler>();
             #endif
             Console.WriteLine("[ExIsLand][EarlyLoad]完成!");
-            Console.WriteLine("[ExIsLand][EarlyLoad]注册插件内部事件...");
+            Console.WriteLine("[ExIsLand][EarlyLoad]注册事件...");
             GlobalConstants.Triggers.OnLoaded += TinyFeatures.JuniorGuide.Trigger;
+            AppBase.Current.AppStopping += (_,_) => {
+                if (GlobalConstants.Handlers.LyricsIsland == null) return;
+                GlobalConstants.Handlers.LyricsIsland = null;
+                GlobalConstants.HostInterfaces.PluginLogger!.LogInformation("检测到内置LyricsIsland协议接口启动,5秒后将强制结束进程");
+                new Thread(() => {
+                    Thread.Sleep(5000);
+                    GlobalConstants.HostInterfaces.PluginLogger!.LogInformation("正在关闭...");
+                    Environment.Exit(0);
+                }).Start();
+            };
             Console.WriteLine("[ExIsLand][EarlyLoadTrigger]完成!");
             Console.WriteLine("[ExIsLand][EarlyLoad]等待服务主机启动...");
         }
