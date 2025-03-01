@@ -52,9 +52,10 @@ public class MainWindowHandler {
             GlobalConstants.Handlers.MainWindow?.SetAppBar();
         }
     }
-
+    
     public void InitBar(Color? backColor = null, AppBarHelper.AppBarLocation? location = null, 
         AccentHelper.AccentState accentState = AccentHelper.AccentState.AccentEnableBlurbehind) {
+        GlobalConstants.HostInterfaces.LessonsService!.PreMainTimerTicked -= ConfigDaemon;
         SetBar(backColor,location,accentState);
         GlobalConstants.HostInterfaces.LessonsService!.PreMainTimerTicked += ConfigDaemon;
     }
@@ -72,6 +73,7 @@ public class MainWindowHandler {
         TargetConfigs.Scale = settings.Scale;
         double topOffset = settings.Scale * 4.0;
         ((Grid)MainWindow.Content).Margin = new Thickness(0,topOffset,0,0);
+        AppBar.OnFullScreenStateChanged += OnFullScreenStateChanged;
         SetAppBar(location.Value);
         UpdateAccent(accentState);
         Animator.Background(true);
@@ -82,13 +84,11 @@ public class MainWindowHandler {
     }
 
     void SetAppBar(AppBarHelper.AppBarLocation location = AppBarHelper.AppBarLocation.Top) {
-        AppBar.OnFullScreenStateChanged -= OnFullScreenStateChanged;
         if (location == AppBar.Location) {
             AppBar = new AppBarHelper.AppBar {
                 Location = location
             };
         }
-        AppBar.OnFullScreenStateChanged += OnFullScreenStateChanged;
         AppBar.Location = location;
         AppBarHelper.AppBarCreator.SetAppBar(MainWindow, AppBar);
     }

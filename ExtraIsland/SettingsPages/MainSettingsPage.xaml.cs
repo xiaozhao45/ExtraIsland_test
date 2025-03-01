@@ -51,6 +51,7 @@ public partial class MainSettingsPage {
     void DockSwitcher_Click(object sender, RoutedEventArgs e) {
         if (Settings.Dock.Enabled) {
             Settings.Dock.Enabled = false;
+            MainWindowHandler.TargetConfigs.IsMouseClickingEnabled = true;
             MainWindowHandler.ShowGuideNotification();
         } else {
             MainWindowHandler.TargetConfigs.IsMouseClickingEnabled = false;
