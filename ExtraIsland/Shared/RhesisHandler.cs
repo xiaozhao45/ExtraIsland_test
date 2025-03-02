@@ -3,8 +3,6 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 
-using SharedRhesisDataSource = ExtraIsland.Shared.RhesisDataSource;
-
 namespace ExtraIsland.Shared;
 
 public static class RhesisHandler {
