@@ -68,6 +68,6 @@ public partial class Rhesis {
                 } catch (Exception ex) {
                     Showing = $"本地文件读取失败: {ex.Message}";
                 }
-            }).Start();
+            }}).Start();
     }
 }
