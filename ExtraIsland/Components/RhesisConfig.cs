@@ -1,9 +1,17 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using ExtraIsland.Shared;
 
 namespace ExtraIsland.Components;
 
-// ReSharper disable once ClassNeverInstantiated.Global
+public enum RhesisDataSource {
+    All,
+    Hitokoto,
+    Jinrishici,
+    Saint,
+    SaintJinrishici,
+    LocalFile
+}
+
 public class RhesisConfig {
     public RhesisDataSource DataSource { get; set; } = RhesisDataSource.All;
     
@@ -36,4 +44,7 @@ public class RhesisConfig {
     public bool IsAnimationEnabled { get; set; } = true;
     
     public bool IsSwapAnimationEnabled { get; set; }
+    
+    [JsonIgnore]
+    public string LocalFilePath { get; set; } = "rhesis.txt";
 }
