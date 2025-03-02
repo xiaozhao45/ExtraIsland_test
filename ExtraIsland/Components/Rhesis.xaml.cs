@@ -1,4 +1,7 @@
-﻿using System.Windows;
+using System.Windows;
+using System.IO;
+using System.Linq;
+using System.Threading;
 using ClassIsland.Core.Abstractions.Services;
 using ClassIsland.Core.Attributes;
 using ExtraIsland.Shared;
@@ -25,6 +28,7 @@ public partial class Rhesis {
     public string Showing { get; private set; } = "-----------------";
     readonly RhesisHandler.Instance _rhesisHandler = new RhesisHandler.Instance();
     readonly Animators.ClockTransformControlAnimator _labelAnimator;
+    
     void Rhesis_OnLoaded(object sender,RoutedEventArgs e) {
         Settings.LastUpdate = DateTime.Now;
         Update();
@@ -43,15 +47,37 @@ public partial class Rhesis {
     
     void Update() {
         new Thread(() => {
-            Showing = _rhesisHandler.LegacyGet(Settings.DataSource,Settings.HitokotoProp switch {
-                    "" => "https://v1.hitokoto.cn/",
-                    _ => $"https://v1.hitokoto.cn/?{Settings.HitokotoLengthArgs}{Settings.HitokotoProp}"
-                },
-                Settings.SainticProp switch {
-                    "" => "https://open.saintic.com/api/sentence/",
-                    _ => $"https://open.saintic.com/api/sentence/{Settings.HitokotoProp}.json"
-                },
-                Settings.LengthLimitation).Content; 
+            if (Settings.DataSource == RhesisDataSource.LocalFile) {
+                try {
+                    var lines = File.ReadAllLines(Settings.LocalFilePath)
+                                 .Where(line => !line.StartsWith("#") && !string.IsNullOrWhiteSpace(line))
+                                 .ToList();
+                    if (lines.Count > 0) {
+                        Showing = lines[new Random().Next(lines.Count)].Trim();
+                    } else {
+                        Showing = "本地文件没有有效语录";
+                    }
+                } catch (FileNotFoundException) {
+                    Showing = "语录文件未找到";
+                } catch (DirectoryNotFoundException) {
+                    Showing = "目录不存在";
+                } catch (IOException ex) {
+                    Showing = $"文件读取错误: {ex.Message}";
+                } catch (Exception ex) {
+                    Showing = $"本地文件读取失败: {ex.Message}";
+                }
+            } else {
+                Showing = _rhesisHandler.LegacyGet(Settings.DataSource,Settings.HitokotoProp switch {
+                        "" => "https://v1.hitokoto.cn/",
+                        _ => $"https://v1.hitokoto.cn/?{Settings.HitokotoLengthArgs}{Settings.HitokotoProp}"
+                    },
+                    Settings.SainticProp switch {
+                        "" => "https://open.saintic.com/api/sentence/",
+                        _ => $"https://open.saintic.com/api/sentence/{Settings.HitokotoProp}.json"
+                    },
+                    Settings.LengthLimitation).Content; 
+            }
+            
             this.BeginInvoke(() => {
                 _labelAnimator.Update(Showing, Settings.IsAnimationEnabled, Settings.IsSwapAnimationEnabled);
             });
