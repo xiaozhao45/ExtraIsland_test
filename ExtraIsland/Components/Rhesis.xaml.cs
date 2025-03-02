@@ -8,6 +8,8 @@ using ExtraIsland.Shared;
 using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
 
+using SharedRhesisDataSource = ExtraIsland.Shared.RhesisDataSource;
+
 namespace ExtraIsland.Components;
 
 [ComponentInfo(
