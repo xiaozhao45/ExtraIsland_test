@@ -68,22 +68,6 @@ public partial class Rhesis {
                 } catch (Exception ex) {
                     Showing = $"本地文件读取失败: {ex.Message}";
                 }
-            } else {
-            // pass
-            //     Showing = _rhesisHandler.LegacyGet(Settings.DataSource,Settings.HitokotoProp switch {
-            //             "" => "https://v1.hitokoto.cn/",
-            //             _ => $"https://v1.hitokoto.cn/?{Settings.HitokotoLengthArgs}{Settings.HitokotoProp}"
-            //         },
-            //         Settings.SainticProp switch {
-            //             "" => "https://open.saintic.com/api/sentence/",
-            //             _ => $"https://open.saintic.com/api/sentence/{Settings.HitokotoProp}.json"
-            //         },
-            //         Settings.LengthLimitation).Content; 
-            // }
-            
-            this.BeginInvoke(() => {
-                _labelAnimator.Update(Showing, Settings.IsAnimationEnabled, Settings.IsSwapAnimationEnabled);
-            });
-        }).Start();
+            }).Start();
     }
 }
